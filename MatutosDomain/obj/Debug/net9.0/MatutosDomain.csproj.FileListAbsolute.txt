@@ -1,0 +1,11 @@
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\bin\Debug\net9.0\MatutosDomain.deps.json
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\bin\Debug\net9.0\MatutosDomain.dll
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\bin\Debug\net9.0\MatutosDomain.pdb
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.AssemblyInfoInputs.cache
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.AssemblyInfo.cs
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.csproj.CoreCompileInputs.cache
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.dll
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\refint\MatutosDomain.dll
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.pdb
+C:\Users\Unifafibe\source\repos\MatutosApp\MatutosDomain\obj\Debug\net9.0\ref\MatutosDomain.dll

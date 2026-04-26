@@ -1,0 +1,6 @@
+@MatutosApi_HostAddress = http://localhost:5028
+
+GET {{MatutosApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

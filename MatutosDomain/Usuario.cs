@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace MatutosDomain
+{
+    [Table("Usuario")] 
+    public class Usuario
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Codigo_Usuario { get; set; }
+
+        [Required(ErrorMessage = "O nome é obrigatório.")]
+        [MaxLength(250)]
+        public string Nome { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "O e-mail é obrigatório.")]
+        [MaxLength(250)]
+        [Column("E_mail")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "A senha é obrigatória.")]
+        [MaxLength(250)]
+        public string Senha { get; set; } = string.Empty;
+
+        [NotMapped]
+        public UsuarioTipo TipoSelecionado { get; set; }
+        public bool Ativo { get; set; } = true;
+
+        [JsonIgnore]
+        public virtual ICollection<UsuarioTelefone> UsuariosTelefones { get; set; } = new List<UsuarioTelefone>();
+    }
+}

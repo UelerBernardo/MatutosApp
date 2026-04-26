@@ -1,0 +1,50 @@
+[
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "CriarUsuario",
+    "RelativePath": "usuario/cadastrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MatutosDomain.UsuarioCadastro",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "Login",
+    "RelativePath": "usuario/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "MatutosDomain.UsuarioLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "CriarTelefone",
+    "RelativePath": "usuario/telefone",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "telefone",
+        "Type": "MatutosDomain.Telefone",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
