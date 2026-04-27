@@ -21,15 +21,16 @@ namespace MatutosApp
             //Serviços
             //builder.Services.AddSingleton<ApiServicesSessaoPessoa>();
             builder.Services.AddSingleton<UsuarioService>();
+            builder.Services.AddSingleton<TelefoneService>();
 
             //ViewModels
             builder.Services.AddTransient<UsuarioViewModel>();
+            builder.Services.AddTransient<TelefoneViewModel>();
 
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
+            builder.Services.AddTransient<TelefoneCadastroView>();
             //builder.Services.AddTransient<pgLoginView>();
-
-
 
 #if DEBUG
             builder.Logging.AddDebug();

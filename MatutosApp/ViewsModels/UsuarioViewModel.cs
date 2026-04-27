@@ -59,7 +59,7 @@ namespace MatutosApp.ViewsModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Quase lá!", "Cadastro inicial concluído. Agora, informe seu telefone para contato.", "Continuar");
 
-                    await Shell.Current.GoToAsync("TelefoneView");
+                    await Shell.Current.GoToAsync("TelefoneCadastroView");
                 }
                 else
                 {

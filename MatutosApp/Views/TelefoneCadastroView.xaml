@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.TelefoneCadastroView"
+             Title="TelefoneCadastroView">
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+
+            <Label Text="Qual é o seu número?"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#333333"
+                   Margin="0, 10, 0, 20"/>
+
+            <Label Text="Precisamos do seu contato para enviar lembretes dos seus agendamentos."
+                   FontSize="14"
+                   TextColor="Gray"
+                   HorizontalTextAlignment="Center"
+                   Margin="0, -15, 0, 20"/>
+
+            <Grid ColumnDefinitions="0.3*, 0.7*" ColumnSpacing="15">
+
+                <VerticalStackLayout Grid.Column="0" Spacing="5">
+                    <Label Text="DDD" FontSize="14" FontAttributes="Bold" />
+                    <Entry Placeholder="Ex: 17"
+                           Text="{Binding Ddd}" 
+                           Keyboard="Numeric"
+                           MaxLength="2"
+                           HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="5">
+                    <Label Text="Número" FontSize="14" FontAttributes="Bold" />
+                    <Entry Placeholder="99999-9999"
+                           Text="{Binding Numero_telefone}" 
+                           Keyboard="Telephone"
+                           MaxLength="10"
+                           ClearButtonVisibility="WhileEditing"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Grid ColumnDefinitions="*, Auto" Margin="0, 10, 0, 0">
+                <VerticalStackLayout Grid.Column="0" VerticalOptions="Center">
+                    <Label Text="Este é seu número principal?" FontSize="16" FontAttributes="Bold" />
+                    <Label Text="Usaremos este número como preferência para contato." FontSize="12" TextColor="Gray" />
+                </VerticalStackLayout>
+
+                <Switch Grid.Column="1" 
+                        IsToggled="{Binding Principal}" 
+                        ThumbColor="#2B0B3F" 
+                        OnColor="#D8BFD8" />
+            </Grid>
+
+            <Button Text="FINALIZAR CADASTRO"
+                    Command="{Binding CadastrarCommand}"
+                    BackgroundColor="#2B0B3F"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="8"
+                    HeightRequest="50"
+                    Margin="0, 40, 0, 0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

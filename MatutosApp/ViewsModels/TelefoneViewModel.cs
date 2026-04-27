@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
 using MatutosDomain;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +13,12 @@ namespace MatutosApp.ViewsModels
 {
     public partial class TelefoneViewModel : BaseViewModel
     {
-        //Instanciar a classe service pois será usada para conectar com o banco de dados
-        public readonly TelefoneService _telefoneService;
+        private readonly TelefoneService _telefoneService;
 
-        //Definição dos campos que serão usudos para cadastro do Telefone
+        // O Toolkit vai gerar: Numero_telefone, Ddd e Principal
         [ObservableProperty] private string numero_telefone;
         [ObservableProperty] private string ddd;
         [ObservableProperty] private bool principal;
-
 
         public TelefoneViewModel(TelefoneService telefone)
         {
@@ -29,28 +29,66 @@ namespace MatutosApp.ViewsModels
         {
             try
             {
+                string tokenJwt = await SecureStorage.Default.GetAsync("jwt_token");
+
+                if (string.IsNullOrEmpty(tokenJwt))
+                {
+                    await App.Current.MainPage.DisplayAlert("Atenção", "Sessão expirada. Por favor, faça login novamente.", "OK");
+                    return;
+                }
+
                 var telefoneNovo = new Telefone
                 {
-                    DDD = ddd,
-                    Numero_Telefone = numero_telefone,
-                    Principal = principal
+                    DDD = Ddd,
+                    Numero_Telefone = Numero_telefone,
+                    Principal = Principal
                 };
 
-                bool sucesso = await _telefoneService.TelefoneCadastrar(telefoneNovo, );
+                bool sucesso = await _telefoneService.TelefoneCadastrar(telefoneNovo, tokenJwt);
+
                 if (sucesso)
                 {
-                    bool confimar = await Shell.Current.DisplayAlert("Sucesso", "Telefone Cadastrado com sucesso! Deseja cadastrar um novo telefone?", "Sim", "Não");
-                    if (!confimar)
+                    bool confirmar = await Shell.Current.DisplayAlert("Sucesso", "Telefone Cadastrado com sucesso! Deseja cadastrar um novo telefone?", "Sim", "Não");
+
+                    if (!confirmar)
                     {
-                        return;
+                        // Aqui você manda o usuário para a Home da Barbearia!
+                        // await Shell.Current.GoToAsync("///HomeView"); 
                     }
-                }     
+                    else
+                    {
+                        LimparDados();
+                    }
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert("Erro", "Não foi possível cadastrar o telefone. Verifique os dados.", "OK");
+                }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "OK");
+                await App.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "OK");
             }
         }
 
+        [RelayCommand]
+        public async Task Cadastrar() // Adicionado sufixo Async
+        {
+            if (string.IsNullOrEmpty(Numero_telefone) || string.IsNullOrEmpty(Ddd))
+            {
+                await App.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "OK");
+                return;
+            }
+
+            // CORRIGIDO: Agora com o await para o fluxo aguardar o processamento
+            await CadastrarTelefone();
+        }
+
+        public void LimparDados()
+        {
+            Numero_telefone = string.Empty;
+            Ddd = string.Empty;
+            Principal = false;
+        }
     }
 }

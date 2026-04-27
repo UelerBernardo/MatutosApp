@@ -23,8 +23,6 @@ namespace MatutosApp.Services
 
             };
         }
-
-
         public async Task<bool> UsuarioCadastrar(UsuarioCadastro usuario)
         {
             try
@@ -33,8 +31,18 @@ namespace MatutosApp.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var pessoaNova = await response.Content.ReadFromJsonAsync<Usuario>();
-                    return true;
+                    var dadosAutenticacao = await response.Content.ReadFromJsonAsync<AuthResponse>();
+
+                    if (dadosAutenticacao != null && !string.IsNullOrEmpty(dadosAutenticacao.Token))
+                    {
+                        await SecureStorage.Default.SetAsync("jwt_token", dadosAutenticacao.Token);
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Cadastro realizado, mas o Token não foi recebido.");
+                        return false; 
+                    }
                 }
                 else
                 {
@@ -45,11 +53,9 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
                 return false;
             }
         }
-
     }
 }
