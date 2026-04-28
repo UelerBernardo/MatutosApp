@@ -14,6 +14,8 @@ namespace MatutosDomain
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Codigo_Usuario_Telefone { get; set;}
+
         [ForeignKey("Usuario")]
         public int Codigo_Usuario { get; set; }
 

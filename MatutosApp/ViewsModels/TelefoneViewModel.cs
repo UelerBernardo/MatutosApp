@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
+using MatutosApp.Views;
 using MatutosDomain;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -44,16 +45,15 @@ namespace MatutosApp.ViewsModels
                     Principal = Principal
                 };
 
-                bool sucesso = await _telefoneService.TelefoneCadastrar(telefoneNovo, tokenJwt);
+                var resultado = await _telefoneService.TelefoneCadastrar(telefoneNovo, tokenJwt);
 
-                if (sucesso)
+                if (resultado.Sucesso)
                 {
                     bool confirmar = await Shell.Current.DisplayAlert("Sucesso", "Telefone Cadastrado com sucesso! Deseja cadastrar um novo telefone?", "Sim", "Não");
 
                     if (!confirmar)
                     {
-                        // Aqui você manda o usuário para a Home da Barbearia!
-                        // await Shell.Current.GoToAsync("///HomeView"); 
+                        await Shell.Current.GoToAsync(nameof(PrincipalView)); 
                     }
                     else
                     {
@@ -62,7 +62,7 @@ namespace MatutosApp.ViewsModels
                 }
                 else
                 {
-                    await App.Current.MainPage.DisplayAlert("Erro", "Não foi possível cadastrar o telefone. Verifique os dados.", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "OK");
                 }
             }
             catch (Exception ex)

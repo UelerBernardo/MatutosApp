@@ -3368,23 +3368,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ueler\\.nuget\\packages\\": {},
+    "C:\\Users\\Unifafibe\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ueler\\Desktop\\Estágio\\MatutosApp\\MatutosApi\\MatutosApi.csproj",
+      "projectUniqueName": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\MatutosApi.csproj",
       "projectName": "MatutosApi",
-      "projectPath": "C:\\Users\\Ueler\\Desktop\\Estágio\\MatutosApp\\MatutosApi\\MatutosApi.csproj",
-      "packagesPath": "C:\\Users\\Ueler\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ueler\\Desktop\\Estágio\\MatutosApp\\MatutosApi\\obj\\",
+      "projectPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\MatutosApi.csproj",
+      "packagesPath": "C:\\Users\\Unifafibe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Ueler\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Unifafibe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3400,8 +3400,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Ueler\\Desktop\\Estágio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
-              "projectPath": "C:\\Users\\Ueler\\Desktop\\Estágio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj"
+            "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
+              "projectPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj"
             }
           }
         }
@@ -3416,7 +3416,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -3484,7 +3484,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
