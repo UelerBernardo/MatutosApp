@@ -21,14 +21,14 @@ namespace MatutosApi.Controllers
         [Authorize]
         public async Task<IActionResult> CriarTelefone([FromBody] Telefone telefone)
         {
-            // 1. Recupera o ID do usuário logado através dos Claims do Token
-            // Geralmente usamos o NameIdentifier ou o nome que você deu ao claim no login (ex: "id")
+            UsuarioTelefone usuarioTelefone = new UsuarioTelefone();
+
             var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
                               ?? User.FindFirst("id")?.Value;
 
             if (string.IsNullOrEmpty(usuario))
             {
-                return BadRequest(new { Meessage = "Usuário não identificado no token." });
+                return BadRequest(new { Mensagem = "Usuário não identificado no token." });
             }
 
             int codigoUsuarioLogado = int.Parse(usuario);
@@ -38,9 +38,20 @@ namespace MatutosApi.Controllers
 
             if (telefoneExiste)
             {
-                return BadRequest(new { Message = "Este telefone já está cadastrado no sistema." });
+                return BadRequest(new { Mensagem = "Este telefone já está cadastrado no sistema." });
             }
 
+            if (telefone.Principal)
+            {
+                //Validação se o usuário já possui um telefone como principal
+                var jaPossuiPrincipal = await _dbcontext.UsuarioTelefones
+                    .AnyAsync(ut => ut.Codigo_Usuario == codigoUsuarioLogado && ut.Telefone.Principal == true);
+
+                if (jaPossuiPrincipal)
+                {
+                    return BadRequest(new { Mensagem = "Você já possui um telefone principal cadastrado. Desmarque a opção para adicionar este número." });
+                }
+            }
 
             var novoTelefone = new Telefone
             {

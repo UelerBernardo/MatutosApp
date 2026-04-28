@@ -21,3 +21,15 @@ C:\Users\Ueler\Desktop\Estágio\MatutosApp\MatutosDomain\obj\Debug\net9.0\Matuto
 C:\Users\Ueler\Desktop\Estágio\MatutosApp\MatutosDomain\obj\Debug\net9.0\refint\MatutosDomain.dll
 C:\Users\Ueler\Desktop\Estágio\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.pdb
 C:\Users\Ueler\Desktop\Estágio\MatutosApp\MatutosDomain\obj\Debug\net9.0\ref\MatutosDomain.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\bin\Debug\net9.0\MatutosDomain.deps.json
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\bin\Debug\net9.0\MatutosDomain.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\bin\Debug\net9.0\MatutosDomain.pdb
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.AssemblyInfoInputs.cache
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.AssemblyInfo.cs
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.csproj.CoreCompileInputs.cache
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.sourcelink.json
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\refint\MatutosDomain.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.pdb
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosDomain\obj\Debug\net9.0\ref\MatutosDomain.dll
