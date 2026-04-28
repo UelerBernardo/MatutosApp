@@ -17,13 +17,50 @@ namespace MatutosApp.Services
 
         public TelefoneService()
         {
-            string baseURL = "http://localhost:5015";
+            string baseURL = "https://localhost:7110/";
 
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(baseURL)
             };
         }
+
+        //public async Task<bool> TelefoneCadastrar(Telefone telefone, string tokenJwt)
+        //{
+        //    try
+        //    {
+        //        // Limpeza de segurança: remove espaços ou aspas que podem vir no token
+        //        var tokenLimpo = tokenJwt.Replace("Bearer ", "").Trim();
+
+        //        // Criamos a requisição manualmente para ter controle total
+        //        var request = new HttpRequestMessage(HttpMethod.Post, "telefone/cadastrar");
+
+        //        // Injetamos o cabeçalho de autorização de forma explícita
+        //        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+        //        // Adicionamos o corpo da mensagem (o objeto telefone)
+        //        request.Content = JsonContent.Create(telefone);
+
+        //        // Enviamos
+        //        var response = await _httpClient.SendAsync(request);
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            var erro = await response.Content.ReadAsStringAsync();
+        //            Debug.WriteLine($"Erro 401 ou 400: {erro}");
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine($"Falha na comunicação: {ex.Message}");
+        //        return false;
+        //    }
+        //}
 
         public async Task<bool> TelefoneCadastrar(Telefone telefone, string tokenJwt)
         {
@@ -50,7 +87,7 @@ namespace MatutosApp.Services
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
                 return false;
             }
-            
+
         }
 
     }

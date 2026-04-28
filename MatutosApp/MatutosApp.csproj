@@ -71,6 +71,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\TelefoneCadastroView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\UsuarioCadastroView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
