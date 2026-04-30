@@ -85,18 +85,6 @@ namespace MatutosApp.ViewsModels
                 Debug.WriteLine($"Erro ao navegar para {pageType.Name}: {ex.Message}");
             }
         }
-        //private void NotificarMudancaDeSessao()
-        //{
-        //    Avisa a UI para reavaliar todas as propriedades de permissão
-        //    OnPropertyChanged(nameof(IsCliente));
-        //    OnPropertyChanged(nameof(IsBarbeiro));
-        //    OnPropertyChanged(nameof(IsAdministrador));
-        //}
-
-        //public void Dispose()
-        //{
-        //    UsuarioSessaoService.OnSessaoChanged -= NotificarMudancaDeSessao;
-        //}
 
         [RelayCommand]
         private async Task FazerLogoutAsync()

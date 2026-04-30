@@ -5,6 +5,37 @@
     "version": "v1"
   },
   "paths": {
+    "/agendamento/cadastrar": {
+      "post": {
+        "tags": [
+          "Agendamento"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agendamento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agendamento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agendamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/telefone/cadastrar": {
       "post": {
         "tags": [
@@ -101,6 +132,46 @@
   },
   "components": {
     "schemas": {
+      "Agendamento": {
+        "type": "object",
+        "properties": {
+          "codigo_Agendamento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "data_Agendamento": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "data_Fim_Agendamento": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "codigo_Cliente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Barbeiro": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Situacao_Agendamento": {
+            "$ref": "#/components/schemas/AgendamentoSituacao"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AgendamentoSituacao": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Telefone": {
         "type": "object",
         "properties": {

@@ -30,7 +30,7 @@ namespace MatutosApp
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
             builder.Services.AddTransient<TelefoneCadastroView>();
-            //builder.Services.AddTransient<pgLoginView>();
+            builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<PrincipalView>();
 
 #if DEBUG

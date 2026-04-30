@@ -2,17 +2,12 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.LoginView"
+             xmlns:views="clr-namespace:MatutosApp.Views"
              Title="LoginView">
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
-
-            <Image Source="dotnet_bot.png" 
-                   HeightRequest="120"
-                   HorizontalOptions="Center"
-                   Margin="0,0,0,20"/>
-
-            <Label Text="BEM-VINDO AO MATUTOS"
-                   FontSize="24"
+            <Label Text="BEM-VINDO A BARBERIA MATUTOS"
+                   FontSize="30"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    TextColor="#2B0B3F"/>
@@ -53,9 +48,11 @@
                 <Label Text="Cadastre-se" 
                        TextColor="#2B0B3F"
                        FontAttributes="Bold"
-                       VerticalOptions="Center">
+                       VerticalOptions="Center"
+                       TextDecorations="Underline">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding IrParaCadastroCommand}"/>
+                        <TapGestureRecognizer Command="{Binding AbrirTela}"
+                                              CommandParameter="{x:Type TypeName=views:UsuarioCadastroView}"/>
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>

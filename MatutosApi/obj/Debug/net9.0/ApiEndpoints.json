@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "CriarAgendamento",
+    "RelativePath": "agendamento/cadastrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "agendamento",
+        "Type": "MatutosDomain.Agendamento",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.TelefoneController",
     "Method": "CriarTelefone",
     "RelativePath": "telefone/cadastrar",

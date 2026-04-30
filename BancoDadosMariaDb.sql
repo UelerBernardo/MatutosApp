@@ -98,6 +98,8 @@ CREATE TABLE IF NOT EXISTS Agendamento (
     Ativo BOOLEAN DEFAULT 1,
     Codigo_Cliente INT NOT NULL,
     Codigo_Barbeiro INT NOT NULL,
+    Codigo_Situacao_Agendamento INT NOT NULL,
+    FOREIGN KEY (Codigo_Situacao_Agendamento) REFERENCES Situacao_Agendamento (Codigo_Situacao_Agendamento),
     FOREIGN KEY (Codigo_Cliente) REFERENCES Cliente (Codigo_Usuario),
     FOREIGN KEY (Codigo_Barbeiro) REFERENCES Barbeiro (Codigo_Usuario)
 );
@@ -114,10 +116,8 @@ CREATE TABLE IF NOT EXISTS Agendamento_Servico (
 );
 
 CREATE TABLE IF NOT EXISTS Situacao_Agendamento (
-    Codigo_Situacao_Agendamento INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Codigo_Situacao_Agendamento INT NOT NULL PRIMARY KEY,
     Descricao VARCHAR(250),
-    Codigo_Agendamento INT,
-    FOREIGN KEY (Codigo_Agendamento) REFERENCES Agendamento (Codigo_Agendamento)
 );
 
 CREATE TABLE IF NOT EXISTS Configura_Notificacao (
@@ -127,3 +127,13 @@ CREATE TABLE IF NOT EXISTS Configura_Notificacao (
     FOREIGN KEY (Codigo_Notificacao) REFERENCES Notificacao (Codigo_Notificacao),
     FOREIGN KEY (Codigo_Agendamento) REFERENCES Agendamento (Codigo_Agendamento)
 );
+
+
+INSERT INTO situacao_agendamento (Codigo_Situacao_Agendamento, Descricao)
+VALUES (1, 'Aberto')
+
+INSERT INTO situacao_agendamento (Codigo_Situacao_Agendamento, Descricao)
+VALUES (2, 'Cancelado')
+
+INSERT INTO situacao_agendamento (Codigo_Situacao_Agendamento, Descricao)
+VALUES (3, 'Finalizado')
