@@ -19,6 +19,7 @@ namespace MatutosApi.Controllers
         {
             _dbcontext = dbcontext ?? throw new ArgumentNullException(nameof(dbcontext));
         }
+
         [HttpPost("cadastrar")]
         [AllowAnonymous]
         public async Task<IActionResult> CriarUsuario([FromBody] UsuarioCadastro request)
@@ -74,14 +75,16 @@ namespace MatutosApi.Controllers
 
             if (login == null || !BCrypt.Net.BCrypt.Verify(usuario.Senha, login.Senha))
             {
-                return Unauthorized(new { Message = "Login ou senha inválidos!" });
+                return Unauthorized(new { Mensagem = "Login ou senha inválidos!" });
             }
 
             var token = TokenService.GenerateToken(login);
 
             return Ok(new
             {
-                User = login.Nome,
+                login.Codigo_Usuario,
+                Nome = login.Nome,
+                login.Email,
                 Token = token
             });
         }

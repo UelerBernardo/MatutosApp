@@ -44,8 +44,6 @@ namespace MatutosApp.Services
                     string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
 
                     Debug.WriteLine($"Falha: {mensagemDaApi}");
-
-                    // Retorna FALSE e a mensagem exata da Controller!
                     return (false, mensagemDaApi);
                 }
 

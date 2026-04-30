@@ -22,7 +22,7 @@ namespace MatutosApi.Controllers
         public async Task<IActionResult> CriarTelefone([FromBody] Telefone telefone)
         {
             UsuarioTelefone usuarioTelefone = new UsuarioTelefone();
-
+            //Usuario encontrado
             var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
                               ?? User.FindFirst("id")?.Value;
 
@@ -76,7 +76,7 @@ namespace MatutosApi.Controllers
 
             return Ok(new
             {
-                Message = "Telefone cadastrado e vinculado com sucesso!",
+                Mensagem = "Telefone cadastrado e vinculado com sucesso!",
                 novoTelefone.Codigo_Telefone,
                 novoTelefone.Numero_Telefone,
                 novoTelefone.DDD

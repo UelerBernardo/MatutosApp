@@ -10,7 +10,7 @@ namespace MatutosApp
             InitializeComponent();
             Routing.RegisterRoute(nameof(UsuarioCadastroView), typeof(UsuarioCadastroView));
             Routing.RegisterRoute(nameof(TelefoneCadastroView), typeof(TelefoneCadastroView));
-            //Routing.RegisterRoute(nameof(pgLoginView), typeof(pgLoginView));
+            Routing.RegisterRoute(nameof(LoginView), typeof(LoginView));
             Routing.RegisterRoute(nameof(PrincipalView), typeof(PrincipalView));
         }
     }

@@ -1,6 +1,8 @@
-﻿using MatutosDomain;
+﻿using Azure;
+using MatutosDomain;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Json;
@@ -55,6 +57,41 @@ namespace MatutosApp.Services
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
                 return false;
+            }
+        }
+        public async Task<(bool Sucesso, string Mensagem)> UsuarioLogin(UsuarioLogin login)
+        {
+            try
+            {
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/login", login);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var token = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
+
+                    if (token != null && !string.IsNullOrEmpty(token.Token))
+                    {
+                        await SecureStorage.Default.SetAsync("jwt_token", token.Token);
+
+                        return (true, string.Empty);
+                    }
+
+                    return (false, "Falha ao ler o token de acesso.");
+                }
+                else
+                {
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+                    string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
+
+                    return (false, mensagemDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erro de conexão no login: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
             }
         }
     }
