@@ -1,4 +1,5 @@
 ﻿using MatutosApp.Services;
+using Microsoft.Extensions.DependencyInjection;
 using MatutosApp.Views;
 using MatutosApp.ViewsModels;
 using Microsoft.Extensions.Logging;
@@ -22,16 +23,25 @@ namespace MatutosApp
             //builder.Services.AddSingleton<ApiServicesSessaoPessoa>();
             builder.Services.AddSingleton<UsuarioService>();
             builder.Services.AddSingleton<TelefoneService>();
+            builder.Services.AddSingleton<AgendamentoService>();
+            builder.Services.AddHttpClient<BarbeiroService>(cliente =>
+            {
+               cliente.BaseAddress = new Uri("https://localhost:7110/"); 
+            });
 
             //ViewModels
             builder.Services.AddTransient<UsuarioViewModel>();
             builder.Services.AddTransient<TelefoneViewModel>();
+            builder.Services.AddTransient<AgendamentoViewModel>();
+            builder.Services.AddTransient<PrincipalViewModel>();
 
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
             builder.Services.AddTransient<TelefoneCadastroView>();
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<PrincipalView>();
+            builder.Services.AddTransient<AgendamentoCadastroView>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();

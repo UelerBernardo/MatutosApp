@@ -36,6 +36,18 @@
         }
       }
     },
+    "/barbeiro/consultar": {
+      "get": {
+        "tags": [
+          "Barbeiro"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/telefone/cadastrar": {
       "post": {
         "tags": [

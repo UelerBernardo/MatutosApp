@@ -130,10 +130,10 @@ CREATE TABLE IF NOT EXISTS Configura_Notificacao (
 
 
 INSERT INTO situacao_agendamento (Codigo_Situacao_Agendamento, Descricao)
-VALUES (1, 'Aberto')
+VALUES (1, 'Aberto');
 
 INSERT INTO situacao_agendamento (Codigo_Situacao_Agendamento, Descricao)
-VALUES (2, 'Cancelado')
+VALUES (2, 'Cancelado');
 
 INSERT INTO situacao_agendamento (Codigo_Situacao_Agendamento, Descricao)
-VALUES (3, 'Finalizado')
+VALUES (3, 'Finalizado');
