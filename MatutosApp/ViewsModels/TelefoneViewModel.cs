@@ -72,7 +72,7 @@ namespace MatutosApp.ViewsModels
         }
 
         [RelayCommand]
-        public async Task Cadastrar() // Adicionado sufixo Async
+        public async Task Cadastrar() 
         {
             if (string.IsNullOrEmpty(Numero_telefone) || string.IsNullOrEmpty(Ddd))
             {

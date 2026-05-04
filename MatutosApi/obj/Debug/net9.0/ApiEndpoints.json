@@ -16,6 +16,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.BarbeiroController",
+    "Method": "ConsultarBarbeiro",
+    "RelativePath": "barbeiro/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.TelefoneController",
     "Method": "CriarTelefone",
     "RelativePath": "telefone/cadastrar",
