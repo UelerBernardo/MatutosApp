@@ -4,60 +4,104 @@
              x:Class="MatutosApp.Views.AgendamentoCadastroView"
              Title="AgendamentoCadastroView">
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="30">
+        <VerticalStackLayout Spacing="25" Padding="25,40,25,40">
 
-            <!-- Cabeçalho -->
-            <Label Text="Escolha seu horário"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="#2B0B3F"
-                   HorizontalOptions="Center"
-                   Margin="0,10,0,20"/>
+            <!-- Cabeçalho Elegante -->
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,15">
+                <Label Text="📅" FontSize="60" HorizontalOptions="Center" />
+                <Label Text="Escolha seu Horário"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="#2B0B3F"
+                       HorizontalOptions="Center" />
+                <Label Text="Reserve seu momento com nossos especialistas"
+                       FontSize="14"
+                       TextColor="#666666"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
 
-            <!-- Seleção do Barbeiro -->
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Profissional" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
-                <Frame BorderColor="#2B0B3F" CornerRadius="8" Padding="0" HasShadow="False" HeightRequest="50">
-                    <Picker Title="Selecione o barbeiro..."
-                            ItemsSource="{Binding ListaBarbeiro}"
+            <!-- Card: Seleção do Barbeiro -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Profissional" FontSize="14" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,0"/>
+                <Border Stroke="#E0E0E0" 
+                        StrokeThickness="1" 
+                        BackgroundColor="White"
+                        StrokeShape="RoundRectangle 10" 
+                        HeightRequest="50"
+                        Padding="15,0">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
+                    </Border.Shadow>
+
+                    <Picker ItemsSource="{Binding ListaBarbeiro}"
                             ItemDisplayBinding="{Binding Nome}"
                             SelectedItem="{Binding BarbeiroSelecionado}"
-                            Margin="10,0"
-                            TextColor="Black"
-                            TitleColor="Gray"/>
-                </Frame>
+                            TextColor="#2B0B3F"
+                            TitleColor="#999999"
+                            VerticalOptions="Center"/>
+                </Border>
             </VerticalStackLayout>
 
-            <!-- Seleção da Data -->
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Data" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
-                <Frame BorderColor="#2B0B3F" CornerRadius="8" Padding="0" HasShadow="False" HeightRequest="50">
-                    <DatePicker Date="{Binding Data_Selecionada}"
-                                MinimumDate="{Binding DataMinima}"
-                                Margin="10,0"
-                                TextColor="Black"/>
-                </Frame>
-            </VerticalStackLayout>
+            <!-- GRID: Data e Hora dividindo o mesmo espaço 50/50 -->
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
 
-            <!-- Seleção da Hora -->
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Horário" FontSize="14" FontAttributes="Bold" TextColor="Black"/>
-                <Frame BorderColor="#2B0B3F" CornerRadius="8" Padding="0" HasShadow="False" HeightRequest="50">
-                    <TimePicker Time="{Binding Hora_Selecionada}"
-                                Margin="10,0"
-                                TextColor="Black"/>
-                </Frame>
-            </VerticalStackLayout>
+                <!-- Coluna 0: Data do Serviço -->
+                <VerticalStackLayout Grid.Column="0" Spacing="8">
+                    <Label Text="Data" FontSize="14" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,0"/>
+                    <Border Stroke="#E0E0E0" 
+                            StrokeThickness="1" 
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12" 
+                            HeightRequest="50"
+                            Padding="15,0">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
+                        </Border.Shadow>
 
-            <!-- Botão de Avançar -->
+                        <DatePicker Date="{Binding Data_Selecionada}"
+                                    MinimumDate="{Binding DataMinima}"
+                                    FontSize="14"
+                                    TextColor="#2B0B3F"
+                                    VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Coluna 1: Hora do Serviço -->
+                <VerticalStackLayout Grid.Column="1" Spacing="8">
+                    <Label Text="Horário" FontSize="14" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,0"/>
+                    <Border Stroke="#E0E0E0" 
+                            StrokeThickness="1" 
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12" 
+                            HeightRequest="50"
+                            Padding="15,0">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
+                        </Border.Shadow>
+
+                        <TimePicker Time="{Binding Hora_Selecionada}"
+                                    TextColor="#2B0B3F"
+                                    FontSize="14"
+                                    VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+            </Grid>
+
+            <!-- Botão de Avançar Modernizado -->
             <Button Text="AVANÇAR PARA SERVIÇOS"
                     Command="{Binding CadastrarCommand}"
                     BackgroundColor="#2B0B3F"
                     TextColor="White"
                     FontAttributes="Bold"
-                    CornerRadius="8"
-                    HeightRequest="55"
-                    Margin="0, 30, 0, 0"/>
+                    FontSize="16"
+                    CornerRadius="25"
+                    HeightRequest="60"
+                    Margin="0, 20, 0, 0">
+                <Button.Shadow>
+                    <Shadow Brush="#2B0B3F" Offset="0,4" Radius="8" Opacity="0.3" />
+                </Button.Shadow>
+            </Button>
 
         </VerticalStackLayout>
     </ScrollView>

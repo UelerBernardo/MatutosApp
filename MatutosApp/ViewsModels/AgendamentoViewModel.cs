@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
+using MatutosApp.Views;
 using MatutosDomain;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.IdentityModel.Tokens;
@@ -16,15 +17,17 @@ namespace MatutosApp.ViewsModels
     public partial class AgendamentoViewModel : BaseViewModel
     {
         private readonly AgendamentoService _agendamentoService;
-
         private readonly BarbeiroService _barbeiroService;
+        private readonly ServicoService _servicoService;
 
         [ObservableProperty] private DateTime data_Selecionada;
         [ObservableProperty] private TimeSpan hora_Selecionada;
         [ObservableProperty] private DateTime data_Fim_Agendamento;
         [ObservableProperty] private Barbeiro barbeiroSelecionado;
+        [ObservableProperty] private Servico servicoSelecionado;
 
         public ObservableCollection<Barbeiro> ListaBarbeiro { get; set; } = new();
+        public ObservableCollection<Servico> ListaServico { get; set; } = new();
         public DateTime DataMinima => DateTime.Today;
 
         public AgendamentoViewModel(AgendamentoService agendamentoService, BarbeiroService barbeiroService)
@@ -61,19 +64,16 @@ namespace MatutosApp.ViewsModels
                 {
                     Data_Agendamento = dataCompleta,
                     Data_Fim_Agendamento = null,
-
-                    // CORREÇÃO 3: Tiramos o 13 e pegamos o ID dinâmico do Picker!
-                    // (Valide se a sua propriedade de ID na classe Barbeiro se chama Codigo_Usuario mesmo)
                     Codigo_Barbeiro = BarbeiroSelecionado.Codigo_Usuario,
-
-                    Codigo_Situacao_Agendamento = AgendamentoSituacao.Aberto
+                    Codigo_Situacao_Agendamento = AgendamentoSituacao.Aberto,
+                    Ativo = true
                 };
 
                 var resultado = await _agendamentoService.AgendamentoCadastrar(agendamentoNovo, token);
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "Agendamento realizado com sucesso", "OK");
-                    //await Shell.Current.GoToAsync(nameof(ServicosSelecionarView));
+                    await Shell.Current.GoToAsync($"{nameof(AgendamentoServicoView)}?Agendamento={resultado.NovoId}");
                 }
                 else
                 {

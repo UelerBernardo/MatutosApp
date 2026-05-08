@@ -5,6 +5,69 @@
     "version": "v1"
   },
   "paths": {
+    "/agendamento/inativarAgendamento/{codigoAgendamento}": {
+      "patch": {
+        "tags": [
+          "Agendamento"
+        ],
+        "parameters": [
+          {
+            "name": "codigoAgendamento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/agendamento/cadastrar/agendamentoServico": {
+      "post": {
+        "tags": [
+          "Agendamento"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Agendamento_Servico"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Agendamento_Servico"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Agendamento_Servico"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/agendamento/cadastrar": {
       "post": {
         "tags": [
@@ -36,10 +99,45 @@
         }
       }
     },
+    "/agendamento/consultar/{id}": {
+      "get": {
+        "tags": [
+          "Agendamento"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/barbeiro/consultar": {
       "get": {
         "tags": [
           "Barbeiro"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/servico/consultar": {
+      "get": {
+        "tags": [
+          "Servico"
         ],
         "responses": {
           "200": {
@@ -161,6 +259,13 @@
             "format": "date-time",
             "nullable": true
           },
+          "ativo": {
+            "type": "boolean"
+          },
+          "valor_Total_Agendamento": {
+            "type": "number",
+            "format": "double"
+          },
           "codigo_Cliente": {
             "type": "integer",
             "format": "int32"
@@ -171,6 +276,13 @@
           },
           "codigo_Situacao_Agendamento": {
             "$ref": "#/components/schemas/AgendamentoSituacao"
+          },
+          "agendamento_Servicos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agendamento_Servico"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -183,6 +295,71 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "Agendamento_Servico": {
+        "type": "object",
+        "properties": {
+          "codigo_Agendamento_Servico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Agendamento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Servico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantidade_Servico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "agendamento": {
+            "$ref": "#/components/schemas/Agendamento"
+          },
+          "servico": {
+            "$ref": "#/components/schemas/Servico"
+          },
+          "valor_Total_Item": {
+            "type": "number",
+            "format": "double"
+          },
+          "tempo_Servico_Item": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Servico": {
+        "type": "object",
+        "properties": {
+          "codigo_Servico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descricao": {
+            "type": "string",
+            "nullable": true
+          },
+          "duracao": {
+            "type": "string",
+            "nullable": true
+          },
+          "preco": {
+            "type": "number",
+            "format": "double"
+          },
+          "tempo_Servico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ativo": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
       },
       "Telefone": {
         "type": "object",

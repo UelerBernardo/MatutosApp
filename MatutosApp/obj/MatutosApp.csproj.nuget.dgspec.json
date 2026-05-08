@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\MatutosApp.csproj": {}
+    "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\MatutosApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\MatutosApp.csproj": {
+    "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\MatutosApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\MatutosApp.csproj",
+        "projectUniqueName": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\MatutosApp.csproj",
         "projectName": "MatutosApp",
-        "projectPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\MatutosApp.csproj",
-        "packagesPath": "C:\\Users\\Ueler\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\obj\\",
+        "projectPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\MatutosApp.csproj",
+        "packagesPath": "C:\\Users\\Unifafibe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ueler\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Unifafibe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -35,16 +35,16 @@
           "net9.0-android35.0": {
             "targetAlias": "net9.0-android",
             "projectReferences": {
-              "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
-                "projectPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj"
+              "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
+                "projectPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj"
               }
             }
           },
           "net9.0-windows10.0.19041": {
             "targetAlias": "net9.0-windows10.0.19041.0",
             "projectReferences": {
-              "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
-                "projectPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj"
+              "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
+                "projectPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj"
               }
             }
           }
@@ -59,7 +59,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0-android35.0": {
@@ -87,12 +87,12 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.120, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.2, )",
+              "version": "[9.0.15, )",
               "autoReferenced": true
             }
           },
@@ -115,7 +115,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
@@ -142,7 +142,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.120, )"
             }
           },
           "imports": [
@@ -170,7 +170,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
@@ -185,20 +185,20 @@
         }
       }
     },
-    "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
+    "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj",
+        "projectUniqueName": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj",
         "projectName": "MatutosDomain",
-        "projectPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj",
-        "packagesPath": "C:\\Users\\Ueler\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\obj\\",
+        "projectPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj",
+        "packagesPath": "C:\\Users\\Unifafibe\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosDomain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Ueler\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Unifafibe\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -226,7 +226,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -247,7 +247,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.AgendamentoServicoView"
+             Title="AgendamentoServicoView">
+    <!-- Mudamos o ScrollView principal por um Grid para o botão ficar sempre fixo no rodapé -->
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <!-- Cabeçalho (Linha 0) -->
+        <VerticalStackLayout Grid.Row="0" Spacing="5" HorizontalOptions="Center" Margin="0,30,0,15">
+            <Label Text="✂️" FontSize="50" HorizontalOptions="Center" />
+            <Label Text="O que vamos fazer?"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="#2B0B3F"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Lista de Serviços (Linha 1) -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaServico}" 
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <!-- Card de cada Serviço -->
+                    <Border Stroke="#E0E0E0" 
+                            StrokeThickness="1" 
+                            BackgroundColor="White"
+                            StrokeShape="RoundRectangle 12" 
+                            Margin="0,0,0,15"
+                            Padding="15">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
+                        </Border.Shadow>
+
+                        <!-- Divide o card: Info na esquerda (*), Botões na direita (Auto) -->
+                        <Grid ColumnDefinitions="*, Auto">
+
+                            <!-- Esquerda: Informações -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="2" VerticalOptions="Center">
+                                <!-- ATENÇÃO: Confirme se é Nome ou Descricao na sua classe Servico -->
+                                <Label Text="{Binding ServicoOriginal.Descricao}" 
+                                       FontSize="16" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#333333"/>
+
+                                <Label Text="{Binding ServicoOriginal.Preco, StringFormat='R$ {0:F2}'}" 
+                                       FontSize="14" 
+                                       TextColor="#4CAF50" 
+                                       FontAttributes="Bold"/>
+
+                                <Label Text="{Binding ServicoOriginal.Duracao, StringFormat='⏱'}" 
+                                       FontSize="12" 
+                                       TextColor="#888888"/>
+                            </VerticalStackLayout>
+
+                            <!-- Direita: Controles de Quantidade -->
+                            <HorizontalStackLayout Grid.Column="1" Spacing="15" VerticalOptions="Center">
+
+                                <!-- Botão de Menos -->
+                                <Button Text="-" 
+                                        Command="{Binding DiminuirCommand}"
+                                        WidthRequest="40" HeightRequest="40"
+                                        CornerRadius="20" Padding="0"
+                                        BackgroundColor="#E0E0E0" TextColor="#333333" FontAttributes="Bold" FontSize="18"/>
+
+                                <!-- Quantidade -->
+                                <Label Text="{Binding QuantidadeSelecionada}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold" 
+                                       TextColor="#2B0B3F"
+                                       VerticalOptions="Center"/>
+
+                                <!-- Botão de Mais -->
+                                <Button Text="+" 
+                                        Command="{Binding AumentarCommand}"
+                                        WidthRequest="40" HeightRequest="40"
+                                        CornerRadius="20" Padding="0"
+                                        BackgroundColor="#2B0B3F" TextColor="White" FontAttributes="Bold" FontSize="18"/>
+                            </HorizontalStackLayout>
+
+                        </Grid>
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Botão de Finalizar Fixo no Rodapé (Linha 2) -->
+        <Border Grid.Row="2" BackgroundColor="White" Padding="20,15,20,30">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,-5" Radius="10" Opacity="0.05" />
+            </Border.Shadow>
+
+            <!-- A SOLUÇÃO: Agrupamos os botões dentro de um StackLayout -->
+            <HorizontalStackLayout>
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Botão Principal -->
+                <Button Text="FINALIZAR AGENDAMENTO"
+                Command="{Binding CadastrarCommand}"
+                HorizontalOptions="Start"
+                BackgroundColor="#2B0B3F"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="16"
+                CornerRadius="25"
+                HeightRequest="60">
+                    <!--<Button.Shadow>
+                        <Shadow Brush="#2B0B3F" Offset="0,4" Radius="8" Opacity="0.3" />
+                    </Button.Shadow>-->
+                </Button>
+
+                <!-- Botão Secundário -->
+                <Button Text="Cancelar"
+                Command="{Binding CancelarAgendamentoCommand}"
+                BackgroundColor="#2B0B3F"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="16"
+                CornerRadius="25"
+                HeightRequest="60">
+                    <!--<Button.Shadow>
+                        <Shadow Brush="#2B0B3F" Offset="0,4" Radius="8" Opacity="0.3" />
+                    </Button.Shadow>-->
+                </Button>
+
+            </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -16,9 +16,67 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "CriarAgendamentoServico",
+    "RelativePath": "agendamento/cadastrar/agendamentoServico",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "listaServicos",
+        "Type": "System.Collections.Generic.List\u00601[[MatutosDomain.Agendamento_Servico, MatutosDomain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "ConsultarDetalhesAgendamento",
+    "RelativePath": "agendamento/consultar/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "InativarAgendamento",
+    "RelativePath": "agendamento/inativarAgendamento/{codigoAgendamento}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoAgendamento",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.BarbeiroController",
     "Method": "ConsultarBarbeiro",
     "RelativePath": "barbeiro/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.ServicoController",
+    "Method": "ConsultarServico",
+    "RelativePath": "servico/consultar",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
