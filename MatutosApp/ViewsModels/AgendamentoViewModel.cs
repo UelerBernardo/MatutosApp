@@ -72,7 +72,6 @@ namespace MatutosApp.ViewsModels
                 var resultado = await _agendamentoService.AgendamentoCadastrar(agendamentoNovo, token);
                 if (resultado.Sucesso)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", "Agendamento realizado com sucesso", "OK");
                     await Shell.Current.GoToAsync($"{nameof(AgendamentoServicoView)}?Agendamento={resultado.NovoId}");
                 }
                 else

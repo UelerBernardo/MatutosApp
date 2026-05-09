@@ -17,6 +17,41 @@ namespace MatutosApi.Controllers
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
 
+        [HttpPatch("alterarSituacao/{codigoAgendamento}")]
+        [Authorize]
+        public async Task<IActionResult> AlterarSituacaoAgendamento(int codigoAgendamento,[FromBody] AgendamentoSituacao agendamentoSituacao)
+        {
+            if(codigoAgendamento <= 0)
+            {
+                return BadRequest(new { Mensagem = "Código de agendamento inválido." });
+            }
+
+            try
+            {
+                var agendamento = await _dbContext.Agendamentos.FirstOrDefaultAsync(a => a.Codigo_Agendamento == codigoAgendamento);
+
+                if(agendamento == null)
+                {
+                    return BadRequest(new { Mensagem = "Código de agendamento não encontrado." });
+                }
+                
+                agendamento.Codigo_Situacao_Agendamento = agendamentoSituacao;
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    Mensagem = "Situação alterada com sucesso!",
+                    CodigoSituacaoNova = agendamentoSituacao
+                    
+                });
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro interno ao cancelar o agendamento: {ex.Message}" });
+            }
+        }
+
         [HttpPatch("inativarAgendamento/{codigoAgendamento}")]
         [Authorize]
         public async Task<IActionResult> InativarAgendamento(int codigoAgendamento)
@@ -37,6 +72,7 @@ namespace MatutosApi.Controllers
                 }
 
                 agendamento.Ativo = false;
+                agendamento.Codigo_Situacao_Agendamento = AgendamentoSituacao.Cancelado;
 
                 await _dbContext.SaveChangesAsync();
 
@@ -150,7 +186,7 @@ namespace MatutosApi.Controllers
             });
         }
 
-        [HttpGet("consultar/{id:int}")]
+        [HttpGet("consultar/detalhes/{id:int}")]
         [Authorize]
         public async Task<IActionResult> ConsultarDetalhesAgendamento(int id)
         {
@@ -163,32 +199,65 @@ namespace MatutosApi.Controllers
                         a.Codigo_Agendamento,
                         a.Data_Agendamento,
                         a.Data_Fim_Agendamento,
-
-                        // Cliente
-                        a.Codigo_Cliente,
-                        Nome_Cliente = a.Cliente.Nome,
-
-                        // Barbeiro
-                        a.Codigo_Barbeiro,
-                        Nome_Barbeiro = a.Barbeiro.Nome,
-
                         a.Valor_Total_Agendamento,
 
-                        Servicos = a.Agendamento_Servicos.Select(s => new
+                        // Cliente
+                        // 1. Criamos um "falso" objeto Cliente para o JSON bater com Cliente.Nome
+                        Cliente = new { Nome = a.Cliente.Nome },
+
+                        // 2. Criamos um "falso" objeto Barbeiro para bater com Barbeiro.Nome
+                        Barbeiro = new { Nome = a.Barbeiro.Nome },
+
+                        // 3. Voltamos o nome da lista para o original e criamos o objeto Servico dentro
+                        Agendamento_Servicos = a.Agendamento_Servicos.Select(s => new
                         {
-                            s.Codigo_Servico,
-                            Nome_Servico = s.Servico.Descricao, 
                             s.Quantidade_Servico,
                             s.Valor_Total_Item,
-                            s.Tempo_Servico_Item
+                            Servico = new { Descricao = s.Servico.Descricao } // Para o XAML achar Servico.Nome
                         }).ToList()
                     })
-                    .FirstOrDefaultAsync();
+                    .ToListAsync();
 
-                if (agendamento == null)
+                if (!agendamento.Any())
                 {
                     // Padronizado para retornar JSON
                     return NotFound(new { Mensagem = $"Agendamento com ID {id} não encontrado." });
+                }
+
+                return Ok(agendamento);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao consultar agendamento: {ex.Message}" });
+            }
+        }
+
+        [HttpGet("consultar")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarAgendamento()
+        {
+            var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
+
+            int codigoUsuarioLogado = int.Parse(usuario);
+            try
+            {
+                var agendamento = await _dbContext.Agendamentos
+                    .Where(a => a.Codigo_Cliente == codigoUsuarioLogado && a.Ativo == true && a.Data_Agendamento >= DateTime.Today.AddMonths(-1))
+                    .Select(a => new
+                    {
+                        a.Codigo_Agendamento,
+                        a.Data_Agendamento,
+                        a.Valor_Total_Agendamento,
+                        a.Codigo_Situacao_Agendamento,
+
+                        Cliente = new { Nome = a.Cliente.Nome},
+                        Barbeiro = new {Nome = a.Barbeiro.Nome}
+                    })
+                    .ToListAsync();
+
+                if (!agendamento.Any())
+                {
+                    return NotFound(new { Mensagem = $"Você não possui Angedamentos." });
                 }
 
                 return Ok(agendamento);

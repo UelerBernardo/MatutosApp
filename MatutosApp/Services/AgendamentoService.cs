@@ -124,7 +124,7 @@ namespace MatutosApp.Services
                 var tokenLimpo = token.Replace("Bearer ", "").Trim();
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
 
-                var resposta = await _httpClient.GetAsync($"agendamento/consultar/{codigoAgendamento}");
+                var resposta = await _httpClient.GetAsync($"agendamento/consultar/detalhes/{codigoAgendamento}");
 
                // var agendamento = await resposta.Content.ReadFromJsonAsync<Agendamento>();
 
@@ -151,6 +151,75 @@ namespace MatutosApp.Services
             {
                 Debug.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.", null);
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem, List<Agendamento>? Dados)> AgendamentoConsultar( string token)
+        {
+            try
+            {
+                var tokenLimpo = token.Replace("Bearer ", "").Trim();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+                var resposta = await _httpClient.GetAsync($"agendamento/consultar");
+
+                if (resposta.IsSuccessStatusCode)
+                {
+
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<Agendamento>>(options);
+
+                    return (true, string.Empty, dados);
+                }
+                else
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar a requisição.";
+                    Debug.WriteLine($"Falha na API: {mensagemApi}");
+
+                    return (false, mensagemApi, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.", null);
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> AgendamentoAlterarSituacao(int codigoAgendamento, string token, AgendamentoSituacao agendamentoSituacao)
+        {
+            try
+            {
+                var tokenLimpo = token.Replace("Bearer ", "").Trim();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+                var jsonConteudo = JsonSerializer.Serialize(agendamentoSituacao);
+                var conteudo = new StringContent(jsonConteudo, Encoding.UTF8, "application/json");
+
+                var resposta = await _httpClient.PatchAsync($"agendamento/alterarSituacao/{codigoAgendamento}", conteudo);
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    return (true, "Situação alterada com Sucesso.");
+                }
+                else
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar a requisição.";
+                    Debug.WriteLine($"Falha na API: {mensagemApi}");
+
+                    return (false, mensagemApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao inativar agendamento: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
             }
         }
     }

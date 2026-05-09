@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MatutosApp.Views.AgendamentoDetalhesView"
-             Title="AgendamentoDetalhesView">
+             x:Class="MatutosApp.Views.AgendamentoDetalhesView">
     <ScrollView Padding="15">
         <VerticalStackLayout Spacing="15">
+
+            <Label Text="Detalhes do Agendamento"
+                   FontSize="Title"
+                   FontAttributes="Bold"
+                   HorizontalTextAlignment="Center"/>
 
             <Border BackgroundColor="White" Padding="15" StrokeShape="RoundRectangle 10">
                 <Border.Shadow>
@@ -17,13 +21,13 @@
                     <BoxView HeightRequest="1" Color="#EEEEEE" Margin="0,5"/>
 
                     <HorizontalStackLayout Spacing="10">
-                        <Label Text="📅 Início:" FontAttributes="Bold" TextColor="#666"/>
+                        <Label Text="📅 Início do Agendamento:" FontAttributes="Bold" TextColor="#666"/>
                         <Label Text="{Binding DadosDoAgendamento.Data_Agendamento, StringFormat='{0:dd/MM/yyyy HH:mm}'}" TextColor="#333"/>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10">
                         <Label Text="⏰ Fim (Previsto):" FontAttributes="Bold" TextColor="#666"/>
-                        <Label Text="{Binding DadosDoAgendamento.Data_Fim_Agendamento, StringFormat='{0:HH:mm}'}" TextColor="#333"/>
+                        <Label Text="{Binding DadosDoAgendamento.Data_Fim_Agendamento, StringFormat='{0:dd/MM/yyyy HH:mm}'}" TextColor="#333"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
@@ -33,11 +37,14 @@
                     <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.1" />
                 </Border.Shadow>
                 <VerticalStackLayout Spacing="5">
+                    <HorizontalStackLayout>
                     <Label Text="👤 Cliente:" FontAttributes="Bold" TextColor="#666"/>
-                    <Label Text="{Binding DadosDoAgendamento.Cliente.Nome}" TextColor="#333" FontSize="16" Margin="0,0,0,10"/>
-
-                    <Label Text="✂️ Barbeiro:" FontAttributes="Bold" TextColor="#666"/>
-                    <Label Text="{Binding DadosDoAgendamento.Barbeiro.Nome}" TextColor="#333" FontSize="16"/>
+                    <Label Text="{Binding DadosDoAgendamento.Cliente.Nome}" TextColor="#333" FontSize="16" Margin="10,0,0,10"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="✂️ Barbeiro:" FontAttributes="Bold" TextColor="#666"/>
+                        <Label Text="{Binding DadosDoAgendamento.Barbeiro.Nome}" TextColor="#333" FontSize="16" Margin="10,0,0,10"/>
+                    </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Border>
 
@@ -54,7 +61,7 @@
                                 <Grid ColumnDefinitions="50, *, 80" Padding="0,5">
                                     <Label Grid.Column="0" Text="{Binding Quantidade_Servico, StringFormat='{0}x'}" 
                                            VerticalOptions="Center" TextColor="#666" FontAttributes="Bold"/>
-                                    <Label Grid.Column="1" Text="{Binding Servico.Nome}" 
+                                    <Label Grid.Column="1" Text="{Binding Servico.Descricao}" 
                                            VerticalOptions="Center" TextColor="#333"/>
                                     <Label Grid.Column="2" Text="{Binding Valor_Total_Item, StringFormat='R$ {0:F2}'}" 
                                            HorizontalOptions="End" VerticalOptions="Center" FontAttributes="Bold" TextColor="#2B0B3F"/>
@@ -77,8 +84,8 @@
             </Border>
 
             <VerticalStackLayout Spacing="10" Margin="0,15,0,30">
-                <Button Text="VOLTAR AO INÍCIO" 
-                        Command="{Binding VoltarCommand}"
+                <Button Text="Liberar Agendamento" 
+                        Command="{Binding LiberarAgendamentoCommand}"
                         BackgroundColor="Transparent"
                         BorderColor="#2B0B3F"
                         BorderWidth="2"

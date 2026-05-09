@@ -26,9 +26,7 @@ namespace MatutosDomain
         [ForeignKey ("Barbeiro")]
         [Column("Codigo_Barbeiro")]
         public int Codigo_Barbeiro { get; set; }
-        [JsonIgnore]
         public Cliente? Cliente { get; set; }
-        [JsonIgnore]
         public Barbeiro? Barbeiro { get; set; }
         public AgendamentoSituacao Codigo_Situacao_Agendamento { get; set; }
 

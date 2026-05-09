@@ -1,6 +1,27 @@
 [
   {
     "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "AlterarSituacaoAgendamento",
+    "RelativePath": "agendamento/alterarSituacao/{codigoAgendamento}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoAgendamento",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "agendamentoSituacao",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
     "Method": "CriarAgendamento",
     "RelativePath": "agendamento/cadastrar",
     "HttpMethod": "POST",
@@ -33,8 +54,18 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "ConsultarAgendamento",
+    "RelativePath": "agendamento/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
     "Method": "ConsultarDetalhesAgendamento",
-    "RelativePath": "agendamento/consultar/{id}",
+    "RelativePath": "agendamento/consultar/detalhes/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

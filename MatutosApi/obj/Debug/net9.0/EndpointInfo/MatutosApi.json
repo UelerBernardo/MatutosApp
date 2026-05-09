@@ -5,6 +5,48 @@
     "version": "v1"
   },
   "paths": {
+    "/agendamento/alterarSituacao/{codigoAgendamento}": {
+      "patch": {
+        "tags": [
+          "Agendamento"
+        ],
+        "parameters": [
+          {
+            "name": "codigoAgendamento",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgendamentoSituacao"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgendamentoSituacao"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AgendamentoSituacao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/agendamento/inativarAgendamento/{codigoAgendamento}": {
       "patch": {
         "tags": [
@@ -99,7 +141,7 @@
         }
       }
     },
-    "/agendamento/consultar/{id}": {
+    "/agendamento/consultar/detalhes/{id}": {
       "get": {
         "tags": [
           "Agendamento"
@@ -114,6 +156,18 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/agendamento/consultar": {
+      "get": {
+        "tags": [
+          "Agendamento"
         ],
         "responses": {
           "200": {
@@ -274,6 +328,12 @@
             "type": "integer",
             "format": "int32"
           },
+          "cliente": {
+            "$ref": "#/components/schemas/Cliente"
+          },
+          "barbeiro": {
+            "$ref": "#/components/schemas/Barbeiro"
+          },
           "codigo_Situacao_Agendamento": {
             "$ref": "#/components/schemas/AgendamentoSituacao"
           },
@@ -328,6 +388,78 @@
           "tempo_Servico_Item": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Barbeiro": {
+        "required": [
+          "email",
+          "nome",
+          "senha"
+        ],
+        "type": "object",
+        "properties": {
+          "codigo_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "senha": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "tipoSelecionado": {
+            "$ref": "#/components/schemas/UsuarioTipo"
+          },
+          "ativo": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Cliente": {
+        "required": [
+          "email",
+          "nome",
+          "senha"
+        ],
+        "type": "object",
+        "properties": {
+          "codigo_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "senha": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "tipoSelecionado": {
+            "$ref": "#/components/schemas/UsuarioTipo"
+          },
+          "ativo": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

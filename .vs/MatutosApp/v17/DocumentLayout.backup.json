@@ -3,52 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\agendamentoservicoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\agendamentoservicoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{09DBBF90-FECA-4B78-966D-02805EA6C369}|MatutosApi\\MatutosApi.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapi\\controllers\\agendamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{09DBBF90-FECA-4B78-966D-02805EA6C369}|MatutosApi\\MatutosApi.csproj|solutionrelative:matutosapi\\controllers\\agendamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\agendamentodetalhesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\agendamentodetalhesview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\agendamentodetalhesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\agendamentodetalhesviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\agendamentodetalhesview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\agendamentodetalhesview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\agendamentoservicoview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\agendamentoservicoview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\services\\agendamentoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\services\\agendamentoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\agendamentoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\agendamentoviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\appshell.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\agendamentocadastroview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\agendamentocadastroview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\agendamentoconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\agendamentoconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -61,159 +17,32 @@
           "SelectedChildIndex": 4,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AgendamentoDetalhesViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoDetalhesViewModel.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\AgendamentoDetalhesViewModel.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoDetalhesViewModel.cs",
-              "RelativeToolTip": "MatutosApp\\ViewsModels\\AgendamentoDetalhesViewModel.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAACQAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T23:04:04.912Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AgendamentoDetalhesView.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoDetalhesView.xaml.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\Views\\AgendamentoDetalhesView.xaml.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoDetalhesView.xaml.cs",
-              "RelativeToolTip": "MatutosApp\\Views\\AgendamentoDetalhesView.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-08T00:30:47.94Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AgendamentoServicoView.xaml",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoServicoView.xaml",
-              "RelativeDocumentMoniker": "MatutosApp\\Views\\AgendamentoServicoView.xaml",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoServicoView.xaml",
-              "RelativeToolTip": "MatutosApp\\Views\\AgendamentoServicoView.xaml",
-              "ViewState": "AgIAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-08T00:32:37.697Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a0c5197d-0ac7-4b63-97cd-8872a789d233}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AgendamentoController.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\Controllers\\AgendamentoController.cs",
-              "RelativeDocumentMoniker": "MatutosApi\\Controllers\\AgendamentoController.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\Controllers\\AgendamentoController.cs",
-              "RelativeToolTip": "MatutosApi\\Controllers\\AgendamentoController.cs",
-              "ViewState": "AgIAAI8AAAAAAAAAAAAIwLIAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T23:09:18.622Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AgendamentoServicoViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoServicoViewModel.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\AgendamentoServicoViewModel.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoServicoViewModel.cs",
-              "RelativeToolTip": "MatutosApp\\ViewsModels\\AgendamentoServicoViewModel.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAhwEoAAAAJAAAAAAAAAA==",
+              "Title": "AgendamentoConsultarViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoConsultarViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\AgendamentoConsultarViewModel.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoConsultarViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\AgendamentoConsultarViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T23:06:43.226Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AgendamentoService.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Services\\AgendamentoService.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\Services\\AgendamentoService.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Services\\AgendamentoService.cs",
-              "RelativeToolTip": "MatutosApp\\Services\\AgendamentoService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAxwC8AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-07T23:17:50.667Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AgendamentoDetalhesView.xaml",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoDetalhesView.xaml",
-              "RelativeDocumentMoniker": "MatutosApp\\Views\\AgendamentoDetalhesView.xaml",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoDetalhesView.xaml",
-              "RelativeToolTip": "MatutosApp\\Views\\AgendamentoDetalhesView.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-07T23:37:34.321Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AgendamentoViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoViewModel.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\AgendamentoViewModel.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\AgendamentoViewModel.cs",
-              "RelativeToolTip": "MatutosApp\\ViewsModels\\AgendamentoViewModel.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAcwEsAAAByAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-08T00:32:51.49Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AppShell.xaml",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\AppShell.xaml",
-              "RelativeDocumentMoniker": "MatutosApp\\AppShell.xaml",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\AppShell.xaml",
-              "RelativeToolTip": "MatutosApp\\AppShell.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-08T00:27:38.281Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AppShell.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\AppShell.xaml.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\AppShell.xaml.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\AppShell.xaml.cs",
-              "RelativeToolTip": "MatutosApp\\AppShell.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-08T00:27:39.403Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MauiProgram.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\MauiProgram.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\MauiProgram.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\MauiProgram.cs",
-              "RelativeToolTip": "MatutosApp\\MauiProgram.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwCQAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-08T00:27:59.582Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AgendamentoCadastroView.xaml",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoCadastroView.xaml",
-              "RelativeDocumentMoniker": "MatutosApp\\Views\\AgendamentoCadastroView.xaml",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoCadastroView.xaml",
-              "RelativeToolTip": "MatutosApp\\Views\\AgendamentoCadastroView.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-07T23:37:05.957Z",
+              "WhenOpened": "2026-05-09T01:11:20.147Z",
               "EditorCaption": ""
             }
           ]
