@@ -126,8 +126,6 @@ namespace MatutosApp.Services
 
                 var resposta = await _httpClient.GetAsync($"agendamento/consultar/detalhes/{codigoAgendamento}");
 
-               // var agendamento = await resposta.Content.ReadFromJsonAsync<Agendamento>();
-
                 if (resposta.IsSuccessStatusCode)
                 {
 

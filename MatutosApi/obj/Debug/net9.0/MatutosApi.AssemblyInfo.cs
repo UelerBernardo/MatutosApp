@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MatutosApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a68fcdc7f6782525fdde51119e62cd1b0d80d00b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afb4d3a94c16c6dadf9488db103dae77a9c71348")]
 [assembly: System.Reflection.AssemblyProductAttribute("MatutosApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MatutosApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
