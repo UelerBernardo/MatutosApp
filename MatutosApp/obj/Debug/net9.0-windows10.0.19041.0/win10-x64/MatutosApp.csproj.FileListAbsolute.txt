@@ -2175,3 +2175,9 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Http.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Options.ConfigurationExtensions.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Diagnostics.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Diagnostics.Abstractions.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Http.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\System.Diagnostics.DiagnosticSource.dll

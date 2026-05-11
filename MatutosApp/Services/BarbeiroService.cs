@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MatutosApp.Services
-{
+{ 
     public class BarbeiroService
     {
         private readonly HttpClient _httpClient;
