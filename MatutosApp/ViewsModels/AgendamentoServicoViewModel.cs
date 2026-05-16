@@ -129,7 +129,7 @@ namespace MatutosApp.ViewsModels
                 return;
             }
 
-            var resultado = await _agendamentoService.AgendamentoInativar(Agendamento, token);
+            var resultado = await _agendamentoService.AgendamentoExcluir(Agendamento, token);
 
             if (resultado.Sucesso)
             {

@@ -80,7 +80,7 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.AgendamentoController",
-    "Method": "InativarAgendamento",
+    "Method": "ExcluirAgendamento",
     "RelativePath": "agendamento/inativarAgendamento/{codigoAgendamento}",
     "HttpMethod": "PATCH",
     "IsController": true,
@@ -98,6 +98,32 @@
     "ContainingType": "MatutosApi.Controllers.BarbeiroController",
     "Method": "ConsultarBarbeiro",
     "RelativePath": "barbeiro/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.ClienteController",
+    "Method": "AlterarSenhaPerfil",
+    "RelativePath": "cliente/alterar/senha",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dados",
+        "Type": "MatutosApi.Controllers.ClienteController\u002BAlterarSenhaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.ClienteController",
+    "Method": "ConsultarClientePerfil",
+    "RelativePath": "cliente/consultar",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -128,6 +154,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.TelefoneController",
+    "Method": "ConsultarTelefone",
+    "RelativePath": "telefone/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

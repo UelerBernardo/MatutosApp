@@ -31,6 +31,5 @@ namespace MatutosDomain
         public AgendamentoSituacao Codigo_Situacao_Agendamento { get; set; }
 
         public ICollection<Agendamento_Servico> Agendamento_Servicos { get; set; } = new List<Agendamento_Servico>();
-
     }
 }

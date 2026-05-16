@@ -54,7 +54,7 @@ namespace MatutosApi.Controllers
 
         [HttpPatch("inativarAgendamento/{codigoAgendamento}")]
         [Authorize]
-        public async Task<IActionResult> InativarAgendamento(int codigoAgendamento)
+        public async Task<IActionResult> ExcluirAgendamento(int codigoAgendamento)
         {
             if (codigoAgendamento <= 0)
             {
@@ -200,25 +200,21 @@ namespace MatutosApi.Controllers
                         a.Data_Agendamento,
                         a.Data_Fim_Agendamento,
                         a.Valor_Total_Agendamento,
+                        a.Codigo_Situacao_Agendamento,
 
-                        // Cliente
-                        // 1. Criamos um "falso" objeto Cliente para o JSON bater com Cliente.Nome
                         Cliente = new { Nome = a.Cliente.Nome },
 
-                        // 2. Criamos um "falso" objeto Barbeiro para bater com Barbeiro.Nome
                         Barbeiro = new { Nome = a.Barbeiro.Nome },
-
-                        // 3. Voltamos o nome da lista para o original e criamos o objeto Servico dentro
                         Agendamento_Servicos = a.Agendamento_Servicos.Select(s => new
                         {
                             s.Quantidade_Servico,
                             s.Valor_Total_Item,
-                            Servico = new { Descricao = s.Servico.Descricao } // Para o XAML achar Servico.Nome
+                            Servico = new { Descricao = s.Servico.Descricao } 
                         }).ToList()
                     })
-                    .ToListAsync();
+                    .FirstOrDefaultAsync();
 
-                if (!agendamento.Any())
+                if (agendamento == null)
                 {
                     // Padronizado para retornar JSON
                     return NotFound(new { Mensagem = $"Agendamento com ID {id} não encontrado." });

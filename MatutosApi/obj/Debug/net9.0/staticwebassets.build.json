@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "VAdSbQFYWnTE1CjsvVgSbCAXt4IPHV1nqBOswSF68Cs=",
-  "Source": "MatutosApi",
-  "BasePath": "_content/MatutosApi",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"VAdSbQFYWnTE1CjsvVgSbCAXt4IPHV1nqBOswSF68Cs=","Source":"MatutosApi","BasePath":"_content/MatutosApi","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

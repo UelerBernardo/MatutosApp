@@ -57,6 +57,12 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task CancelarAgendamento()
         {
+            if (DadosDoAgendamento != null && DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Aberto && 
+                                              DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Liberado)
+            {
+                await Application.Current.MainPage.DisplayAlert("Aviso", "Somente é possível cancelar registros na situação 'Aberto' ou 'Liberado'.", "Ok");
+                return;
+            }
 
             bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realmente cancelar o agendamento?", "Sim", "Não");
 
@@ -69,11 +75,24 @@ namespace MatutosApp.ViewsModels
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
                 if (AgendamentoID == null)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado.", "Ok");
                     return;
                 }
 
-                var resultado = await _agendamentoService.AgendamentoInativar(AgendamentoID, token);
+                if(DadosDoAgendamento.Data_Fim_Agendamento != null || DadosDoAgendamento.Valor_Total_Agendamento > 0)
+                {
+                    var resultado = await _agendamentoService.AgendamentoAlterarSituacao(AgendamentoID, token, AgendamentoSituacao.Cancelado);
+
+                    if(resultado.Sucesso)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Aviso", "Agendamento cancelado com sucesso!", "Ok");
+                        _ = ConsultarDetalhesAgendamento();
+                    }
+                }
+                else
+                { 
+
+                    var resultado = await _agendamentoService.AgendamentoExcluir(AgendamentoID, token);
 
                 if (resultado.Sucesso)
                 {
@@ -84,12 +103,19 @@ namespace MatutosApp.ViewsModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
                 }
+
+                }
             }
         }
 
         [RelayCommand]
         public async Task LiberarAgendamento()
         {
+            if (DadosDoAgendamento != null && DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Aberto)
+            {
+                await Application.Current.MainPage.DisplayAlert("Aviso", "Somente é possível liberar registros na situção 'Aberto'.", "Ok");
+                return; 
+            }
             bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realmente liberar o agendamento?", "Sim", "Não");
             if (!confirmar)
             {

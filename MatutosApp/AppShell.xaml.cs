@@ -16,6 +16,10 @@ namespace MatutosApp
             Routing.RegisterRoute(nameof(AgendamentoCadastroView), typeof(AgendamentoCadastroView));
             Routing.RegisterRoute(nameof(AgendamentoServicoView), typeof(AgendamentoServicoView));
             Routing.RegisterRoute(nameof(AgendamentoDetalhesView), typeof(AgendamentoDetalhesView));
+            Routing.RegisterRoute(nameof(AgendamentoConsultarView), typeof(AgendamentoConsultarView));
+            Routing.RegisterRoute(nameof(ClientePerfilConsultarView), typeof(ClientePerfilConsultarView));
+            Routing.RegisterRoute(nameof(UsuarioTelefoneConsultarView), typeof(UsuarioTelefoneConsultarView));
+
         }
     }
 }

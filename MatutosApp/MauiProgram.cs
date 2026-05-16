@@ -25,6 +25,7 @@ namespace MatutosApp
             builder.Services.AddSingleton<TelefoneService>();
             builder.Services.AddSingleton<AgendamentoService>();
             builder.Services.AddSingleton<ServicoService>();
+            builder.Services.AddSingleton<ClienteService>();
             builder.Services.AddHttpClient<BarbeiroService>(cliente =>
             {
                cliente.BaseAddress = new Uri("https://localhost:7110/"); 
@@ -37,6 +38,9 @@ namespace MatutosApp
             builder.Services.AddTransient<PrincipalViewModel>();
             builder.Services.AddTransient<AgendamentoServicoViewModel>();
             builder.Services.AddTransient<AgendamentoDetalhesViewModel>();
+            builder.Services.AddTransient<AgendamentoConsultarViewModel>();
+            builder.Services.AddTransient<ClientePerfilConsultarViewModel>();
+            builder.Services.AddTransient<UsuarioTelefoneConsultarViewModel>();
 
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
@@ -46,7 +50,9 @@ namespace MatutosApp
             builder.Services.AddTransient<PrincipalView>();
             builder.Services.AddTransient<AgendamentoCadastroView>();
             builder.Services.AddTransient<AgendamentoServicoView>();
-
+            builder.Services.AddTransient<AgendamentoConsultarView>();
+            builder.Services.AddTransient<ClientePerfilConsultarView>();
+            builder.Services.AddTransient<UsuarioTelefoneConsultarView>();
 
 #if DEBUG
             builder.Logging.AddDebug();
