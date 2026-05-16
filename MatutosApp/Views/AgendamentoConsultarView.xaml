@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.AgendamentoConsultarView"
+             Title="Meus Agendamentos">
+    <Grid Padding="15">
+
+        <CollectionView ItemsSource="{Binding ListaAgendamentos}"
+                        SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                    <Label Text="✂️" FontSize="50" HorizontalOptions="Center"/>
+                    <Label Text="Você não possui agendamentos recentes." 
+                           TextColor="#666" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border BackgroundColor="White" Padding="15" StrokeShape="RoundRectangle 10">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.1" />
+                        </Border.Shadow>
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalhesCommand}"
+                                CommandParameter="{Binding Codigo_Agendamento}" />
+                        </Border.GestureRecognizers>
+
+                        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="5">
+
+                            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="5">
+                                <Label Text="{Binding Codigo_Agendamento}"/>
+                                <Label Text="📅" VerticalOptions="Center"/>
+                                <Label Text="{Binding Data_Agendamento, StringFormat='{0:dd/MM/yyyy HH:mm}'}" 
+                                       FontAttributes="Bold" FontSize="16" TextColor="#2B0B3F" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+
+                            <Frame Grid.Row="0" Grid.Column="1" Padding="8,4" CornerRadius="5" 
+                                   BackgroundColor="#E8EAF6" BorderColor="Transparent" HasShadow="False">
+                                <Label Text="{Binding Codigo_Situacao_Agendamento}" 
+                                       FontSize="12" FontAttributes="Bold" TextColor="#3F51B5"/>
+                            </Frame>
+
+                            <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="#EEEEEE" Margin="0,5"/>
+
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
+                                <Label Text="Barbeiro" FontSize="12" TextColor="#999"/>
+                                <Label Text="{Binding Barbeiro.Nome}" FontSize="15" TextColor="#333" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+
+
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="2" HorizontalOptions="End" Spacing="2" Margin="0,40,0,0">
+                                <Label Text="Total" FontSize="12" TextColor="#999" HorizontalOptions="End"/>
+                                <Label Text="{Binding Valor_Total_Agendamento, StringFormat='R$ {0:F2}'}" 
+                                       FontSize="16" TextColor="#2E7D32" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="0" Spacing="2" Margin="0,40,0,0">
+                                <Label Text="Cliente" FontSize="12" TextColor="#999"/>
+                                <Label Text="{Binding Cliente.Nome}" FontSize="15" TextColor="#333" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

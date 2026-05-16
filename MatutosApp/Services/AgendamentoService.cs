@@ -84,7 +84,7 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<(bool Sucesso, string Mensagem)> AgendamentoInativar(int codigoAgendamento, string token)
+        public async Task<(bool Sucesso, string Mensagem)> AgendamentoExcluir(int codigoAgendamento, string token)
         {
             try
             {

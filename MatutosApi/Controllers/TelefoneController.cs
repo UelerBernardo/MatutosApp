@@ -82,5 +82,51 @@ namespace MatutosApi.Controllers
                 novoTelefone.DDD
             });
         }
+
+        [HttpGet("consultar")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarTelefone()
+        {
+            try
+            {
+                var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                                   ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuario) || !int.TryParse(usuario, out int codigoCliente))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado ou token inválido." });
+                }
+
+                var listaTelefone = await _dbcontext.UsuarioTelefones
+                    .Where(ut => ut.Codigo_Usuario == codigoCliente)
+                   .Select(ut => new
+                   {
+                       Codigo_Usuario = ut.Codigo_Usuario,
+                       Codigo_Telefone = ut.Codigo_Telefone,
+
+                       Usuario = new
+                       {
+                           Nome = ut.Usuario.Nome
+                       },
+                       Telefone = new
+                       {
+                           DDD = ut.Telefone.DDD,
+                           Numero_Telefone = ut.Telefone.Numero_Telefone,
+                           Principal = ut.Telefone.Principal
+                       }
+                   }).ToListAsync();
+
+                if (!listaTelefone.Any())
+                {
+                    return NotFound(new { Mensagem = "Você não possui telefone cadastrado." });
+                }
+
+                return Ok(listaTelefone);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao consultar telefones: {ex.Message}" });
+            }
+        }
     }
 }
