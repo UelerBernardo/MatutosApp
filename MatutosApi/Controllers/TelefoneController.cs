@@ -17,6 +17,7 @@ namespace MatutosApi.Controllers
         {
             _dbcontext = dbcontext ?? throw new ArgumentNullException(nameof(dbcontext));
         }
+
         [HttpPost("cadastrar")]
         [Authorize]
         public async Task<IActionResult> CriarTelefone([FromBody] Telefone telefone)
@@ -126,6 +127,40 @@ namespace MatutosApi.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Mensagem = $"Erro ao consultar telefones: {ex.Message}" });
+            }
+        }
+
+        [HttpDelete("excluir/{codigoTelefone}")]
+        [Authorize]
+        public async Task<IActionResult> ExcluirTelefone(int codigoTelefone)
+        {
+            try
+            {
+                var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                   ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuario) || !int.TryParse(usuario, out int codigoCliente))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado ou token inválido." });
+                }
+
+                var telefoneUsuarioExcluir = await _dbcontext.UsuarioTelefones
+                    .Where(a => a.Codigo_Telefone == codigoTelefone && a.Codigo_Usuario == codigoCliente).ExecuteDeleteAsync();
+
+                if(telefoneUsuarioExcluir == 0)
+                {
+                    return BadRequest(new { Mensagem = "Telefone não encontrado" });
+                }
+
+                var telefoneExcluir = await _dbcontext.Telefones
+                    .Where(a => a.Codigo_Telefone == codigoTelefone).ExecuteDeleteAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });
             }
         }
     }

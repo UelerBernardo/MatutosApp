@@ -27,21 +27,49 @@ namespace MatutosApp.Services
             };
         }
 
+        public async Task<(bool Sucesso, string Mensagem)> TelefoneExcluir(string token, int codigoTelefone)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var resposta = await _httpClient.DeleteAsync($"telefone/excluir/{codigoTelefone}");
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    return (true, "Telefone excluído com sucesso!");
+                }
+                else
+                {
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>();
+
+                    string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
+
+                    Debug.WriteLine($"Falha: {mensagemDaApi}");
+                    return (false, mensagemDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
+
         public async Task<(bool Sucesso, string Mensagem )> TelefoneCadastrar(Telefone telefone, string tokenJwt)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenJwt);
-                var response = await _httpClient.PostAsJsonAsync("telefone/cadastrar", telefone);
+                var resposta = await _httpClient.PostAsJsonAsync("telefone/cadastrar", telefone);
 
-                if (response.IsSuccessStatusCode)
+                if (resposta.IsSuccessStatusCode)
                 {
-                    var telefoneNovo = await response.Content.ReadFromJsonAsync<Telefone>();
+                    var telefoneNovo = await resposta.Content.ReadFromJsonAsync<Telefone>();
                     return (true, string.Empty);
                 }
                 else
                 {
-                    var erroResposta = await response.Content.ReadFromJsonAsync<ApiErroResposta>();
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>();
 
                     string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
 
@@ -55,7 +83,6 @@ namespace MatutosApp.Services
                 Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.");
             }
-
         }
 
         public async Task<(bool Sucesso, string Mensagem, List<UsuarioTelefone> Dados)> TelefoneConsultar(string token)
@@ -64,12 +91,12 @@ namespace MatutosApp.Services
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var response = await _httpClient.GetAsync("telefone/consultar");
+                var resposta = await _httpClient.GetAsync("telefone/consultar");
 
-                if(response.IsSuccessStatusCode)
+                if(resposta.IsSuccessStatusCode)
                 {
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    var dados = await response.Content.ReadFromJsonAsync<List<UsuarioTelefone>>(options);
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<UsuarioTelefone>>(options);
 
                     return (true, string.Empty, dados);
                 }
@@ -77,7 +104,7 @@ namespace MatutosApp.Services
                 else
                 {
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    var erroResposta = await response.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
 
                     string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar a requisição.";
                     Debug.WriteLine($"Falha na API: {mensagemApi}");

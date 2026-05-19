@@ -167,6 +167,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.TelefoneController",
+    "Method": "ExcluirTelefone",
+    "RelativePath": "telefone/excluir/{codigoTelefone}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoTelefone",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.UsuarioController",
     "Method": "CriarUsuario",
     "RelativePath": "usuario/cadastrar",

@@ -286,6 +286,29 @@
         }
       }
     },
+    "/telefone/excluir/{codigoTelefone}": {
+      "delete": {
+        "tags": [
+          "Telefone"
+        ],
+        "parameters": [
+          {
+            "name": "codigoTelefone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/usuario/cadastrar": {
       "post": {
         "tags": [

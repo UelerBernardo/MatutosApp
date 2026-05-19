@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 
 namespace MatutosApp.ViewsModels
 {
+    [QueryProperty(nameof(TelefoneEditar), "TelefoneParaEditar")]
     public partial class TelefoneViewModel : BaseViewModel
     {
         private readonly TelefoneService _telefoneService;
+
+        [ObservableProperty] private Telefone? telefoneEditar;
 
         // O Toolkit vai gerar: Numero_telefone, Ddd e Principal
         [ObservableProperty] private string numero_telefone;
