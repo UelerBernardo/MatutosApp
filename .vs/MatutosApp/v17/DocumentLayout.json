@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\usuarioimagemview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\usuarioimagemview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\clienteperfilconsultarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\clienteperfilconsultarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\baseviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +39,45 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuarioImagemView.xaml",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\UsuarioImagemView.xaml",
+              "RelativeDocumentMoniker": "MatutosApp\\Views\\UsuarioImagemView.xaml",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\UsuarioImagemView.xaml",
+              "RelativeToolTip": "MatutosApp\\Views\\UsuarioImagemView.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-22T23:38:54.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClientePerfilConsultarView.xaml",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
+              "RelativeDocumentMoniker": "MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
+              "RelativeToolTip": "MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-22T23:38:52.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BaseViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\BaseViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\BaseViewModel.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\BaseViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\BaseViewModel.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAwwGUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T23:38:40.497Z",
+              "EditorCaption": ""
             }
           ]
         }

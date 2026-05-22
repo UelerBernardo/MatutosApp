@@ -33,6 +33,8 @@ namespace MatutosDomain
         public UsuarioTipo TipoSelecionado { get; set; }
         public bool Ativo { get; set; } = true;
 
+        public string? Imagem_Usuario { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<UsuarioTelefone> UsuariosTelefones { get; set; } = new List<UsuarioTelefone>();
     }

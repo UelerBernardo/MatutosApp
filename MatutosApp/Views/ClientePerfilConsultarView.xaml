@@ -13,11 +13,10 @@
 
                 <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto" Margin="0,25,0,0">
 
- 
-                    <Frame Grid.Column="0" WidthRequest="64" HeightRequest="64" CornerRadius="32" 
-                           Padding="0" IsClippedToBounds="True" BorderColor="Transparent">
 
-                        <Image Source="dotnet_bot.png" BackgroundColor="#2C3E50" />
+                     <Frame Grid.Column="0" WidthRequest="64" HeightRequest="64" CornerRadius="32" 
+                           Padding="0" IsClippedToBounds="True" BorderColor="Transparent">
+                            <Image Source="{Binding FotoPerfilSource}" BackgroundColor="#2C3E50" />
                     </Frame>
 
        
@@ -29,18 +28,28 @@
                                TextColor="#A0AAB2" FontSize="12" />
                     </VerticalStackLayout>
 
-                    <Frame Grid.Column="2" WidthRequest="40" HeightRequest="40" CornerRadius="20" 
-                           BackgroundColor="#1C2736" BorderColor="Transparent" Padding="0" 
-                           VerticalOptions="Center" HorizontalOptions="Center">
-                        <Label Text="✏️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center" />
-                    </Frame>
-                </Grid>
+                        <Frame Grid.Column="2" WidthRequest="40" HeightRequest="40" CornerRadius="20" 
+                               BackgroundColor="#1C2736" BorderColor="Transparent" Padding="0" 
+                               VerticalOptions="Center" HorizontalOptions="Center">     
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AbrirImagemUsuarioCommand}" />
+                            </Frame.GestureRecognizers>
+
+                            <Label Text="✏️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                        </Frame>
+
+                    </Grid>
             </Grid>
 
             <Grid ColumnDefinitions="*, *, *" Padding="20" ColumnSpacing="15" Margin="0,-20,0,0">
 
                 <Border Grid.Column="0" BackgroundColor="#E63946" StrokeShape="RoundRectangle 15" 
                         Padding="15" HeightRequest="100" >
+                    <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirImagemUsuarioCommad}" />
+                    </Border.GestureRecognizers>
                     <Border.Shadow>
                         <Shadow Brush="Black" Offset="0,5" Radius="10" Opacity="0.1" />
                     </Border.Shadow>

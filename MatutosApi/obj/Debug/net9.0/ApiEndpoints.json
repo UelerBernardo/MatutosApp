@@ -142,6 +142,27 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.TelefoneController",
+    "Method": "AlterarTelefone",
+    "RelativePath": "telefone/alterar/{codigoTelefone}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoTelefone",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "telefone",
+        "Type": "MatutosDomain.Telefone",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.TelefoneController",
     "Method": "CriarTelefone",
     "RelativePath": "telefone/cadastrar",
     "HttpMethod": "POST",
@@ -167,6 +188,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.TelefoneController",
+    "Method": "ExcluirTelefone",
+    "RelativePath": "telefone/excluir/{codigoTelefone}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoTelefone",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.UsuarioController",
     "Method": "CriarUsuario",
     "RelativePath": "usuario/cadastrar",
@@ -178,6 +215,22 @@
         "Name": "request",
         "Type": "MatutosDomain.UsuarioCadastro",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "CadastrarImagemUsuario",
+    "RelativePath": "usuario/cadastrar/imagem",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "arquivo",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

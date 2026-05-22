@@ -99,6 +99,9 @@
 	  <MauiXaml Update="Views\UsuarioCadastroView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\UsuarioImagemView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\UsuarioTelefoneConsultarView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

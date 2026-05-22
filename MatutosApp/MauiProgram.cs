@@ -41,6 +41,7 @@ namespace MatutosApp
             builder.Services.AddTransient<AgendamentoConsultarViewModel>();
             builder.Services.AddTransient<ClientePerfilConsultarViewModel>();
             builder.Services.AddTransient<UsuarioTelefoneConsultarViewModel>();
+            builder.Services.AddTransient<UsuarioImagemViewModel>();
 
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
@@ -53,6 +54,7 @@ namespace MatutosApp
             builder.Services.AddTransient<AgendamentoConsultarView>();
             builder.Services.AddTransient<ClientePerfilConsultarView>();
             builder.Services.AddTransient<UsuarioTelefoneConsultarView>();
+            builder.Services.AddTransient<UsuarioImagemView>();
 
 #if DEBUG
             builder.Logging.AddDebug();

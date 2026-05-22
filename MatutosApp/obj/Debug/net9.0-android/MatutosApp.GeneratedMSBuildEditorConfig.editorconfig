@@ -101,6 +101,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioCa
 build_metadata.AdditionalFiles.TargetPath = Views\UsuarioCadastroView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UsuarioCadastroView.xaml
 
+[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/UsuarioImagemView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioImagemView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UsuarioImagemView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UsuarioImagemView.xaml
+
 [C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/UsuarioTelefoneConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioTelefoneConsultarView.xaml
