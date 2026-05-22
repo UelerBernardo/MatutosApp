@@ -26,4 +26,8 @@
     <ProjectReference Include="..\MatutosDomain\MatutosDomain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
 </Project>

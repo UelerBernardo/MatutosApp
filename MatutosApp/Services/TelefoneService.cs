@@ -55,6 +55,34 @@ namespace MatutosApp.Services
             }
         }
 
+        public async Task<(bool Sucesso, string Mensagem)> TelefoneAlterar(Telefone telefone, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var resposta = await _httpClient.PutAsJsonAsync($"telefone/alterar/{telefone.Codigo_Telefone}", telefone);
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    return (true, "Telefone alterado com Sucesso!");
+                }
+                else
+                {
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>();
+
+                    string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
+
+                    Debug.WriteLine($"Falha: {mensagemDaApi}");
+                    return (false, mensagemDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
+
         public async Task<(bool Sucesso, string Mensagem )> TelefoneCadastrar(Telefone telefone, string tokenJwt)
         {
             try

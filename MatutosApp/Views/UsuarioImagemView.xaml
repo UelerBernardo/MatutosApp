@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.UsuarioImagemView"
+             Title="Foto do Perfil">
+    <Grid RowDefinitions="Auto, *, Auto">
+
+        <Grid Grid.Row="0" BackgroundColor="#0D1623" Padding="20,50,20,30">
+            <Grid ColumnDefinitions="Auto, *">
+                <ImageButton Grid.Column="0" 
+                             Source="back_arrow_white.png" 
+                             WidthRequest="24" 
+                             HeightRequest="24" 
+                             VerticalOptions="Center" 
+                             Command="{Binding VoltarTela}" 
+                             BackgroundColor="Transparent"/>
+
+                <Label Grid.Column="1" 
+                       Text="Foto do Perfil" 
+                       TextColor="White" 
+                       FontSize="22" 
+                       FontAttributes="Bold" 
+                       VerticalOptions="Center" 
+                       Margin="15,0,0,0"/>
+            </Grid>
+        </Grid>
+
+        <VerticalStackLayout Grid.Row="1" 
+                             Padding="30" 
+                             Spacing="20" 
+                             VerticalOptions="Center">
+
+            <Label Text="Uma foto ajuda as pessoas a reconhecerem você e permite saber quando você está conectado."
+                   TextColor="#5F6368"
+                   FontSize="14"
+                   HorizontalTextAlignment="Center"
+                   Margin="0,0,0,20"/>
+
+            <Border StrokeShape="RoundRectangle 100"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="2"
+                    HorizontalOptions="Center"
+                    HeightRequest="200"
+                    WidthRequest="200">
+
+                <Grid>
+                    <Image Source="{Binding FotoPerfilSource}"
+                           Aspect="AspectFill"
+                           HeightRequest="200"
+                           WidthRequest="200"/>
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                       IsVisible="{Binding IsBusy}"
+                                       Color="#E63946"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                </Grid>
+            </Border>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="20" Margin="0,30,0,0">
+
+                <Button Text="Mudar"
+                        ImageSource="edit_icon.png"
+                        Command="{Binding EscolherImagemCommand}"
+                        BackgroundColor="White"
+                        TextColor="#1A73E8"
+                        BorderColor="#E0E0E0"
+                        BorderWidth="1"
+                        CornerRadius="20"
+                        WidthRequest="130"
+                        FontAttributes="Bold"/>
+
+                <Button Text="Cancelar"
+                        ImageSource="trash_icon.png"
+                        Command="{Binding VoltarTelaCommand}"
+                        BackgroundColor="White"
+                        TextColor="#E63946"
+                        BorderColor="#E0E0E0"
+                        BorderWidth="1"
+                        CornerRadius="20"
+                        WidthRequest="130"
+                        FontAttributes="Bold"/>
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <Frame Grid.Row="2" 
+               BackgroundColor="#F8F9FA" 
+               HasShadow="False" 
+               BorderColor="#E0E0E0"
+               Padding="20">
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                <Label Text="🌐" FontSize="18"/>
+                <Label Text="Visível para todos os usuários do sistema" 
+                       TextColor="#5F6368" 
+                       FontSize="13"
+                       VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+    </Grid>
+</ContentPage>

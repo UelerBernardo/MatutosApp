@@ -14,11 +14,14 @@ namespace MatutosApp.ViewsModels
     public partial class ClientePerfilConsultarViewModel : BaseViewModel
     {
         private readonly ClienteService _clienteService;
+
         [ObservableProperty] private Cliente clientePerfil;
+
         [ObservableProperty] private bool isPopupSenhaVisivel;
         [ObservableProperty] private string senhaAtual;
         [ObservableProperty] private string novaSenha;
         [ObservableProperty] private string confirmarNovaSenha;
+
 
         public ClientePerfilConsultarViewModel(ClienteService clienteService)
         {
@@ -26,10 +29,50 @@ namespace MatutosApp.ViewsModels
             _ = ConsultarClientePerfil();
         }
 
+        public void AtualizarFotoTela()
+        {
+            // Como a sua classe herda de BaseViewModel, você tem acesso ao OnPropertyChanged.
+            // Isso avisa o XAML: "Ei, releia a propriedade FotoPerfilSource agora!"
+            OnPropertyChanged(nameof(FotoPerfilSource));
+        }
+
+        public ImageSource FotoPerfilSource
+        {
+            get
+            {
+                var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
+
+                return usuarioLogado == null || string.IsNullOrEmpty(usuarioLogado.Imagem_Usuario)
+                    ? "user_placeholder.png"
+                    : ImageSource.FromUri(new Uri($"https://localhost:7110{usuarioLogado.Imagem_Usuario}"));
+            }
+        }
+
         [RelayCommand]
         public async Task ConsultarTelefone()
         {
             await Shell.Current.GoToAsync(nameof(UsuarioTelefoneConsultarView));
+        }
+        [RelayCommand]
+        public async Task AbrirAgendamentos()
+        {
+            await Shell.Current.GoToAsync(nameof(AgendamentoConsultarView));
+        }
+
+        [RelayCommand]
+        public async Task AbrirImagemUsuario()
+        {
+            Usuario usuarioLogado = UsuarioSessaoService.UsuarioLogado;
+
+            // 2. Blindagem: Se por algum motivo a sessão estiver vazia, não faz nada (evita crash)
+            if (usuarioLogado == null)
+                return;
+
+            var parametros = new Dictionary<string, object>
+                {
+                    { "FotoAtual", usuarioLogado.Imagem_Usuario }
+                };
+            await Shell.Current.GoToAsync(nameof(UsuarioImagemView), parametros);
         }
 
         public async Task ConsultarClientePerfil()
@@ -77,6 +120,12 @@ namespace MatutosApp.ViewsModels
             if (NovaSenha != ConfirmarNovaSenha)
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "As senhas novas não coincidem.", "Ok");
+                return;
+            }
+
+            if(NovaSenha == SenhaAtual)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "A senha nova não pode ser igual a senha atual!", "Ok");
                 return;
             }
 

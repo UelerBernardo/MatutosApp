@@ -309,6 +309,80 @@
         }
       }
     },
+    "/telefone/alterar/{codigoTelefone}": {
+      "put": {
+        "tags": [
+          "Telefone"
+        ],
+        "parameters": [
+          {
+            "name": "codigoTelefone",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Telefone"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Telefone"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Telefone"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/usuario/cadastrar/imagem": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "arquivo": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "arquivo": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/usuario/cadastrar": {
       "post": {
         "tags": [
@@ -516,6 +590,10 @@
           },
           "ativo": {
             "type": "boolean"
+          },
+          "imagem_Usuario": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -552,6 +630,10 @@
           },
           "ativo": {
             "type": "boolean"
+          },
+          "imagem_Usuario": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

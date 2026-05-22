@@ -39,6 +39,7 @@ namespace MatutosApp.ViewsModels
                 return;
             }
             await LoginUsuario();
+
         }
 
         [RelayCommand]
@@ -96,6 +97,8 @@ namespace MatutosApp.ViewsModels
 
                 if (resultado.Sucesso)
                 {
+                    UsuarioSessaoService.IniciarSessao(resultado.Dados);
+
                     await Application.Current.MainPage.DisplayAlert("Sucesso", "Seja Bem-vindo!", "Ok");
 
                     await Shell.Current.GoToAsync(nameof(PrincipalView));

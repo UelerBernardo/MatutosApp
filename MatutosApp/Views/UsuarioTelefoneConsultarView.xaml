@@ -78,8 +78,8 @@
                                       TextColor="White"
                                       CornerRadius="8"
                                       HeightRequest="2"
-                                      Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirTelefoneCommand}"
-                                      CommandParameter="{Binding Codigo_Telefone}" />
+                                      Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoTelefoneCommand}"
+                                      CommandParameter="{Binding Telefone}" />
                         </Grid>
                     </Border>
                 </DataTemplate>

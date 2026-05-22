@@ -111,6 +111,7 @@ namespace MatutosApi.Controllers
                        },
                        Telefone = new
                        {
+                           Codigo_Telefone = ut.Codigo_Telefone,
                            DDD = ut.Telefone.DDD,
                            Numero_Telefone = ut.Telefone.Numero_Telefone,
                            Principal = ut.Telefone.Principal
@@ -156,6 +157,47 @@ namespace MatutosApi.Controllers
                     .Where(a => a.Codigo_Telefone == codigoTelefone).ExecuteDeleteAsync();
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });
+            }
+        }
+
+        [HttpPut("alterar/{codigoTelefone}")]
+        [Authorize]
+        public async Task<IActionResult> AlterarTelefone(int codigoTelefone, [FromBody] Telefone telefone)
+        {
+            try
+            {
+                if (codigoTelefone != telefone.Codigo_Telefone)
+                {
+                    return BadRequest(new { Mensagem = "O código do telefone na URL não corresponde ao objeto enviado." });
+                }
+
+                var telefoneExiste = await _dbcontext.Telefones
+                .AnyAsync(t => t.DDD == telefone.DDD && t.Numero_Telefone == telefone.Numero_Telefone);
+
+                if (telefoneExiste)
+                {
+                    return BadRequest(new { Mensagem = "Este telefone já está cadastrado no sistema." });
+                }
+
+                int linhasAfetadas = await _dbcontext.Telefones
+                    .Where(a => a.Codigo_Telefone == codigoTelefone)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(t => t.DDD, telefone.DDD)
+                        .SetProperty(t => t.Numero_Telefone, telefone.Numero_Telefone)
+                        .SetProperty(t => t.Principal, telefone.Principal)
+                    );
+
+                if (linhasAfetadas == 0)
+                {
+                    return NotFound(new { Mensagem = "Telefone não encontrado para alteração." });
+                }
+
+                return Ok(new { Mensagem = "Telefone alterado com sucesso!" });
             }
             catch (Exception ex)
             {

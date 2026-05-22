@@ -49,11 +49,12 @@
                 <Switch Grid.Column="1" 
                         IsToggled="{Binding Principal}" 
                         ThumbColor="#2B0B3F" 
-                        OnColor="#D8BFD8" />
+                        OnColor="#D8BFD8" 
+                        IsEnabled="{Binding PodeEditarPrincipal}"/>
             </Grid>
 
-            <Button Text="FINALIZAR CADASTRO"
-                    Command="{Binding CadastrarCommand}"
+            <Button Text="{Binding NomeBotaoAcao}"
+                    Command="{Binding CadastrarOuAlterarCommand}"
                     BackgroundColor="#2B0B3F"
                     TextColor="White"
                     FontAttributes="Bold"

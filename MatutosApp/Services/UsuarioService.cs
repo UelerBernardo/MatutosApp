@@ -2,11 +2,12 @@
 using MatutosDomain;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MatutosApp.Services
@@ -17,14 +18,78 @@ namespace MatutosApp.Services
 
         public UsuarioService()
         {
-            string baseUrl = "http://localhost:5028";
+            string baseURL = "https://localhost:7110/"; ;
 
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(baseUrl)
+                BaseAddress = new Uri(baseURL)
 
             };
         }
+
+  
+        public async Task<(bool Sucesso, string Mensagem, string CaminhoImagem)> CadastrarImagemUsuario(FileResult arquivoLocal, string token)
+        {
+            try
+            {
+                var tokenLimpo = token.Replace("Bearer ", "").Trim();
+
+                using var streamDaFoto = await arquivoLocal.OpenReadAsync();
+                using var conteudoDoArquivo = new StreamContent(streamDaFoto);
+
+                // 👉 BÔNUS: Avisa explicitamente o servidor que isso é um arquivo de imagem (ajuda a evitar bloqueios)
+                conteudoDoArquivo.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("image/jpeg");
+
+                using var formulario = new MultipartFormDataContent();
+                formulario.Add(conteudoDoArquivo, "arquivo", arquivoLocal.FileName);
+
+                // 👉 A MÁGICA: Em vez de PostAsync direto, criamos a requisição na mão
+                using var request = new HttpRequestMessage(HttpMethod.Post, "usuario/cadastrar/imagem");
+
+                // Colamos o token ESPECIFICAMENTE nesta requisição, blindando contra redirecionamentos
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+                // Colocamos o formulário dentro da requisição
+                request.Content = formulario;
+
+                // Enviamos o "envelope" completo
+                var resposta = await _httpClient.SendAsync(request);
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var dados = await resposta.Content.ReadFromJsonAsync<ApiRespostaImagem>(options);
+
+                    return (true, "Foto atualizada com sucesso!", dados?.Caminho);
+                }
+                else
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    string conteudoString = await resposta.Content.ReadAsStringAsync();
+
+                    if (string.IsNullOrWhiteSpace(conteudoString))
+                    {
+                        return (false, $"Acesso negado (Status: {resposta.StatusCode}). O Token foi recusado.", string.Empty);
+                    }
+
+                    try
+                    {
+                        var erroResposta = System.Text.Json.JsonSerializer.Deserialize<ApiErroResposta>(conteudoString, options);
+                        return (false, erroResposta?.Mensagem ?? "Erro desconhecido.", string.Empty);
+                    }
+                    catch
+                    {
+                        return (false, "Falha de comunicação com a API.", string.Empty);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exceção ao enviar imagem: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor ao enviar a foto.", string.Empty);
+            }
+        }
+
         public async Task<bool> UsuarioCadastrar(UsuarioCadastro usuario)
         {
             try
@@ -59,7 +124,7 @@ namespace MatutosApp.Services
                 return false;
             }
         }
-        public async Task<(bool Sucesso, string Mensagem)> UsuarioLogin(UsuarioLogin login)
+        public async Task<(bool Sucesso, string Mensagem, Usuario Dados)> UsuarioLogin(UsuarioLogin login)
         {
             try
             {
@@ -69,29 +134,28 @@ namespace MatutosApp.Services
 
                 if (resposta.IsSuccessStatusCode)
                 {
-                    var token = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
+                    var dadosLogin = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
 
-                    if (token != null && !string.IsNullOrEmpty(token.Token))
+                    if (dadosLogin != null && !string.IsNullOrEmpty(dadosLogin.Token))
                     {
-                        await SecureStorage.Default.SetAsync("jwt_token", token.Token);
+                        await SecureStorage.Default.SetAsync("jwt_token", dadosLogin.Token);
 
-                        return (true, string.Empty);
+                        return (true, string.Empty, dadosLogin.Usuario);
                     }
 
-                    return (false, "Falha ao ler o token de acesso.");
+                    return (false, "Falha ao ler o token de acesso.", null);
                 }
                 else
                 {
                     var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
                     string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
-
-                    return (false, mensagemDaApi);
+                    return (false, mensagemDaApi, null);
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Erro de conexão no login: {ex.Message}");
-                return (false, "Falha de comunicação com o servidor.");
+                return (false, "Falha de comunicação com o servidor.", null);
             }
         }
     }

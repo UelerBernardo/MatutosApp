@@ -28,6 +28,26 @@ namespace MatutosApp.ViewsModels
             _ = ConsultarTelefone();
         }
 
+
+
+        [RelayCommand]
+        public async Task AbrirAlteracaoTelefone(Telefone telefoneSelecionado)
+        {
+            if (telefoneSelecionado == null)
+                return;
+
+            bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realizar a alteração do telefone?", "Sim", "Não");
+
+            if (!confirmar)
+                return;
+
+            var parametros = new Dictionary<string, object>
+                {
+                    { "TelefoneParaEditar", telefoneSelecionado }
+                };
+                 await Shell.Current.GoToAsync(nameof(TelefoneCadastroView), parametros);
+        }
+
         [RelayCommand]
         public async Task ConsultarTelefone()
         {
