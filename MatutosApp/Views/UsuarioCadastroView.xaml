@@ -51,7 +51,7 @@
             </VerticalStackLayout>
 
             <Button Text="CRIAR CONTA"
-                    Command="{Binding CadastrarCommand}"
+                    Command="{Binding CadastrarOuAlterarCommand}"
                     BackgroundColor="#2B0B3F"
                     TextColor="White"
                     FontAttributes="Bold"

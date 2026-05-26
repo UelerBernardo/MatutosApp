@@ -90,6 +90,10 @@
 
             
                 <Grid ColumnDefinitions="*, Auto" Padding="0,15">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirMeusDadosCommand}" />
+                        </Grid.GestureRecognizers>
+                    
                     <Label Grid.Column="0" Text="Meus Dados" TextColor="#333" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                     <Label Grid.Column="1" Text=">" TextColor="#CCC" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                 </Grid>

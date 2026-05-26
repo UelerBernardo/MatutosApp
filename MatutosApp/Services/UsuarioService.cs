@@ -158,5 +158,33 @@ namespace MatutosApp.Services
                 return (false, "Falha de comunicação com o servidor.", null);
             }
         }
+
+        public async Task<(bool Sucesso, string Mensagem)> UsuarioAlterar(Usuario usuario, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var resposta = await _httpClient.PutAsJsonAsync("usuario/alterar/", usuario);
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    return (true, "Usuario alterado com sucesso!");
+                }
+                else
+                {
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>();
+
+                    string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
+
+                    Debug.WriteLine($"Falha: {mensagemDaApi}");
+                    return (false, mensagemDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
     }
 }
