@@ -351,6 +351,37 @@
         }
       }
     },
+    "/usuario/alterar": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/usuario/cadastrar/imagem": {
       "post": {
         "tags": [
@@ -684,6 +715,46 @@
           },
           "principal": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usuario": {
+        "required": [
+          "email",
+          "nome",
+          "senha"
+        ],
+        "type": "object",
+        "properties": {
+          "codigo_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "senha": {
+            "maxLength": 250,
+            "minLength": 1,
+            "type": "string"
+          },
+          "tipoSelecionado": {
+            "$ref": "#/components/schemas/UsuarioTipo"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "imagem_Usuario": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

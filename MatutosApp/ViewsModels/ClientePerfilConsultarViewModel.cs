@@ -53,6 +53,12 @@ namespace MatutosApp.ViewsModels
         {
             await Shell.Current.GoToAsync(nameof(UsuarioTelefoneConsultarView));
         }
+
+        [RelayCommand]
+        public async Task AbrirMeusDados()
+        {
+            await Shell.Current.GoToAsync(nameof(UsuarioCadastroView));
+        }
         [RelayCommand]
         public async Task AbrirAgendamentos()
         {

@@ -192,3 +192,4 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.genruntimeconfig.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\ref\MatutosApi.dll
 C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.runtime.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.runtime.json
