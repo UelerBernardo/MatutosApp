@@ -3,12 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\agendamentocadastroview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\agendamentocadastroview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\principalview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\principalview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\clienteperfilconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\clienteperfilconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\principalview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\principalview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\views\\clienteperfilconsultarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\views\\clienteperfilconsultarview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\luiz felipe\\estagio\\matutosapp\\matutosapp\\viewsmodels\\principalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\principalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,27 +59,79 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsuarioViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
-              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
-              "RelativeToolTip": "MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-28T22:18:47.15Z",
+              "Title": "AgendamentoCadastroView.xaml",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoCadastroView.xaml",
+              "RelativeDocumentMoniker": "MatutosApp\\Views\\AgendamentoCadastroView.xaml",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\AgendamentoCadastroView.xaml",
+              "RelativeToolTip": "MatutosApp\\Views\\AgendamentoCadastroView.xaml",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAGkAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-29T01:30:55.106Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PrincipalView.xaml",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\PrincipalView.xaml",
+              "RelativeDocumentMoniker": "MatutosApp\\Views\\PrincipalView.xaml",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\PrincipalView.xaml",
+              "RelativeToolTip": "MatutosApp\\Views\\PrincipalView.xaml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAFsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-29T01:20:01.508Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PrincipalView.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\PrincipalView.xaml.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\Views\\PrincipalView.xaml.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\PrincipalView.xaml.cs",
+              "RelativeToolTip": "MatutosApp\\Views\\PrincipalView.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T01:19:59.409Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ClientePerfilConsultarView.xaml",
               "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
               "RelativeDocumentMoniker": "MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
               "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
               "RelativeToolTip": "MatutosApp\\Views\\ClientePerfilConsultarView.xaml",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAwwFwAAAA7AAAAAAAAAA==",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-28T22:17:12.043Z",
+              "WhenOpened": "2026-05-29T01:15:58.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ClientePerfilConsultarViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\ClientePerfilConsultarViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\ClientePerfilConsultarViewModel.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\ClientePerfilConsultarViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\ClientePerfilConsultarViewModel.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T01:10:13.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PrincipalViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\PrincipalViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\PrincipalViewModel.cs",
+              "ToolTip": "C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApp\\ViewsModels\\PrincipalViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\PrincipalViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-29T01:06:28.602Z",
               "EditorCaption": ""
             }
           ]

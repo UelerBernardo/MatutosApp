@@ -53,6 +53,12 @@ namespace MatutosApp.ViewsModels
         {
             await Shell.Current.GoToAsync(nameof(UsuarioTelefoneConsultarView));
         }
+
+        [RelayCommand]
+        public async Task AbrirMeusDados()
+        {
+            await Shell.Current.GoToAsync(nameof(UsuarioCadastroView));
+        }
         [RelayCommand]
         public async Task AbrirAgendamentos()
         {
@@ -93,6 +99,7 @@ namespace MatutosApp.ViewsModels
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao carregar perfil: {ex.Message}", "Ok");
             }
         }
+
         [RelayCommand]
         public void AbrirPopupSenha()
         {

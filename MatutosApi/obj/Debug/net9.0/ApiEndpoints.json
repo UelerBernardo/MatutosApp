@@ -205,6 +205,22 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "AlterarUsuario",
+    "RelativePath": "usuario/alterar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "MatutosDomain.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
     "Method": "CriarUsuario",
     "RelativePath": "usuario/cadastrar",
     "HttpMethod": "POST",

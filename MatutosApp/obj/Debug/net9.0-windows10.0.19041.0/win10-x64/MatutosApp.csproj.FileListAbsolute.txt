@@ -1096,3 +1096,9 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\gear.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\gear.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\meusagendamento.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\tesoura.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\meusagendamento.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\tesoura.scale-100.png

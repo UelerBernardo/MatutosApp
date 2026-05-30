@@ -2,45 +2,119 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:MatutosApp.Views"
-             x:Class="MatutosApp.Views.PrincipalView"
-             Title="PrincipalView">
-    <VerticalStackLayout>
-        <Button Text="ENTRAR"
-          Command="{Binding AbrirAgendamentoCommand}"
-          BackgroundColor="#2B0B3F"
-          TextColor="White"
-          FontAttributes="Bold"
-          CornerRadius="8"
-          HeightRequest="55"
-          Margin="0, 10, 0, 0"/>
+             x:Class="MatutosApp.Views.PrincipalView">
+    <ScrollView>
+        <VerticalStackLayout Padding="10"  Spacing="10">
 
-        <Label Text="Cadastre-se" 
-        TextColor="#2B0B3F"
-        FontAttributes="Bold"
-        VerticalOptions="Center"
-        TextDecorations="Underline">
-            <Label.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding AbrirTela}"
-                               CommandParameter="{x:Type TypeName=views:ClientePerfilConsultarView}"/>
-            </Label.GestureRecognizers>
-        </Label>
+            <Grid RowDefinitions="Auto, Auto" Margin="0, 40, 0, 10">
+                <ImageButton Source="gear.png" 
+                             WidthRequest="10" 
+                             HeightRequest="10" 
+                             HorizontalOptions="End" 
+                             VerticalOptions="Start"
+                             Command="{Binding PerfilAbrirCommand}"/>
 
-        <Button Text="ENTRAR"
-                  Command="{Binding MeusAgendamentosCommand}"
-                  BackgroundColor="#2B0B3F"
-                  TextColor="White"
-                  FontAttributes="Bold"
-                  CornerRadius="8"
-                  HeightRequest="55"
-                  Margin="0, 10, 0, 0"/>
+                <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 50" 
+                            Stroke="#CE855C" 
+                            StrokeThickness="2" 
+                            WidthRequest="150" 
+                            HeightRequest="150" 
+                            HorizontalOptions="Center">
+                        <Image Source="{Binding FotoPerfilSource}" Aspect="AspectFill" />
+                    </Border>
 
-        <Button Text="ENTRAR"
-          Command="{Binding PerfilAbrirCommand}"
-          BackgroundColor="#2B0B3F"
-          TextColor="White"
-          FontAttributes="Bold"
-          CornerRadius="8"
-          HeightRequest="55"
-          Margin="0, 10, 0, 0"/>
-    </VerticalStackLayout>
+                    <Label Text="{Binding ClientePerfil.Nome}"
+                           Margin="0,20,0,0"
+                           FontSize="22" 
+                           FontAttributes="Bold" 
+                           TextColor="#CE855C" 
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <BoxView HeightRequest="1" Color="#3A414A" Margin="0, 1" />
+
+            <Label Text="Menu de Opções" 
+                   FontSize="18" 
+                   FontAttributes="Bold" 
+                   TextColor="#CE855C" 
+                   HorizontalOptions="Center" 
+                   Margin="0, 0, 0, 10" />
+
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="20" RowSpacing="20">
+
+                <Border Grid.Row="0" Grid.Column="0" 
+                        StrokeShape="RoundRectangle 20" 
+                        BackgroundColor="#F4F4F4" 
+                        StrokeThickness="0" 
+                        HeightRequest="140">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirAgendamentoCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                        <Image Source="tesoura.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" />
+                        <Label Text="Agendar" TextColor="#1E242B" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Border StrokeShape="RoundRectangle 20" 
+                            BackgroundColor="#F4F4F4" 
+                            StrokeThickness="0" 
+                            HeightRequest="140">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding MeusAgendamentosCommand}"/>
+                        </Border.GestureRecognizers>
+                        <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                            <Image Source="meusagendamento.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" />
+                            <Label Text="Meus Agendamentos" TextColor="#1E242B" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <!--<Border StrokeShape="RoundRectangle 20" 
+                            BackgroundColor="#CE855C" 
+                            StrokeThickness="0" 
+                            HorizontalOptions="End" 
+                            VerticalOptions="Start"
+                            Margin="0, -10, -10, 0"
+                            Padding="8, 5">
+                        <Label Text="50%&#x0a;OFF" TextColor="White" FontSize="10" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                    </Border>-->
+                </Grid>
+
+                <Border Grid.Row="1" Grid.Column="0" 
+                        StrokeShape="RoundRectangle 20" 
+                        BackgroundColor="#F4F4F4" 
+                        StrokeThickness="0" 
+                        HeightRequest="140">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                        <Image Source="icon_hairwash.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" />
+                        <Label Text="Horários Off" TextColor="#1E242B" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="1" 
+                        StrokeShape="RoundRectangle 20" 
+                        BackgroundColor="#F4F4F4" 
+                        StrokeThickness="0" 
+                        HeightRequest="140">
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
+                        <Image Source="icon_treatment.png" WidthRequest="50" HeightRequest="50" HorizontalOptions="Center" />
+                        <Label Text="Serviços" TextColor="#1E242B" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <Button Text="Sair" 
+                    BackgroundColor="MediumPurple" 
+                    TextColor="#1E242B" 
+                    FontAttributes="Bold" 
+                    CornerRadius="25" 
+                    HeightRequest="50" 
+                    WidthRequest="200" 
+                    HorizontalOptions="Center" 
+                    Margin="0, 20, 0, 30" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

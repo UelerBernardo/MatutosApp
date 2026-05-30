@@ -21,6 +21,43 @@ namespace MatutosApi.Controllers
             _dbcontext = dbcontext ?? throw new ArgumentNullException(nameof(dbcontext));
         }
 
+        [HttpPut("alterar")]
+        [Authorize]
+        public async Task<IActionResult> AlterarUsuario([FromBody] Usuario usuario)
+        {
+            try
+            {
+                var usuarioToken = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                 ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuarioToken) || !int.TryParse(usuarioToken, out int codigoUsuario))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado." });
+                }
+
+                var usuarioAlteracao = await _dbcontext.Usuarios
+                    .Where(a => a.Codigo_Usuario == codigoUsuario)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(u => u.Nome,  usuario.Nome)
+                        .SetProperty(u => u.Email, usuario.Email)
+                    );
+
+                if(usuarioAlteracao <= 0)
+                {
+                    return NotFound(new { Mensagem = "Usuário não encontrado para alteração." });
+                }
+
+                return Ok(new { Mensagem = "Usuario alterado com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });
+            }
+        }
+
+
+
         [HttpPost("cadastrar/imagem")]
         [Authorize]
         [Consumes("multipart/form-data")]
@@ -153,6 +190,22 @@ namespace MatutosApi.Controllers
                 return Unauthorized(new { Mensagem = "Login ou senha inválidos!" });
             }
 
+            UsuarioTipo tipoDescoberto = UsuarioTipo.Cliente;
+
+            // Verificamos em cada tabela (ajuste o nome das tabelas _dbcontext.Tabela se necessário)
+            if (await _dbcontext.Administradores.AnyAsync(a => a.Codigo_Usuario == login.Codigo_Usuario))
+            {
+                tipoDescoberto = UsuarioTipo.Administrador;
+            }
+            else if (await _dbcontext.Barbeiros.AnyAsync(b => b.Codigo_Usuario == login.Codigo_Usuario))
+            {
+                tipoDescoberto = UsuarioTipo.Barbeiro;
+            }
+            else if (await _dbcontext.Clientes.AnyAsync(c => c.Codigo_Usuario == login.Codigo_Usuario))
+            {
+                tipoDescoberto = UsuarioTipo.Cliente;
+            }
+
             var token = TokenService.GenerateToken(login);
 
             return Ok(new
@@ -163,7 +216,8 @@ namespace MatutosApi.Controllers
                     Codigo_Usuario = login.Codigo_Usuario,
                     Nome = login.Nome,
                     Email = login.Email,
-                    Imagem_Usuario = login.Imagem_Usuario
+                    Imagem_Usuario = login.Imagem_Usuario,
+                    TipoSelecionado = tipoDescoberto  
                 }
             });
         }
