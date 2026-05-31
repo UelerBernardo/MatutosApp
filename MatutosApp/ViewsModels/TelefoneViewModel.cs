@@ -25,7 +25,6 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] private string ddd;
         [ObservableProperty] private bool principal;
         [ObservableProperty]
-
         private bool podeEditarPrincipal = true;
 
 

@@ -1096,3 +1096,31 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\gear.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\gear.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\meusagendamento.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\tesoura.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\meusagendamento.scale-100.png
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\tesoura.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\gear.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\meusagendamento.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\tesoura.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\gear.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\meusagendamento.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\tesoura.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\localizacao.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\localizacao.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\servicos.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\servicos.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\logobarbearia.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\logobarbearia.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\barbearia.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\barbearia.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\barbearialogo.scale-100.jpeg
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\barbearialogo.scale-100.jpeg
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\relogioagendar.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\relogioagendar.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\tesourapente.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\tesourapente.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\bin\Debug\net9.0-windows10.0.19041.0\win10-x64\mais.scale-100.png
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\obj\Debug\net9.0-windows10.0.19041.0\win10-x64\resizetizer\r\mais.scale-100.png

@@ -89,6 +89,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.Principal
 build_metadata.AdditionalFiles.TargetPath = Views\PrincipalView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\PrincipalView.xaml
 
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ServicoCadastroView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ServicoCadastroView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ServicoCadastroView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ServicoCadastroView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ServicoConsultarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ServicoConsultarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ServicoConsultarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ServicoConsultarView.xaml
+
 [C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/TelefoneCadastroView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.TelefoneCadastroView.xaml

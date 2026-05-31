@@ -2,106 +2,104 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.AgendamentoCadastroView"
-             Title="AgendamentoCadastroView">
+             BackgroundColor="#121212"
+             Title=""
+             Shell.NavBarIsVisible="False">
+
     <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="25,40,25,40">
+        <VerticalStackLayout Spacing="30" Padding="20,40,20,40">
 
-            <!-- Cabeçalho Elegante -->
-            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,15">
-                <Label Text="📅" FontSize="60" HorizontalOptions="Center" />
-                <Label Text="Escolha seu Horário"
-                       FontSize="28"
-                       FontAttributes="Bold"
-                       TextColor="#2B0B3F"
-                       HorizontalOptions="Center" />
-                <Label Text="Reserve seu momento com nossos especialistas"
-                       FontSize="14"
-                       TextColor="#666666"
-                       HorizontalOptions="Center" />
+            <Label Text="Agendamento"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   TextColor="#FFFFFF"
+                   FontFamily="Cursive" 
+                   HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Selecione o Barbeiro" FontSize="18" FontAttributes="Bold" TextColor="#CCCCCC"/>
+
+                <CollectionView ItemsSource="{Binding ListaBarbeiro}"
+                                SelectedItem="{Binding BarbeiroSelecionado}"
+                                SelectionMode="Single"
+                                HeightRequest="120">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2" HorizontalItemSpacing="10" VerticalItemSpacing="15"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="45, *" ColumnSpacing="10">
+                                <Border Grid.Column="0" BackgroundColor="#2A2A2A" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                    <Image Source="{Binding UrlImagemCompleta}" Margin="1" HeightRequest="50"/>
+                                </Border>
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                    <Label Text="{Binding Nome}" TextColor="#FFFFFF" FontSize="14" FontAttributes="Bold" />
+                                    <Label Text="★★★★☆" TextColor="#888888" FontSize="10" />
+                                </VerticalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
 
-            <!-- Card: Seleção do Barbeiro -->
-            <VerticalStackLayout Spacing="8">
-                <Label Text="Profissional" FontSize="14" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,0"/>
-                <Border Stroke="#E0E0E0" 
-                        StrokeThickness="1" 
-                        BackgroundColor="White"
-                        StrokeShape="RoundRectangle 10" 
-                        HeightRequest="50"
-                        Padding="15,0">
-                    <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
-                    </Border.Shadow>
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="20">
+                <VerticalStackLayout Spacing="25">
+                    <VerticalStackLayout Spacing="15">
+                        <Label Text="Escolha o Dia:" FontSize="16" FontAttributes="Bold" TextColor="#CCCCCC"/>
 
-                    <Picker ItemsSource="{Binding ListaBarbeiro}"
-                            ItemDisplayBinding="{Binding Nome}"
-                            SelectedItem="{Binding BarbeiroSelecionado}"
-                            TextColor="#2B0B3F"
-                            TitleColor="#999999"
-                            VerticalOptions="Center"/>
-                </Border>
-            </VerticalStackLayout>
-
-            <!-- GRID: Data e Hora dividindo o mesmo espaço 50/50 -->
-            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
-
-                <!-- Coluna 0: Data do Serviço -->
-                <VerticalStackLayout Grid.Column="0" Spacing="8">
-                    <Label Text="Data" FontSize="14" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,0"/>
-                    <Border Stroke="#E0E0E0" 
-                            StrokeThickness="1" 
-                            BackgroundColor="White"
-                            StrokeShape="RoundRectangle 12" 
-                            HeightRequest="50"
-                            Padding="15,0">
-                        <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
-                        </Border.Shadow>
-
-                        <DatePicker Date="{Binding Data_Selecionada}"
-                                    MinimumDate="{Binding DataMinima}"
-                                    FontSize="14"
-                                    TextColor="#2B0B3F"
-                                    VerticalOptions="Center"/>
-                    </Border>
+                        <CollectionView ItemsSource="{Binding ListaDatas}" 
+                                        SelectedItem="{Binding Data_Selecionada}" 
+                                        SelectionMode="Single"
+                                        HeightRequest="75">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 12" WidthRequest="60" Padding="5">
+                                        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Label Text="{Binding DiaSemana}" FontSize="12" TextColor="#AAAAAA" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding DiaMes}" FontSize="18" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
+            </Border>
 
-                <!-- Coluna 1: Hora do Serviço -->
-                <VerticalStackLayout Grid.Column="1" Spacing="8">
-                    <Label Text="Horário" FontSize="14" FontAttributes="Bold" TextColor="#333333" Margin="5,0,0,0"/>
-                    <Border Stroke="#E0E0E0" 
-                            StrokeThickness="1" 
-                            BackgroundColor="White"
-                            StrokeShape="RoundRectangle 12" 
-                            HeightRequest="50"
-                            Padding="15,0">
-                        <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.05" />
-                        </Border.Shadow>
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="20">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Horário do Serviço:" FontSize="16" FontAttributes="Bold" TextColor="#CCCCCC"/>
 
-                        <TimePicker Time="{Binding Hora_Selecionada}"
-                                    TextColor="#2B0B3F"
-                                    FontSize="14"
-                                    VerticalOptions="Center"/>
-                    </Border>
+                    <CollectionView ItemsSource="{Binding ListaHorarios}" 
+                                    SelectedItem="{Binding Hora_Selecionada}" 
+                                    SelectionMode="Single"
+                                    HeightRequest="90">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="10" VerticalItemSpacing="10"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,8">
+                                    <Label Text="{Binding HoraFormatada}" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
                 </VerticalStackLayout>
+            </Border>
 
-            </Grid>
-
-            <!-- Botão de Avançar Modernizado -->
-            <Button Text="AVANÇAR PARA SERVIÇOS"
+            <Button Text="Vincular Serviço"
                     Command="{Binding CadastrarCommand}"
-                    BackgroundColor="#2B0B3F"
-                    TextColor="White"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="#121212"
                     FontAttributes="Bold"
                     FontSize="16"
-                    CornerRadius="25"
-                    HeightRequest="60"
-                    Margin="0, 20, 0, 0">
-                <Button.Shadow>
-                    <Shadow Brush="#2B0B3F" Offset="0,4" Radius="8" Opacity="0.3" />
-                </Button.Shadow>
-            </Button>
+                    CornerRadius="12"
+                    HeightRequest="55"
+                    Margin="0, 10, 0, 0" />
 
         </VerticalStackLayout>
     </ScrollView>

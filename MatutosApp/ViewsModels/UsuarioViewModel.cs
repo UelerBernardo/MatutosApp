@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,8 +26,15 @@ namespace MatutosApp.ViewsModels
 
         [ObservableProperty] private bool isModoCadastro;
         [ObservableProperty] private bool isModoAlteracao;
+        
+        [ObservableProperty]
+        private bool podeEditar = true;
 
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
         private AcaoTela _acaoTela;
+
+        public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Criar Conta" : "Alterar Perfil";
 
         public ObservableCollection<UsuarioTipo> usuarioTipoDisponivel { get; }
 
@@ -66,6 +74,7 @@ namespace MatutosApp.ViewsModels
             Email = usuario.Email;
             UsuarioTipoSelecionado = usuario.TipoSelecionado;
             Senha = "**********"; // Apenas máscara visual para a tela
+            PodeEditar = false;
         }
 
         private void ModoCadastro()
@@ -80,6 +89,7 @@ namespace MatutosApp.ViewsModels
             Email = string.Empty;
             Senha = string.Empty;
             UsuarioTipoSelecionado = UsuarioTipo.Cliente;
+            PodeEditar = true;
         }
 
 

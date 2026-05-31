@@ -18,7 +18,7 @@ namespace MatutosApp.Services
 
         public UsuarioService()
         {
-            string baseURL = "https://localhost:7110/"; ;
+            string baseURL = "https://localhost:7110/";
 
             _httpClient = new HttpClient
             {
@@ -27,7 +27,51 @@ namespace MatutosApp.Services
             };
         }
 
-  
+        public async Task<Usuario> ConsultarPefil(string token)
+        {
+            var tokenLimpo = token.Replace("Bearer ", "").Trim();
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+            return await _httpClient.GetFromJsonAsync<Usuario>("usuario/consultar");
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> AlterarSenha(string token, string senhaAtualDigitada, string novaSenhaDigitada)
+        {
+            try
+            {
+                var tokenLimpo = token.Replace("Bearer ", "").Trim();
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+                var pacote = new
+                {
+                    SenhaAntiga = senhaAtualDigitada,
+                    SenhaNova = novaSenhaDigitada
+                };
+
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/alterar/senha", pacote);
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    return (true, "Senha alterada com sucesso!");
+                }
+                else
+                {
+                    var options = new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar a requisição.";
+                    System.Diagnostics.Debug.WriteLine($"Falha: {mensagemApi}");
+
+                    return (false, mensagemApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exceção ao alterar senha: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.");
+            }
+        }
+
         public async Task<(bool Sucesso, string Mensagem, string CaminhoImagem)> CadastrarImagemUsuario(FileResult arquivoLocal, string token)
         {
             try

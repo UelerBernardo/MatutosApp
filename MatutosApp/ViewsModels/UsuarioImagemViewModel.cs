@@ -62,5 +62,18 @@ namespace MatutosApp.ViewsModels
             }
         }
 
+        [RelayCommand]
+        public async Task Cancelar()
+        {
+            if (Application.Current?.MainPage is Shell shell)
+            {
+                await shell.GoToAsync("..");
+            }
+            else if (Application.Current?.MainPage?.Navigation.NavigationStack.Count > 1)
+            {
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
+        }
+
     }
 }

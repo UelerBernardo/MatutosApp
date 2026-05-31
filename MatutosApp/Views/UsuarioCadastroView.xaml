@@ -31,7 +31,8 @@
                 <Label Text="Senha" FontSize="14" FontAttributes="Bold" />
                 <Entry Placeholder="Digite sua senha"
                        Text="{Binding Senha}"
-                       IsPassword="True" />
+                       IsPassword="True"
+                       IsEnabled="{Binding PodeEditar}"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="5">
@@ -44,13 +45,14 @@
                       SelectedItem="{Binding UsuarioTipoSelecionado}"
                       BackgroundColor="White"
                       TextColor="Black"
+                      IsEnabled="{Binding PodeEditar}"
                       FontAttributes="Bold"
                       HorizontalOptions="Start"
                       WidthRequest="150"
                       HeightRequest="60"/>
             </VerticalStackLayout>
 
-            <Button Text="CRIAR CONTA"
+            <Button Text="{Binding NomeBotaoAcao}"
                     Command="{Binding CadastrarOuAlterarCommand}"
                     BackgroundColor="#2B0B3F"
                     TextColor="White"

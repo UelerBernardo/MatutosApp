@@ -13,9 +13,11 @@ namespace MatutosApp.ViewsModels
 {
     public partial class ClientePerfilConsultarViewModel : BaseViewModel
     {
-        private readonly ClienteService _clienteService;
+        //private readonly ClienteService _clienteService;
 
-        [ObservableProperty] private Cliente clientePerfil;
+        private readonly UsuarioService _usuarioService;
+
+        [ObservableProperty] private Usuario usuarioPerfil;
 
         [ObservableProperty] private bool isPopupSenhaVisivel;
         [ObservableProperty] private string senhaAtual;
@@ -23,10 +25,10 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] private string confirmarNovaSenha;
 
 
-        public ClientePerfilConsultarViewModel(ClienteService clienteService)
+        public ClientePerfilConsultarViewModel(UsuarioService usuarioService)
         {
-            _clienteService = clienteService;
-            _ = ConsultarClientePerfil();
+            _usuarioService = usuarioService;
+            _ = ConsultarPerfil();
         }
 
         public void AtualizarFotoTela()
@@ -81,17 +83,17 @@ namespace MatutosApp.ViewsModels
             await Shell.Current.GoToAsync(nameof(UsuarioImagemView), parametros);
         }
 
-        public async Task ConsultarClientePerfil()
+        public async Task ConsultarPerfil()
         {
             try
             {
                 var token = await SecureStorage.Default.GetAsync("jwt_token");
 
-                var resultadoCliente = await _clienteService.ClienteConsultarPefil(token);
+                var resultadoUsuario = await _usuarioService.ConsultarPefil(token);
 
-                if (resultadoCliente != null)
+                if (resultadoUsuario != null)
                 {
-                    ClientePerfil = resultadoCliente;
+                    UsuarioPerfil = resultadoUsuario;
                 }
             }
             catch (Exception ex)
@@ -99,6 +101,7 @@ namespace MatutosApp.ViewsModels
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao carregar perfil: {ex.Message}", "Ok");
             }
         }
+
         [RelayCommand]
         public void AbrirPopupSenha()
         {
@@ -137,7 +140,7 @@ namespace MatutosApp.ViewsModels
 
             var token = await SecureStorage.Default.GetAsync("jwt_token");
 
-            var resultado = await _clienteService.AlterarSenhaCliente(token, SenhaAtual, NovaSenha);
+            var resultado = await _usuarioService.AlterarSenha(token, SenhaAtual, NovaSenha);
 
             if(resultado.Sucesso)
             {
