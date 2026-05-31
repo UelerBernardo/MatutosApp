@@ -2,21 +2,22 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.AgendamentoCadastroView"
-             BackgroundColor="#152A38"
+             BackgroundColor="#121212"
              Title=""
              Shell.NavBarIsVisible="False">
+
     <ScrollView>
         <VerticalStackLayout Spacing="30" Padding="20,40,20,40">
 
-            <Label Text="Appointment"
+            <Label Text="Agendamento"
                    FontSize="36"
                    FontAttributes="Bold"
-                   TextColor="White"
+                   TextColor="#FFFFFF"
                    FontFamily="Cursive" 
                    HorizontalOptions="Center" />
 
             <VerticalStackLayout Spacing="15">
-                <Label Text="Select Barber" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                <Label Text="Selecione o Barbeiro" FontSize="18" FontAttributes="Bold" TextColor="#CCCCCC"/>
 
                 <CollectionView ItemsSource="{Binding ListaBarbeiro}"
                                 SelectedItem="{Binding BarbeiroSelecionado}"
@@ -28,12 +29,12 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Grid ColumnDefinitions="45, *" ColumnSpacing="10">
-                                <Border Grid.Column="0" BackgroundColor="#FE6D8E" StrokeShape="RoundRectangle 8" StrokeThickness="0">
-                                    <Image Source="icon_user_white.png" Margin="8" />
+                                <Border Grid.Column="0" BackgroundColor="#2A2A2A" StrokeShape="RoundRectangle 8" StrokeThickness="0">
+                                    <Image Source="{Binding UrlImagemCompleta}" Margin="1" HeightRequest="50"/>
                                 </Border>
                                 <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                    <Label Text="{Binding Nome}" TextColor="White" FontSize="14" FontAttributes="Bold" />
-                                    <Label Text="★★★★☆" TextColor="White" FontSize="10" />
+                                    <Label Text="{Binding Nome}" TextColor="#FFFFFF" FontSize="14" FontAttributes="Bold" />
+                                    <Label Text="★★★★☆" TextColor="#888888" FontSize="10" />
                                 </VerticalStackLayout>
                             </Grid>
                         </DataTemplate>
@@ -41,11 +42,10 @@
                 </CollectionView>
             </VerticalStackLayout>
 
-            <Border BackgroundColor="#D9EFFF" StrokeThickness="0" StrokeShape="RoundRectangle 20" Padding="20">
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="20">
                 <VerticalStackLayout Spacing="25">
-
                     <VerticalStackLayout Spacing="15">
-                        <Label Text="Choose the date" FontSize="16" FontAttributes="Bold" TextColor="#152A38"/>
+                        <Label Text="Escolha o Dia:" FontSize="16" FontAttributes="Bold" TextColor="#CCCCCC"/>
 
                         <CollectionView ItemsSource="{Binding ListaDatas}" 
                                         SelectedItem="{Binding Data_Selecionada}" 
@@ -56,10 +56,10 @@
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 12" WidthRequest="60" Padding="5">
+                                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 12" WidthRequest="60" Padding="5">
                                         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                                            <Label Text="{Binding DiaSemana}" FontSize="12" TextColor="#666666" HorizontalOptions="Center"/>
-                                            <Label Text="{Binding DiaMes}" FontSize="18" FontAttributes="Bold" TextColor="#152A38" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding DiaSemana}" FontSize="12" TextColor="#AAAAAA" HorizontalOptions="Center"/>
+                                            <Label Text="{Binding DiaMes}" FontSize="18" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center"/>
                                         </VerticalStackLayout>
                                     </Border>
                                 </DataTemplate>
@@ -69,9 +69,9 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Border BackgroundColor="#D9EFFF" StrokeThickness="0" StrokeShape="RoundRectangle 20" Padding="20">
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 20" Padding="20">
                 <VerticalStackLayout Spacing="15">
-                    <Label Text="Choose the time" FontSize="16" FontAttributes="Bold" TextColor="#152A38"/>
+                    <Label Text="Horário do Serviço:" FontSize="16" FontAttributes="Bold" TextColor="#CCCCCC"/>
 
                     <CollectionView ItemsSource="{Binding ListaHorarios}" 
                                     SelectedItem="{Binding Hora_Selecionada}" 
@@ -82,8 +82,8 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border BackgroundColor="White" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,8">
-                                    <Label Text="{Binding HoraFormatada}" FontSize="12" FontAttributes="Bold" TextColor="#152A38" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="10,8">
+                                    <Label Text="{Binding HoraFormatada}" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center" VerticalOptions="Center"/>
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -91,10 +91,10 @@
                 </VerticalStackLayout>
             </Border>
 
-            <Button Text="Book Appointment"
+            <Button Text="Vincular Serviço"
                     Command="{Binding CadastrarCommand}"
-                    BackgroundColor="#FE6D8E"
-                    TextColor="White"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="#121212"
                     FontAttributes="Bold"
                     FontSize="16"
                     CornerRadius="12"

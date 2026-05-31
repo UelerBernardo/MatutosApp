@@ -9,4 +9,13 @@ public partial class PrincipalView : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
 	}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is ClientePerfilConsultarViewModel viewModel)
+        {
+            viewModel.AtualizarFotoTela();
+        }
+    }
 }

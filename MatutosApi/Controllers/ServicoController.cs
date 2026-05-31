@@ -1,4 +1,6 @@
 ﻿using MatutosApi.Infraestrutura;
+using MatutosDomain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,38 @@ namespace MatutosApi.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpPost ("cadastrar")]
+        [Authorize]
+        public async  Task<IActionResult> CadastrarServico([FromBody] Servico servico)
+        {
+
+            try
+            {
+                var servicoNovo = new Servico
+                {
+                    Descricao = servico.Descricao,
+                    Duracao = servico.Duracao,
+                    Preco = servico.Preco,
+                    Tempo_Servico = servico.Tempo_Servico,
+                    Ativo = servico.Ativo
+                };
+
+                _dbContext.Servicos.Add(servicoNovo);
+
+                await _dbContext.SaveChangesAsync();
+
+                return Ok();
+            }
+
+            catch(Exception ex)
+            {
+                return StatusCode(500, new { Message = $"Erro interno ao buscar barbeiros: {ex.Message}" });
+            }
+        }
+
+
         [HttpGet ("consultar")]
+        [Authorize]
         public async Task<IActionResult> ConsultarServico()
         {
             try
@@ -37,8 +70,7 @@ namespace MatutosApi.Controllers
             }
             catch (Exception ex)
             {
-
-                    return StatusCode(500, new { Message = $"Erro interno ao buscar barbeiros: {ex.Message}" });
+                return StatusCode(500, new { Message = $"Erro interno ao buscar barbeiros: {ex.Message}" });
             }
         }
     }

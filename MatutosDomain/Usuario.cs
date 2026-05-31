@@ -37,5 +37,21 @@ namespace MatutosDomain
 
         [JsonIgnore]
         public virtual ICollection<UsuarioTelefone> UsuariosTelefones { get; set; } = new List<UsuarioTelefone>();
+
+        public string UrlImagemCompleta
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Imagem_Usuario))
+                    return "icon_user_white.png"; // Retorna o ícone padrão se não tiver foto
+
+                // Troque pela URL base da sua API
+                string urlBase = "https://localhost:7110/";
+
+                // Junta a base com o caminho que veio do banco
+                return $"{urlBase}{Imagem_Usuario}";
+            }
+        }
+
     }
 }

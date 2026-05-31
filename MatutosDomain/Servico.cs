@@ -19,5 +19,7 @@ namespace MatutosDomain
         public decimal Preco { get; set; }
         public int Tempo_Servico { get; set; }
         public bool Ativo { get; set; }
+
+        public virtual ICollection<Servico_Imagem> Imagens { get; set; } = new List<Servico_Imagem>();
     }
 }

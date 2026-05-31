@@ -27,6 +27,7 @@ namespace MatutosApi.Controllers
                     {
                         a.Codigo_Usuario,
                         a.Nome,
+                        a.Imagem_Usuario,
                     })
                     .ToListAsync(); 
                 return Ok(barbeiros);

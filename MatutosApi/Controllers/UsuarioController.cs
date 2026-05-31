@@ -220,6 +220,97 @@ namespace MatutosApi.Controllers
                     TipoSelecionado = tipoDescoberto  
                 }
             });
+
+        }
+
+
+        [HttpGet("consultar")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarPerfil()
+        {
+            try
+            {
+                var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                                ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuario) || !int.TryParse(usuario, out int codigoUsuario))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado ou token inválido." });
+                }
+
+                var clienteconsulta = await _dbcontext.Usuarios
+                    .Where(a => a.Codigo_Usuario == codigoUsuario)
+                    .Select(a => new
+                    {
+                        a.Codigo_Usuario,
+                        a.Nome,
+                        a.Email,
+                        a.Ativo,
+                        a.Imagem_Usuario
+                    }).FirstOrDefaultAsync();
+
+                if (clienteconsulta == null)
+                {
+                    return NotFound(new { Mensagem = "Perfil de cliente não encontrado." });
+                }
+
+                return Ok(clienteconsulta);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao consultar usuário: {ex.Message}" });
+            }
+        }
+
+        [HttpPost("alterar/senha")]
+        [Authorize]
+        // 1. Mudamos o nome do parâmetro para o novo nome da classe
+        public async Task<IActionResult> AlterarSenhaPerfil([FromBody] AlterarSenhaPerfilRequest dados)
+        {
+            try
+            {
+                var usuarioClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                                  ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuarioClaim) || !int.TryParse(usuarioClaim, out int codigoUsuarioLogado))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário inválido ou não autenticado." });
+                }
+                var cliente = await _dbcontext.Usuarios
+                    .FirstOrDefaultAsync(a => a.Codigo_Usuario == codigoUsuarioLogado);
+
+                if (cliente == null)
+                {
+                    return NotFound(new { Mensagem = "Usuário não encontrado." });
+                }
+
+                bool senhaValida = BCrypt.Net.BCrypt.Verify(dados.SenhaAntiga, cliente.Senha);
+
+                if (!senhaValida)
+                {
+                    return BadRequest(new { Mensagem = "Senha atual está incorreta." });
+                }
+
+                cliente.Senha = BCrypt.Net.BCrypt.HashPassword(dados.SenhaNova);
+                await _dbcontext.SaveChangesAsync();
+
+                return Ok(new { Mensagem = "Senha alterada com sucesso!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao alterar senha: {ex.Message}" });
+            }
+        }
+
+        // FIM DA CLASSE CONTROLLER
+        // --------------------------------------------------------
+
+        // 2. A classe de modelo fica aqui fora (ou em um arquivo separado)
+        // 3. Renomeamos para evitar qualquer conflito de Schema no Swagger
+        public class AlterarSenhaPerfilRequest
+        {
+            public string? SenhaAntiga { get; set; }
+            public string? SenhaNova { get; set; }
         }
     }
 }

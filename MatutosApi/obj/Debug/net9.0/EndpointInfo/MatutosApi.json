@@ -188,38 +188,26 @@
         }
       }
     },
-    "/cliente/consultar": {
-      "get": {
-        "tags": [
-          "Cliente"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/cliente/alterar/senha": {
+    "/servico/cadastrar": {
       "post": {
         "tags": [
-          "Cliente"
+          "Servico"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AlterarSenhaRequest"
+                "$ref": "#/components/schemas/Servico"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/AlterarSenhaRequest"
+                "$ref": "#/components/schemas/Servico"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/AlterarSenhaRequest"
+                "$ref": "#/components/schemas/Servico"
               }
             }
           }
@@ -475,6 +463,49 @@
           }
         }
       }
+    },
+    "/usuario/consultar": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/usuario/alterar/senha": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterarSenhaPerfilRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterarSenhaPerfilRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlterarSenhaPerfilRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -575,7 +606,7 @@
         },
         "additionalProperties": false
       },
-      "AlterarSenhaRequest": {
+      "AlterarSenhaPerfilRequest": {
         "type": "object",
         "properties": {
           "senhaAntiga": {
@@ -625,6 +656,11 @@
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
+          },
+          "urlImagemCompleta": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -665,6 +701,11 @@
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
+          },
+          "urlImagemCompleta": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -755,6 +796,11 @@
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
+          },
+          "urlImagemCompleta": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
