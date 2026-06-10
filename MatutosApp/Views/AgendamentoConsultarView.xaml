@@ -2,31 +2,30 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.AgendamentoConsultarView"
+             BackgroundColor="#121212"
              Title="Meus Agendamentos">
-    <Grid Padding="15">
 
-        <CollectionView ItemsSource="{Binding ListaAgendamentos}"
-                        SelectionMode="None">
+    <Grid RowDefinitions="*, Auto">
 
+        <CollectionView Grid.Row="0" 
+                        ItemsSource="{Binding ListaAgendamentos}"
+                        SelectionMode="None"
+                        Margin="15,15,15,0">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.EmptyView>
-                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
                     <Label Text="✂️" FontSize="50" HorizontalOptions="Center"/>
                     <Label Text="Você não possui agendamentos recentes." 
-                           TextColor="#666" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+                           TextColor="#AAAAAA" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-
-                    <Border BackgroundColor="White" Padding="15" StrokeShape="RoundRectangle 10">
-                        <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.1" />
-                        </Border.Shadow>
+                    <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" Padding="15" StrokeShape="RoundRectangle 12">
 
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer 
@@ -34,44 +33,89 @@
                                 CommandParameter="{Binding Codigo_Agendamento}" />
                         </Border.GestureRecognizers>
 
-                        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="5">
+                        <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
 
-                            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="5">
-                                <Label Text="{Binding Codigo_Agendamento}"/>
+                            <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                <Label Text="{Binding Codigo_Agendamento, StringFormat='Nº {0}'}" TextColor="#AAAAAA" FontAttributes="Bold" VerticalOptions="Center"/>
+                                <Label Text="|" TextColor="#333333" VerticalOptions="Center"/>
                                 <Label Text="📅" VerticalOptions="Center"/>
                                 <Label Text="{Binding Data_Agendamento, StringFormat='{0:dd/MM/yyyy HH:mm}'}" 
-                                       FontAttributes="Bold" FontSize="16" TextColor="#2B0B3F" VerticalOptions="Center"/>
+                                       FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF" VerticalOptions="Center"/>
                             </HorizontalStackLayout>
 
-                            <Frame Grid.Row="0" Grid.Column="1" Padding="8,4" CornerRadius="5" 
-                                   BackgroundColor="#E8EAF6" BorderColor="Transparent" HasShadow="False">
-                                <Label Text="{Binding Codigo_Situacao_Agendamento}" 
-                                       FontSize="12" FontAttributes="Bold" TextColor="#3F51B5"/>
-                            </Frame>
+                            <Border Grid.Row="0" Grid.Column="1" Padding="8,4" StrokeShape="RoundRectangle 5" StrokeThickness="1" BackgroundColor="#2A2A2A">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Aberto">
+                                        <Setter Property="Stroke" Value="#FFFFFF" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Cancelado">
+                                        <Setter Property="Stroke" Value="#E63946" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Liberado">
+                                        <Setter Property="Stroke" Value="#2196F3" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Concluido">
+                                        <Setter Property="Stroke" Value="#4CAF50" />
+                                    </DataTrigger>
+                                </Border.Triggers>
 
-                            <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="#EEEEEE" Margin="0,5"/>
+                                <Label Text="{Binding Codigo_Situacao_Agendamento}" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Aberto">
+                                            <Setter Property="TextColor" Value="#FFFFFF" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Cancelado">
+                                            <Setter Property="TextColor" Value="#E63946" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Liberado">
+                                            <Setter Property="TextColor" Value="#2196F3" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Concluido">
+                                            <Setter Property="TextColor" Value="#4CAF50" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+
+                            <BoxView Grid.Row="1" Grid.ColumnSpan="2" HeightRequest="1" Color="#333333" Margin="0,5"/>
 
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2">
-                                <Label Text="Barbeiro" FontSize="12" TextColor="#999"/>
-                                <Label Text="{Binding Barbeiro.Nome}" FontSize="15" TextColor="#333" FontAttributes="Bold"/>
+                                <Label Text="✂️ Barbeiro" FontSize="12" TextColor="#AAAAAA"/>
+                                <Label Text="{Binding Barbeiro.Nome}" FontSize="15" TextColor="#FFFFFF" FontAttributes="Bold"/>
                             </VerticalStackLayout>
 
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="0" Spacing="2" Margin="0,10,0,0">
+                                <Label Text="👤 Cliente" FontSize="12" TextColor="#AAAAAA"/>
+                                <Label Text="{Binding Cliente.Nome}" FontSize="15" TextColor="#FFFFFF" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
 
-                            <VerticalStackLayout Grid.Row="3" Grid.Column="2" HorizontalOptions="End" Spacing="2" Margin="0,40,0,0">
-                                <Label Text="Total" FontSize="12" TextColor="#999" HorizontalOptions="End"/>
+                            <VerticalStackLayout Grid.Row="3" Grid.Column="1" HorizontalOptions="End" Spacing="2" VerticalOptions="End">
+                                <Label Text="Total" FontSize="12" TextColor="#AAAAAA" HorizontalOptions="End"/>
                                 <Label Text="{Binding Valor_Total_Agendamento, StringFormat='R$ {0:F2}'}" 
-                                       FontSize="16" TextColor="#2E7D32" FontAttributes="Bold"/>
+                                       FontSize="18" TextColor="#4CAF50" FontAttributes="Bold"/>
                             </VerticalStackLayout>
-
-                            <VerticalStackLayout Grid.Row="3" Grid.Column="0" Spacing="2" Margin="0,40,0,0">
-                                <Label Text="Cliente" FontSize="12" TextColor="#999"/>
-                                <Label Text="{Binding Cliente.Nome}" FontSize="15" TextColor="#333" FontAttributes="Bold"/>
-                            </VerticalStackLayout>
-
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="0">
+            <BoxView HeightRequest="1" Color="#333333" />
+
+            <VerticalStackLayout Spacing="15" Padding="20,20,20,30" BackgroundColor="#121212">
+
+                <Button Text="Voltar"
+                        Command="{Binding VoltarTela}"
+                        BackgroundColor="#E0E0E0"
+                        TextColor="#121212"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="25"
+                        HeightRequest="55" />
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
     </Grid>
 </ContentPage>

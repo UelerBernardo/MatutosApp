@@ -2,50 +2,86 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.LoginView"
-             xmlns:views="clr-namespace:MatutosApp.Views">
+             xmlns:views="clr-namespace:MatutosApp.Views"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
-            <Label Text="BEM-VINDO A BARBERIA MATUTOS"
-                   FontSize="30"
+
+            <Border StrokeShape="RoundRectangle 75" 
+                    Stroke="#333333" 
+                    StrokeThickness="2" 
+                    WidthRequest="150" 
+                    HeightRequest="150" 
+                    BackgroundColor="#1E1E1E"
+                    HorizontalOptions="Center"
+                    Margin="0, 0, 0, 10">
+                <Image Source="logomatutos.jpg" Aspect="AspectFill" WidthRequest="150" HeightRequest="150"/>
+            </Border>
+
+            <Label Text="BARBEARIA MATUTOS"
+                   FontSize="26"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
-                   TextColor="#2B0B3F"/>
+                   TextColor="#FFFFFF"/>
 
             <Label Text="Acesse sua conta para agendar seu horário."
                    FontSize="14"
-                   TextColor="Gray"
+                   TextColor="#AAAAAA"
                    HorizontalOptions="Center"
-                   Margin="0, -15, 0, 20"/>
+                   Margin="0, -15, 0, 10"/>
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="E-mail" FontSize="14" FontAttributes="Bold" />
-                <Entry Placeholder="exemplo@email.com"
-                       Text="{Binding Email}"
-                       Keyboard="Email"
-                       HeightRequest="50"/>
-            </VerticalStackLayout>
+            <Border BackgroundColor="#1E1E1E" 
+                    Stroke="#333333" 
+                    StrokeThickness="1" 
+                    StrokeShape="RoundRectangle 20" 
+                    Padding="20">
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Senha" FontSize="14" FontAttributes="Bold" />
-                <Entry Placeholder="******"
-                       Text="{Binding Senha}"
-                       IsPassword="True" 
-                       HeightRequest="50"/>
-            </VerticalStackLayout>
+                <VerticalStackLayout Spacing="20">
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="E-mail" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="exemplo@email.com"
+                                   Text="{Binding Email}"
+                                   Keyboard="Email"
+                                   TextColor="#FFFFFF"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Senha" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="******"
+                                   Text="{Binding Senha}"
+                                   IsPassword="True" 
+                                   TextColor="#FFFFFF"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
 
             <Button Text="ENTRAR"
                     Command="{Binding LogarCommand}"
-                    BackgroundColor="#2B0B3F"
-                    TextColor="White"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="#121212"
                     FontAttributes="Bold"
-                    CornerRadius="8"
+                    CornerRadius="12"
                     HeightRequest="55"
                     Margin="0, 10, 0, 0"/>
 
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
-                <Label Text="Novo por aqui?" VerticalOptions="Center"/>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0, 10, 0, 0">
+                <Label Text="Novo por aqui?" TextColor="#AAAAAA" VerticalOptions="Center"/>
                 <Label Text="Cadastre-se" 
-                       TextColor="#2B0B3F"
+                       TextColor="#FFFFFF"
                        FontAttributes="Bold"
                        VerticalOptions="Center"
                        TextDecorations="Underline">

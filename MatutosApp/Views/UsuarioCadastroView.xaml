@@ -1,65 +1,108 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MatutosApp.Views.UsuarioCadastroView">
+             x:Class="MatutosApp.Views.UsuarioCadastroView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
     <ScrollView>
-        <VerticalStackLayout Spacing="20" Padding="30">
+        <VerticalStackLayout Spacing="25" Padding="20,40,20,40">
 
-            <Label Text="Barbearia Matutos"
-                   FontSize="28"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   TextColor="#333333"
-                   Margin="0, 20, 0, 30"/>
-
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Nome Completo" FontSize="14" FontAttributes="Bold" />
-                <Entry Placeholder="Ex: Uéler Silva"
-                       Text="{Binding Nome}" 
-                       ClearButtonVisibility="WhileEditing"/>
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
+                <Label Text="Barbearia Matutos"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#FFFFFF"/>
+                <Label Text="Crie sua conta"
+                       FontSize="14"
+                       TextColor="#AAAAAA"
+                       HorizontalOptions="Center" />
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="5">
-                <Label Text="E-mail" FontSize="14" FontAttributes="Bold" />
-                <Entry Placeholder="seuemail@exemplo.com"
-                       Text="{Binding Email}"
-                       Keyboard="Email"
-                       ClearButtonVisibility="WhileEditing"/>
+            <Border BackgroundColor="#1E1E1E" 
+                    Stroke="#333333" 
+                    StrokeThickness="1" 
+                    StrokeShape="RoundRectangle 20" 
+                    Padding="20">
+
+                <VerticalStackLayout Spacing="20">
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Nome Completo" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="Ex: Uéler Silva"
+                                   Text="{Binding Nome}" 
+                                   TextColor="#FFFFFF"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   ClearButtonVisibility="WhileEditing"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="E-mail" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="seuemail@exemplo.com"
+                                   Text="{Binding Email}"
+                                   Keyboard="Email"
+                                   TextColor="#FFFFFF"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   ClearButtonVisibility="WhileEditing"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Senha" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="Digite sua senha"
+                                   Text="{Binding Senha}"
+                                   IsPassword="True"
+                                   TextColor="#FFFFFF"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   IsEnabled="{Binding PodeEditar}"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+            <Picker Title="Selecione o tipo" 
+                     TitleColor="#888888"
+                     ItemsSource="{Binding usuarioTipoDisponivel}"
+                     SelectedItem="{Binding UsuarioTipoSelecionado}"
+                     BackgroundColor="Transparent"
+                     TextColor="#FFFFFF"
+                     IsEnabled="{Binding PodeEditar}"
+                     WidthRequest="150"
+                    HorizontalOptions="Start"
+                     FontAttributes="Bold"
+                     VerticalOptions="Center"/>
+
+            <VerticalStackLayout Spacing="15" Margin="0,10,0,0">
+
+                <Button Text="{Binding NomeBotaoAcao}"
+                        Command="{Binding CadastrarOuAlterarCommand}"
+                        BackgroundColor="#E0E0E0"
+                        TextColor="#121212"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="55" />
+
+                <Button Text="Cancelar"
+                        Command="{Binding VoltarTela}"
+                        BackgroundColor="Transparent"
+                        TextColor="#AAAAAA"
+                        BorderColor="#333333"
+                        BorderWidth="1"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="55" />
+
             </VerticalStackLayout>
-
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Senha" FontSize="14" FontAttributes="Bold" />
-                <Entry Placeholder="Digite sua senha"
-                       Text="{Binding Senha}"
-                       IsPassword="True"
-                       IsEnabled="{Binding PodeEditar}"/>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Você é um:" FontSize="14" FontAttributes="Bold" />
-
-                <Picker
-                      Title="Tipo de Usuário" 
-                      TitleColor="White"
-                      ItemsSource="{Binding usuarioTipoDisponivel}"
-                      SelectedItem="{Binding UsuarioTipoSelecionado}"
-                      BackgroundColor="White"
-                      TextColor="Black"
-                      IsEnabled="{Binding PodeEditar}"
-                      FontAttributes="Bold"
-                      HorizontalOptions="Start"
-                      WidthRequest="150"
-                      HeightRequest="60"/>
-            </VerticalStackLayout>
-
-            <Button Text="{Binding NomeBotaoAcao}"
-                    Command="{Binding CadastrarOuAlterarCommand}"
-                    BackgroundColor="#2B0B3F"
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CornerRadius="8"
-                    HeightRequest="50"
-                    Margin="0, 30, 0, 0"/>
 
         </VerticalStackLayout>
     </ScrollView>

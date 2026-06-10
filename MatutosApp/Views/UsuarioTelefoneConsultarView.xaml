@@ -1,95 +1,124 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MatutosApp.Views.UsuarioTelefoneConsultarView">
+             x:Class="MatutosApp.Views.UsuarioTelefoneConsultarView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
     <Grid RowDefinitions="Auto, *, Auto">
 
-        <Grid Grid.Row="0" BackgroundColor="#0D1623" Padding="20,50,20,30">
+        <Grid Grid.Row="0" BackgroundColor="#121212" Padding="20,50,20,30">
             <Grid ColumnDefinitions="Auto, *">
-                <ImageButton Grid.Column="0" Source="back_arrow_white.png" WidthRequest="24" HeightRequest="24" 
-                             VerticalOptions="Center" Command="{Binding VoltarCommand}" 
+                <ImageButton Grid.Column="0" 
+                             Source="back_arrow_white.png" 
+                             WidthRequest="24" 
+                             HeightRequest="24" 
+                             VerticalOptions="Center" 
+                             Command="{Binding VoltarCommand}" 
                              BackgroundColor="Transparent"/>
 
-                <Label Grid.Column="1" Text="Meus Telefones" TextColor="White" FontSize="22"  HorizontalTextAlignment="Center"
-                       FontAttributes="Bold" VerticalOptions="Center" Margin="0,0,0,15"/>
+                <Label Grid.Column="1" 
+                       Text="Meus Telefones" 
+                       TextColor="#FFFFFF" 
+                       FontSize="22"  
+                       HorizontalTextAlignment="Center"
+                       FontAttributes="Bold" 
+                       VerticalOptions="Center" 
+                       Margin="0,0,0,15"/>
             </Grid>
         </Grid>
 
         <CollectionView Grid.Row="1" 
                         ItemsSource="{Binding ListaTelefone}" 
                         SelectionMode="None"
-                        Margin="20">
+                        Margin="20,0,20,0">
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="15" Margin="0,50,0,0">
                     <Label Text="📵" FontSize="60" HorizontalOptions="Center" />
-                    <Label Text="Você não possui nenhum" FontSize="18" TextColor="#333" HorizontalOptions="Center" />
-                    <Label Text="telefone cadastrado." FontSize="18" TextColor="#333" HorizontalOptions="Center" />
+                    <Label Text="Você não possui nenhum" FontSize="18" TextColor="#AAAAAA" HorizontalOptions="Center" />
+                    <Label Text="telefone cadastrado." FontSize="18" TextColor="#AAAAAA" HorizontalOptions="Center" />
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
 
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 12" 
-            Padding="15" Margin="0,0,0,15">
-                        <Border.Shadow>
-                            <Shadow Brush="Black" Offset="0,4" Radius="8" Opacity="0.05" />
-                        </Border.Shadow>
+                    <Border BackgroundColor="#1E1E1E" 
+                            Stroke="#333333" 
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 12" 
+                            Padding="15">
 
-                        <Grid ColumnDefinitions="Auto, *, Auto">
+                        <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="10" VerticalOptions="Center">
 
-                            <Frame Grid.Column="0" BackgroundColor="#F0F4F8" CornerRadius="25" 
-                                WidthRequest="50" HeightRequest="50" Padding="0" HasShadow="False">
-                                <Label Text="📞" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Frame Grid.Column="0" BackgroundColor="#2A2A2A" CornerRadius="25" 
+                                   WidthRequest="50" HeightRequest="50" Padding="0" HasShadow="False" BorderColor="Transparent" VerticalOptions="Center">
+                             
+                                <Image Source="telefonebranco.png" WidthRequest="40"/>
                             </Frame>
 
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0,0,0" Spacing="2">
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
 
-                                <Label Text="{Binding Usuario.Nome}" TextColor="#999" FontSize="12" />
+                                <Label Text="{Binding Usuario.Nome}" TextColor="#AAAAAA" FontSize="12" />
 
                                 <HorizontalStackLayout Spacing="5">
-                                    <Label Text="{Binding Telefone.DDD, StringFormat='({0})'}" TextColor="#333" FontSize="16" FontAttributes="Bold" />
-                                    <Label Text="{Binding Telefone.Numero_Telefone}" TextColor="#333" FontSize="16" FontAttributes="Bold" />
-
-                                    <Border IsVisible="{Binding Telefone.Principal}" BackgroundColor="#E8F5E9" 
-                                                StrokeShape="RoundRectangle 5" Padding="5,2" HorizontalOptions="End" Margin="0,5,0,0">
-                                        <Label Text="Principal" TextColor="#4CAF50" FontSize="10" FontAttributes="Bold" />
-                                    </Border>
+                                    <Label Text="{Binding Telefone.DDD, StringFormat='({0})'}" TextColor="#FFFFFF" FontSize="16" FontAttributes="Bold" />
+                                    <Label Text="{Binding Telefone.Numero_Telefone}" TextColor="#FFFFFF" FontSize="16" FontAttributes="Bold" />
                                 </HorizontalStackLayout>
 
-
+                                <Border IsVisible="{Binding Telefone.Principal}" 
+                                        BackgroundColor="#1A3320" 
+                                        Stroke="#4CAF50" 
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 5" 
+                                        Padding="6,2" 
+                                        HorizontalOptions="Start" 
+                                        Margin="0,2,0,0">
+                                    <Label Text="Principal" TextColor="#4CAF50" FontSize="10" FontAttributes="Bold" />
+                                </Border>
                             </VerticalStackLayout>
-                            <Button Text="❌"
-                                    Grid.Column="1"
-                                    BackgroundColor="White"
-                                    WidthRequest="70"
-                                    FontSize="Medium"
-                                    HorizontalOptions="End"
-                                    TextColor="White"
-                                    CornerRadius="8"
-                                    HeightRequest="9"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirTelefoneCommand}"
-                                    CommandParameter="{Binding Codigo_Telefone}" />
-                            <Button   Text="✏️"
-                                      FontSize="Medium"
-                                      Grid.Column="3"
-                                      BackgroundColor="White"
-                                      WidthRequest="70"
-                                      TextColor="White"
-                                      CornerRadius="8"
-                                      HeightRequest="2"
-                                      Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoTelefoneCommand}"
-                                      CommandParameter="{Binding Telefone}" />
+
+                            <ImageButton Grid.Column="2"
+                                         Source="lapis.png"
+                                         BackgroundColor="Transparent"
+                                         WidthRequest="25"
+                                         HeightRequest="10"
+                                         VerticalOptions="Center"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlteracaoTelefoneCommand}"
+                                         CommandParameter="{Binding Telefone}" />
+
+                            <ImageButton Grid.Column="3"
+                                         Source="xvermelho.png"
+                                         BackgroundColor="Transparent"
+                                         WidthRequest="5"
+                                         HeightRequest="5"
+                                         VerticalOptions="Center"
+                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ExcluirTelefoneCommand}"
+                                         CommandParameter="{Binding Codigo_Telefone}" />
+
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Grid Grid.Row="2" Padding="20,10,20,30" BackgroundColor="#F8F9FA">
-            <Button Text="Adicionar Novo Telefone" BackgroundColor="#E63946" TextColor="White" 
-                    CornerRadius="10" HeightRequest="50" FontAttributes="Bold" FontSize="16"
-                    Command="{Binding AbrirAdicionarTelefoneCommand}"/>
-        </Grid>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="0">
+            <BoxView HeightRequest="1" Color="#333333" />
+            <Grid Padding="20,20,20,30" BackgroundColor="#121212">
+                <Button Text="Adicionar Novo Telefone" 
+                        BackgroundColor="#E0E0E0" 
+                        TextColor="#121212" 
+                        CornerRadius="25" 
+                        HeightRequest="55" 
+                        FontAttributes="Bold" 
+                        FontSize="16"
+                        Command="{Binding AbrirAdicionarTelefoneCommand}"/>
+            </Grid>
+        </VerticalStackLayout>
 
     </Grid>
 </ContentPage>

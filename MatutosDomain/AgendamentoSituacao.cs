@@ -10,6 +10,7 @@ namespace MatutosDomain
     {
         Aberto = 1,
         Cancelado = 2,
-        Liberado = 3
+        Liberado = 3,
+        Concluido = 4
     }
 }

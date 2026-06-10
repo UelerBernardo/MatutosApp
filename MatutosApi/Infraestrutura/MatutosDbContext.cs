@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MatutosDomain; 
+using MatutosDomain;
+using Org.BouncyCastle.Asn1;
 
 namespace MatutosApi.Infraestrutura 
 {
@@ -14,6 +15,8 @@ namespace MatutosApi.Infraestrutura
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Agendamento> Agendamentos { get; set; }
         public DbSet<Agendamento_Servico> Agendamento_Servicos { get; set; }
+        public DbSet<Servico_Imagem> Servico_Imagens { get; set; }
+
         public MatutosDbContext(DbContextOptions<MatutosDbContext> options) : base(options)
         {
         }

@@ -60,6 +60,25 @@ namespace MatutosApp
             builder.Services.AddTransient<ServicoConsultarView>();
             builder.Services.AddTransient<ServicoCadastroView>();
 
+
+
+
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemBorda", (handler, view) =>
+            {
+#if ANDROID
+                handler.PlatformView.Background = null;
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+#elif IOS
+        handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#elif WINDOWS
+        handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+        handler.PlatformView.FocusVisualMargin = new Microsoft.UI.Xaml.Thickness(0);
+#endif
+            });
+
+
+
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
