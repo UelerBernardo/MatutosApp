@@ -26,6 +26,55 @@ namespace MatutosApp.Services
             };
         }
 
+        //public async Task<(bool Sucesso, string Mensagem)> CadastrarImagemServico(string token, int codigoServico, Servico_Imagem _Imagem)
+        //{
+        //    try
+        //    {
+
+        //        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        //        var request = _Imagem.Imagem.Conve
+
+        //        var resposta = await _httpClient.PostAsync($"servico/{codigoServico}/imagens", );
+        //    }
+        //}
+        public async Task<(bool Sucesso, string Mensagem)> CadastrarImagemServico(string token, int codigoServico, string imagemBase64)
+        {
+            try
+            {
+             
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+                var requestBody = new
+                {
+                    ImagemBase64 = imagemBase64
+                };
+
+   
+                string json = JsonSerializer.Serialize(requestBody);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                string url = $"/api/servico/{codigoServico}/imagens";
+
+                var response = await _httpClient.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return (true, "Imagem salva com sucesso!");
+                }
+                else
+                {
+                    var erroResult = await response.Content.ReadAsStringAsync();
+                    return (false, erroResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Erro de conexão ao enviar imagem: {ex.Message}");
+            }
+        }
+
         public async Task<(bool Sucesso, string Mensagem, List<Servico> Dados)> Consultar(string token)
         {
             try

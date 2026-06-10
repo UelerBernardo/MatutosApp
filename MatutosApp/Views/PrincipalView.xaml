@@ -3,43 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:MatutosApp.Views"
              x:Class="MatutosApp.Views.PrincipalView"
-             BackgroundColor="#121212">
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
     <ScrollView>
-        <VerticalStackLayout Padding="10" Spacing="10">
+        <VerticalStackLayout Padding="20" Spacing="10">
 
-            <Grid RowDefinitions="Auto, Auto" Margin="0, 40, 0, 10">
-                <ImageButton Source="gear.png" 
-                             WidthRequest="20" 
-                             HeightRequest="20" 
-                             HorizontalOptions="End" 
+            <Grid ColumnDefinitions="60, *, 60" Margin="0, 20, 0, 10">
+
+                <ImageButton Grid.Column="0"
+                             Source="engrenagembraca.png"
+                             WidthRequest="80"
+                             HeightRequest="80"
                              VerticalOptions="Start"
-                             Command="{Binding PerfilAbrirCommand}"/>
+                             HorizontalOptions="Start"
+                             BackgroundColor="Transparent"
+                             Command="{Binding PerfilAbrirCommand}" />
 
-                <VerticalStackLayout Spacing="5" HorizontalOptions="Center">
-                    <Border StrokeShape="RoundRectangle 50" 
-                            Stroke="#888888" StrokeThickness="2" 
+                <VerticalStackLayout Grid.Column="1" Spacing="15" HorizontalOptions="Center">
+                    <Border StrokeShape="RoundRectangle 75" 
+                            Stroke="#333333" 
+                            StrokeThickness="2" 
                             WidthRequest="150" 
                             HeightRequest="150" 
+                            BackgroundColor="#1E1E1E"
                             HorizontalOptions="Center">
-                        <Image Source="barbearialogo.jpeg" Aspect="AspectFill" WidthRequest="150" HeightRequest="150" HorizontalOptions="Center"/> 
+                        <Image Source="logomatutos.jpg" Aspect="AspectFill" WidthRequest="150" HeightRequest="150"/>
                     </Border>
 
                     <Label Text="{Binding UsuarioPerfil.Nome}"
-                           Margin="0,20,0,0"
                            FontSize="22" 
                            FontAttributes="Bold" 
-                           TextColor="#FFFFFF" HorizontalOptions="Center" />
+                           TextColor="#FFFFFF" 
+                           HorizontalOptions="Center" />
                 </VerticalStackLayout>
+
+                <BoxView Grid.Column="2" Color="Transparent" />
             </Grid>
 
-            <BoxView HeightRequest="1" Color="#333333" Margin="0, 1" />
+            <BoxView HeightRequest="1" Color="#333333" Margin="0, 10" />
+
             <Label Text="Menu" 
                    FontSize="18" 
                    FontAttributes="Bold" 
-                   TextColor="#CCCCCC" HorizontalOptions="Center" 
+                   TextColor="#AAAAAA" 
+                   HorizontalOptions="Center" 
                    Margin="0, 0, 0, 10" />
 
-            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="20" RowSpacing="20">
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="15" RowSpacing="15">
 
                 <Border Grid.Row="0" Grid.Column="0" 
                         StrokeShape="RoundRectangle 20" 
@@ -56,9 +67,7 @@
 
                 <Border Grid.Row="0" Grid.Column="1"
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" 
-                        Stroke="#333333" 
-                        StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding MeusAgendamentosCommand}"/>
@@ -71,9 +80,7 @@
 
                 <Border Grid.Row="1" Grid.Column="0" 
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" 
-                        Stroke="#333333" 
-                        StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirLocalizacaoCommand}"/>
@@ -86,9 +93,7 @@
 
                 <Border Grid.Row="1" Grid.Column="1" 
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" 
-                        Stroke="#333333" 
-                        StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirServicoCommand}"/>
@@ -101,12 +106,14 @@
             </Grid>
 
             <Button Text="Sair" 
-                    BackgroundColor="#E0E0E0" TextColor="#121212" FontAttributes="Bold" 
+                    BackgroundColor="#E0E0E0" 
+                    TextColor="#121212" 
+                    FontAttributes="Bold" 
                     CornerRadius="25" 
-                    HeightRequest="50" 
+                    HeightRequest="55" 
                     WidthRequest="200" 
                     HorizontalOptions="Center" 
-                    Margin="0, 20, 0, 30" />
+                    Margin="0, 30, 0, 30" />
 
         </VerticalStackLayout>
     </ScrollView>
