@@ -14,6 +14,8 @@ namespace MatutosDomain
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Codigo_Imagem { get; set; }
+
+        [Column(TypeName = "LONGTEXT")]
         public string? Imagem { get; set; }
 
         [ForeignKey ("Servico")]

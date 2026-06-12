@@ -231,6 +231,71 @@
         }
       }
     },
+    "/servico/cadastrar/imagens/{codigoServico}": {
+      "post": {
+        "tags": [
+          "Servico"
+        ],
+        "parameters": [
+          {
+            "name": "codigoServico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdicionarImagemServicoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdicionarImagemServicoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdicionarImagemServicoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/servico/consultar/imagens/{codigoServico}": {
+      "get": {
+        "tags": [
+          "Servico"
+        ],
+        "parameters": [
+          {
+            "name": "codigoServico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/telefone/cadastrar": {
       "post": {
         "tags": [
@@ -510,6 +575,16 @@
   },
   "components": {
     "schemas": {
+      "AdicionarImagemServicoRequest": {
+        "type": "object",
+        "properties": {
+          "imagemBase64": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Agendamento": {
         "type": "object",
         "properties": {
@@ -565,7 +640,8 @@
         "enum": [
           1,
           2,
-          3
+          3,
+          4
         ],
         "type": "integer",
         "format": "int32"

@@ -26,18 +26,7 @@ namespace MatutosApp.Services
             };
         }
 
-        //public async Task<(bool Sucesso, string Mensagem)> CadastrarImagemServico(string token, int codigoServico, Servico_Imagem _Imagem)
-        //{
-        //    try
-        //    {
-
-        //        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        //        var request = _Imagem.Imagem.Conve
-
-        //        var resposta = await _httpClient.PostAsync($"servico/{codigoServico}/imagens", );
-        //    }
-        //}
+  
         public async Task<(bool Sucesso, string Mensagem)> CadastrarImagemServico(string token, int codigoServico, string imagemBase64)
         {
             try
@@ -75,6 +64,39 @@ namespace MatutosApp.Services
             }
         }
 
+        public async Task<(bool Sucesso, string Mensagem, List<Servico_Imagem> Dados)> ConsultarImagemServico(int codigoServico, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var resposta = await _httpClient.GetAsync($"servico/consultar/imagens/{codigoServico}");
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<Servico_Imagem>>(options);
+
+                    return (true, string.Empty, dados);
+                }
+                else
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar a requisição.";
+                    Debug.WriteLine($"Falha na API: {mensagemApi}");
+
+                    return (false, mensagemApi, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.", null);
+            }
+        }
+
         public async Task<(bool Sucesso, string Mensagem, List<Servico> Dados)> Consultar(string token)
         {
             try
@@ -100,14 +122,13 @@ namespace MatutosApp.Services
                     Debug.WriteLine($"Falha na API: {mensagemApi}");
 
                     return (false, mensagemApi, null);
-
                 }
             }
 
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
-                return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.", null);
+                Debug.WriteLine($"Exceção ao cadastrar Serviço: {ex.Message}");
+                return (false, string.Empty, null);
             }
         }
 
@@ -124,6 +145,7 @@ namespace MatutosApp.Services
                 var tokenLimpo = token.Replace("Bearer ", "").Trim();
                 _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenLimpo);
 
+
                 var resposta = await _httpClient.PostAsJsonAsync<Servico>("servico/cadastrar", servico);
 
                 if (resposta.IsSuccessStatusCode)
@@ -134,15 +156,16 @@ namespace MatutosApp.Services
                 else
                 {
                     var errorMessage = await resposta.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {errorMessage}");
+                    Debug.WriteLine($"Falha ao cadastrar servico. Status: {resposta.StatusCode}, Erro: {errorMessage}");
                     return (false, errorMessage);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
+                Debug.WriteLine($"Exceção ao cadastrar Serviço: {ex.Message}");
                 return (false, string.Empty);
             }
         }
+
     }
 }

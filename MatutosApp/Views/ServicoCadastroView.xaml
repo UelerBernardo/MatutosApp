@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MatutosApp.Views.ServicoCadastroView">
+             x:Class="MatutosApp.Views.ServicoCadastroView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="20,40,20,40">
 
             <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
-                <!--<Label Text="➕" FontSize="40" HorizontalOptions="Center" />-->
                 <Image Source="mais.png" HeightRequest="50" WidthRequest="50"/>
                 <Label Text="Novo Serviço"
                        FontSize="28"
@@ -53,7 +55,6 @@
                     </VerticalStackLayout>
 
                     <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
-
                         <VerticalStackLayout Grid.Column="0" Spacing="8">
                             <Label Text="Duração (Texto)" TextColor="#CCCCCC" FontAttributes="Bold" FontSize="14" />
                             <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
@@ -90,7 +91,7 @@
 
                         <Switch Grid.Column="1" 
                                 IsToggled="{Binding Ativo}" 
-                                OnColor="#E0E0E0" 
+                                OnColor="#4CAF50" 
                                 ThumbColor="#FFFFFF" 
                                 VerticalOptions="Center" />
                     </Grid>
@@ -103,7 +104,47 @@
                  StrokeThickness="1" 
                  StrokeShape="RoundRectangle 20" 
                  Padding="20">
-                
+
+                <VerticalStackLayout Spacing="15">
+
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Grid.Column="0" Text="Imagens do Serviço" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                        <Label Grid.Column="1" Text="{Binding ImagensNovasBase64.Count, StringFormat='{0}/3'}" TextColor="#AAAAAA" FontAttributes="Bold" FontSize="14" VerticalOptions="Center"/>
+                    </Grid>
+
+                    <CollectionView ItemsSource="{Binding ImagensNovasBase64}" HeightRequest="120" HorizontalOptions="Center">
+
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5" Margin="0,20">
+                                <Label Text="🖼️" FontSize="30" HorizontalOptions="Center" />
+                                <Label Text="Nenhuma imagem." TextColor="#666666" FontSize="14" HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border StrokeShape="RoundRectangle 10" Stroke="#333333" StrokeThickness="1" BackgroundColor="#2A2A2A" WidthRequest="100" HeightRequest="100">
+                                    <Image Source="{Binding FonteImagem}" Aspect="AspectFill" />
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                    <Button Text="📷 Selecionar Foto"
+                             Command="{Binding SelecionarImagemServicoCommand}"
+                             BackgroundColor="#2A2A2A"
+                             TextColor="#FFFFFF"
+                             BorderColor="#555555"
+                             BorderWidth="1"
+                             FontAttributes="Bold"
+                             CornerRadius="10"
+                             HeightRequest="45"
+                             Margin="0,5,0,0" />
+                </VerticalStackLayout>
             </Border>
 
             <VerticalStackLayout Spacing="15" Margin="0,10,0,0">

@@ -25,25 +25,37 @@ namespace MatutosApi.Controllers
 
             try
             {
+                if (servico.Imagens != null && servico.Imagens.Count > 3)
+                {
+                    return BadRequest(new { Message = "Um serviço não pode ser cadastrado com mais de 3 imagens." });
+                }
+
                 var servicoNovo = new Servico
                 {
                     Descricao = servico.Descricao,
                     Duracao = servico.Duracao,
                     Preco = servico.Preco,
                     Tempo_Servico = servico.Tempo_Servico,
-                    Ativo = servico.Ativo
-                };
+                    Ativo = servico.Ativo,
+
+                    Imagens = servico.Imagens?.Select(img => new Servico_Imagem
+                    {
+                        Imagem = img.Imagem
+                    }).ToList() ?? new List<Servico_Imagem>()
+
+                };  
 
                 _dbContext.Servicos.Add(servicoNovo);
 
                 await _dbContext.SaveChangesAsync();
 
-                return Ok();
+                return Ok(new { Mensagem = "Serviço e imagens cadastrados com sucesso!" });
             }
 
             catch(Exception ex)
             {
-                return StatusCode(500, new { Message = $"Erro interno ao buscar barbeiros: {ex.Message}" });
+                string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, new { Message = $"Erro interno: {erroReal}" });
             }
         }
 
@@ -54,6 +66,7 @@ namespace MatutosApi.Controllers
         {
             try
             {
+
                 var servicos = await _dbContext.Servicos
                     .Where(a => a.Ativo == true)
                     .Select(a => new
@@ -74,7 +87,7 @@ namespace MatutosApi.Controllers
             }
         }
 
-        [HttpPost("{codigoServico}/imagens")]
+        [HttpPost("cadastrar/imagens/{codigoServico}")]
         [Authorize] 
         public async Task<IActionResult> AdicionarImagem(int codigoServico, [FromBody] AdicionarImagemServicoRequest request)
         {
@@ -85,7 +98,6 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Mensagem = "Nenhuma imagem foi enviada." });
                 }
 
-                // Busca o serviço e já traz a lista de imagens dele usando o Include
                 var servico = await _dbContext.Servicos
                     .Include(s => s.Imagens)
                     .FirstOrDefaultAsync(s => s.Codigo_Servico == codigoServico);
@@ -95,13 +107,12 @@ namespace MatutosApi.Controllers
                     return NotFound(new { Mensagem = "Serviço não encontrado." });
                 }
 
-                // 👉 A trava de segurança: Garante o máximo de 3 imagens!
+                
                 if (servico.Imagens.Count >= 3)
                 {
                     return BadRequest(new { Mensagem = "Este serviço já atingiu o limite máximo de 3 imagens." });
                 }
 
-                // Cria a nova imagem e vincula ao serviço
                 var novaImagem = new Servico_Imagem
                 {
                     Codigo_Servico = codigoServico,
@@ -119,10 +130,8 @@ namespace MatutosApi.Controllers
             }
         }
 
-        // ==========================================
-        // 2. LISTAR AS IMAGENS PARA A TELA
-        // ==========================================
-        [HttpGet("{codigoServico}/imagens")]
+
+        [HttpGet("consultar/imagens/{codigoServico}")]
         public async Task<IActionResult> ConsultarImagensDoServico(int codigoServico)
         {
             try
@@ -132,7 +141,8 @@ namespace MatutosApi.Controllers
                     .Select(img => new
                     {
                         img.Codigo_Imagem,
-                        img.Imagem // Retorna o texto Base64 para o MAUI renderizar
+                        img.Imagem, 
+                        img.Codigo_Servico
                     })
                     .ToListAsync();
 
