@@ -122,12 +122,49 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.ServicoController",
+    "Method": "AdicionarImagem",
+    "RelativePath": "servico/cadastrar/imagens/{codigoServico}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoServico",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "MatutosDomain.AdicionarImagemServicoRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.ServicoController",
     "Method": "ConsultarServico",
     "RelativePath": "servico/consultar",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.ServicoController",
+    "Method": "ConsultarImagensDoServico",
+    "RelativePath": "servico/consultar/imagens/{codigoServico}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoServico",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

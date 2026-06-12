@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using MatutosApp.Services;
 using MatutosDomain;
@@ -97,5 +98,13 @@ namespace MatutosApp.ViewsModels
             UsuarioSessaoService.EncerrarSessao();
 
         }
+
+        [ObservableProperty]
+        private bool isBusy;
+
+        // BÔNUS: É muito útil ter uma propriedade de Título na Base também!
+        // Assim, qualquer ViewModel pode alterar o título da página facilmente.
+        [ObservableProperty]
+        private string title;
     }
 }
