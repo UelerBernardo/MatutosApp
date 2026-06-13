@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosdomain\\servico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|solutionrelative:matutosdomain\\servico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosdomain\\servico_imagem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|solutionrelative:matutosdomain\\servico_imagem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosdomain\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|solutionrelative:matutosdomain\\cliente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosdomain\\agendamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{64E6EC5C-E24C-4176-B1BB-260C2AB5B1C4}|MatutosDomain\\MatutosDomain.csproj|solutionrelative:matutosdomain\\agendamento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosapp\\viewsmodels\\servicoconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\servicoconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,21 +14,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Servico.cs",
-              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Servico.cs",
-              "RelativeDocumentMoniker": "MatutosDomain\\Servico.cs",
-              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Servico.cs",
-              "RelativeToolTip": "MatutosDomain\\Servico.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T19:10:07.885Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
@@ -63,41 +38,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Agendamento.cs",
-              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Agendamento.cs",
-              "RelativeDocumentMoniker": "MatutosDomain\\Agendamento.cs",
-              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Agendamento.cs",
-              "RelativeToolTip": "MatutosDomain\\Agendamento.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "ServicoConsultarViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T19:09:00.761Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Cliente.cs",
-              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Cliente.cs",
-              "RelativeDocumentMoniker": "MatutosDomain\\Cliente.cs",
-              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Cliente.cs",
-              "RelativeToolTip": "MatutosDomain\\Cliente.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T19:08:27.607Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Servico_Imagem.cs",
-              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Servico_Imagem.cs",
-              "RelativeDocumentMoniker": "MatutosDomain\\Servico_Imagem.cs",
-              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\Servico_Imagem.cs",
-              "RelativeToolTip": "MatutosDomain\\Servico_Imagem.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-31T19:05:48.33Z",
+              "WhenOpened": "2026-06-13T00:07:18.665Z",
               "EditorCaption": ""
             }
           ]

@@ -735,6 +735,34 @@
           },
           "ativo": {
             "type": "boolean"
+          },
+          "imagens": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Servico_Imagem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Servico_Imagem": {
+        "type": "object",
+        "properties": {
+          "codigo_Imagem": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imagem": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigo_Servico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "servico": {
+            "$ref": "#/components/schemas/Servico"
           }
         },
         "additionalProperties": false
