@@ -331,6 +331,88 @@
       ]
     },
     {
+      "Route": "Uploads/perfil_41.1rnsx4swm1.png",
+      "AssetFile": "Uploads/perfil_41.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 18 Jun 2026 21:46:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1rnsx4swm1"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_41.png"
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_41.png",
+      "AssetFile": "Uploads/perfil_41.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 18 Jun 2026 21:46:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        }
+      ]
+    },
+    {
       "Route": "Uploads/perfil_5.b5lvw7qmnn.png",
       "AssetFile": "Uploads/perfil_5.png",
       "Selectors": [],

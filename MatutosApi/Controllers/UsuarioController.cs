@@ -171,11 +171,16 @@ namespace MatutosApi.Controllers
 
             return Ok(new
             {
-                novoUsuario.Codigo_Usuario,
-                novoUsuario.Nome,
-                novoUsuario.Email,
-                Perfil = request.TipoSelecionado.ToString(),
-                Token = token
+
+                Token = token,
+                Usuario = new
+                {
+                    Codigo_Usuario = novoUsuario.Codigo_Usuario,
+                    Nome = novoUsuario.Nome,
+                    Email = novoUsuario.Email,
+                    TipoSelecionado = request.TipoSelecionado
+                }
+
             });
         }
 
@@ -192,7 +197,6 @@ namespace MatutosApi.Controllers
 
             UsuarioTipo tipoDescoberto = UsuarioTipo.Cliente;
 
-            // Verificamos em cada tabela (ajuste o nome das tabelas _dbcontext.Tabela se necessário)
             if (await _dbcontext.Administradores.AnyAsync(a => a.Codigo_Usuario == login.Codigo_Usuario))
             {
                 tipoDescoberto = UsuarioTipo.Administrador;

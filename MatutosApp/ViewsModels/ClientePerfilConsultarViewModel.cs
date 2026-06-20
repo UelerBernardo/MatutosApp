@@ -153,5 +153,19 @@ namespace MatutosApp.ViewsModels
             }
 
         }
+
+        [RelayCommand]
+        private async Task LogOut()
+        {
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realmente sair?", "Sim", "Não");
+
+            if (!confirmar)
+            {
+                return;
+            }
+
+            UsuarioSessaoService.EncerrarSessao();
+            await Shell.Current.GoToAsync(nameof(LoginView));
+        }
     }
 }

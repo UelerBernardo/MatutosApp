@@ -23,8 +23,13 @@ namespace MatutosApp.Services
 
         public static void EncerrarSessao() // Método de Logout unificado
         {
+            // 1. Limpa o usuário da memória RAM
             UsuarioLogado = null;
-            //OnSessaoChanged?.Invoke(); // Dispara o evento de mudança
+
+            // 👉 2. O DETALHE CRÍTICO: Apaga o token físico do armazenamento seguro do celular
+            SecureStorage.Default.Remove("jwt_token");
+
+            // 3. Dispara o evento para a interface (ex: esconder menus, mandar para tela de Login)
             WeakReferenceMessenger.Default.Send("SessaoAlterada");
         }
     }

@@ -10,4 +10,9 @@ public partial class ServicoCadastroView : ContentPage
 
 		BindingContext = viewModel;
 	}
+
+    private void ImageButton_SizeChanged(object sender, EventArgs e)
+    {
+
+    }
 }

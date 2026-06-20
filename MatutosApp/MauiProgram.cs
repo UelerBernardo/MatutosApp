@@ -26,6 +26,7 @@ namespace MatutosApp
             builder.Services.AddSingleton<AgendamentoService>();
             builder.Services.AddSingleton<ServicoService>();
             builder.Services.AddSingleton<ClienteService>();
+            builder.Services.AddSingleton<BlacklistService>();
             builder.Services.AddHttpClient<BarbeiroService>(cliente =>
             {
                cliente.BaseAddress = new Uri("https://localhost:7110/"); 
@@ -44,10 +45,14 @@ namespace MatutosApp
             builder.Services.AddTransient<UsuarioImagemViewModel>();
             builder.Services.AddTransient<ServicoConsultarViewModel>();
             builder.Services.AddTransient<ServicoCadastrarViewModel>();
+            builder.Services.AddTransient<BlacklistConsultarViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<BlacklistCadastrarViewModel>();
 
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
             builder.Services.AddTransient<TelefoneCadastroView>();
+            builder.Services.AddTransient<BlacklistConsultarView>();
             builder.Services.AddTransient<AgendamentoDetalhesViewModel>();
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<PrincipalView>();
@@ -59,6 +64,25 @@ namespace MatutosApp
             builder.Services.AddTransient<UsuarioImagemView>();
             builder.Services.AddTransient<ServicoConsultarView>();
             builder.Services.AddTransient<ServicoCadastroView>();
+            builder.Services.AddTransient<BlacklistCadastrarView>();
+
+
+
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemBorda", (handler, view) =>
+            {
+#if ANDROID
+                handler.PlatformView.Background = null;
+                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+#elif IOS
+        handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#elif WINDOWS
+        handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+        handler.PlatformView.FocusVisualMargin = new Microsoft.UI.Xaml.Thickness(0);
+#endif
+            });
+
+
+
 
 #if DEBUG
             builder.Logging.AddDebug();

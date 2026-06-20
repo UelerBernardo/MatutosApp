@@ -71,6 +71,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.Agendamen
 build_metadata.AdditionalFiles.TargetPath = Views\AgendamentoServicoView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AgendamentoServicoView.xaml
 
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/BlacklistCadastrarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.BlacklistCadastrarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\BlacklistCadastrarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\BlacklistCadastrarView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/BlacklistConsultarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.BlacklistConsultarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\BlacklistConsultarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\BlacklistConsultarView.xaml
+
 [C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ClientePerfilConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ClientePerfilConsultarView.xaml

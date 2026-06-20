@@ -21,10 +21,17 @@ namespace MatutosApp.ViewsModels
 
         [ObservableProperty] private Usuario usuarioPerfil;
 
+        [ObservableProperty] private bool podeVisualizar;
+
+        [ObservableProperty] private UsuarioTipo usuarioTipoLogado;
+
+      
+
         public PrincipalViewModel(UsuarioService usuarioService)
         {
             _usuarioService = usuarioService;
             _ = ConsultarPerfil();
+            PermissaoParaVisualizar();
         }
 
         public void AtualizarFotoTela()
@@ -45,10 +52,55 @@ namespace MatutosApp.ViewsModels
         }
 
 
+        private void PermissaoParaVisualizar()
+        {
+            var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
+
+            //if (usuarioLogado == null)
+            //{
+            //    PodeVisualizar = false;
+            //    return;
+            //}
+
+            if (usuarioLogado.TipoSelecionado == UsuarioTipo.Administrador)
+            {
+                PodeVisualizar = true;
+            }
+            else
+            {
+                PodeVisualizar = false;
+            }
+        }
+
+        private void EcontrarTipoUsuarioLogado()
+        {
+            var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
+
+            if (usuarioLogado.TipoSelecionado == UsuarioTipo.Cliente)
+            {
+                UsuarioTipoLogado = UsuarioTipo.Cliente;
+            }
+            else if (usuarioLogado.TipoSelecionado == UsuarioTipo.Barbeiro)
+            {
+                UsuarioTipoLogado = UsuarioTipo.Barbeiro;
+            }
+            else
+            {
+                UsuarioTipoLogado = UsuarioTipo.Administrador;
+            }
+        }
+
+
         [RelayCommand]
         public async Task AbrirServico()
         {
             await Shell.Current.GoToAsync(nameof(ServicoConsultarView));
+        }
+
+        [RelayCommand]
+        public async Task AbrirBlacklist()
+        {
+            await Shell.Current.GoToAsync(nameof(BlacklistConsultarView));
         }
 
 
@@ -68,6 +120,17 @@ namespace MatutosApp.ViewsModels
         public async Task PerfilAbrir()
         {
             await Shell.Current.GoToAsync(nameof(ClientePerfilConsultarView));
+        }
+
+        [RelayCommand]
+        public async Task AbrirUsuarioCadastro()
+        {
+            var parametros = new Dictionary<string, object>
+                    {
+                        { "CadastroDeUsuario", true } 
+                    };
+
+            await Shell.Current.GoToAsync(nameof(UsuarioCadastroView), parametros);
         }
 
         public async Task ConsultarPerfil()
@@ -109,6 +172,20 @@ namespace MatutosApp.ViewsModels
                 // Cai aqui se o celular do usuário não tiver nenhum navegador instalado
                 await App.Current.MainPage.DisplayAlert("Erro", "Não foi possível abrir o link.", "OK");
             }
+        }
+
+        [RelayCommand]
+        private async Task LogOut()
+        {
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realmente sair?", "Sim", "Não");
+
+            if (!confirmar)
+            {
+                return;
+            }
+
+            UsuarioSessaoService.EncerrarSessao();
+            await Shell.Current.GoToAsync(nameof(LoginView));
         }
     }
 }

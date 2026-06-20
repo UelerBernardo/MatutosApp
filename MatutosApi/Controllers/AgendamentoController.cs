@@ -249,6 +249,7 @@ namespace MatutosApi.Controllers
                         Cliente = new { Nome = a.Cliente.Nome},
                         Barbeiro = new {Nome = a.Barbeiro.Nome}
                     })
+                    .OrderByDescending(a => a.Codigo_Agendamento)
                     .ToListAsync();
 
                 if (!agendamento.Any())

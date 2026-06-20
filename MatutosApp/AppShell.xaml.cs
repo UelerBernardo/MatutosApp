@@ -22,6 +22,8 @@ namespace MatutosApp
             Routing.RegisterRoute(nameof(UsuarioImagemView), typeof(UsuarioImagemView));
             Routing.RegisterRoute(nameof(ServicoConsultarView), typeof(ServicoConsultarView));
             Routing.RegisterRoute(nameof(ServicoCadastroView), typeof(ServicoCadastroView));
+            Routing.RegisterRoute(nameof(BlacklistConsultarView), typeof(BlacklistConsultarView));
+            Routing.RegisterRoute(nameof(BlacklistCadastrarView), typeof(BlacklistCadastrarView));
 
         }
     }

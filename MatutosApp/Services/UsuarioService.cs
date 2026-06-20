@@ -1,5 +1,6 @@
 ﻿using Azure;
 using MatutosDomain;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -134,40 +135,55 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<bool> UsuarioCadastrar(UsuarioCadastro usuario)
+        public async Task<(bool Sucesso, Usuario Dados)> UsuarioCadastrar(UsuarioCadastro usuario)
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("usuario/cadastrar", usuario);
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/cadastrar", usuario);
 
-                if (response.IsSuccessStatusCode)
+                // A configuração para ler o JSON sem frescura com maiúsculas/minúsculas
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resposta.IsSuccessStatusCode)
                 {
-                    var dadosAutenticacao = await response.Content.ReadFromJsonAsync<AuthResponse>();
+                    // 👉 CORREÇÃO 1: Passamos o 'options' para dentro do método de leitura
+                    var dados = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
 
-                    if (dadosAutenticacao != null && !string.IsNullOrEmpty(dadosAutenticacao.Token))
+                    if (dados != null && !string.IsNullOrEmpty(dados.Token))
                     {
-                        await SecureStorage.Default.SetAsync("jwt_token", dadosAutenticacao.Token);
-                        return true;
+                        await SecureStorage.Default.SetAsync("jwt_token", dados.Token);
+
+                        // 👉 CORREÇÃO 2: Montamos a entidade Usuario pura pegando as peças soltas que vieram do AuthResponse
+                        var usuarioSalvo = new Usuario
+                        {
+                            Codigo_Usuario = dados.Usuario.Codigo_Usuario,
+                            Nome = dados.Usuario.Nome,
+                            Email = dados.Usuario.Email,
+                            TipoSelecionado = dados.Usuario.TipoSelecionado
+                        };
+
+                        return (true, usuarioSalvo);
                     }
                     else
                     {
                         Debug.WriteLine("Cadastro realizado, mas o Token não foi recebido.");
-                        return false; 
+                        return (false, null);
                     }
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {response.StatusCode}, Erro: {errorMessage}");
-                    return false;
+                    var errorMessage = await resposta.Content.ReadAsStringAsync();
+                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {errorMessage}");
+                    return (false, null);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
-                return false;
+                return (false, null);
             }
         }
+
         public async Task<(bool Sucesso, string Mensagem, Usuario Dados)> UsuarioLogin(UsuarioLogin login)
         {
             try

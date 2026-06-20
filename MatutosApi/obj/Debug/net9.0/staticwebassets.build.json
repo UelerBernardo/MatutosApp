@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6FsYlGU/Smfz4pI4oK7o+NiMRPeVLDidXcoS3uOYJRI=",
+  "Hash": "knIB6t5ZnKKFueCmMUDZEGAzSV6dnxs0tfCN2BkgR5Y=",
   "Source": "MatutosApi",
   "BasePath": "_content/MatutosApi",
   "Mode": "Default",
@@ -99,6 +99,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Uploads\\perfil_4.png"
+    },
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_41.png",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_41#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1rnsx4swm1",
+      "Integrity": "PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_41.png"
     },
     {
       "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png",
@@ -448,6 +469,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_41.1rnsx4swm1.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_41.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 18 Jun 2026 21:46:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1rnsx4swm1"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_41.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_41.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_41.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 18 Jun 2026 21:46:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
         }
       ]
     },

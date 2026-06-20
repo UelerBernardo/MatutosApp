@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MatutosDomain; 
+using MatutosDomain;
+using Org.BouncyCastle.Asn1;
 
 namespace MatutosApi.Infraestrutura 
 {
@@ -14,6 +15,11 @@ namespace MatutosApi.Infraestrutura
         public DbSet<Servico> Servicos { get; set; }
         public DbSet<Agendamento> Agendamentos { get; set; }
         public DbSet<Agendamento_Servico> Agendamento_Servicos { get; set; }
+        public DbSet<Servico_Imagem> Servico_Imagens { get; set; }
+        public DbSet<Blacklist> Blacklists { get; set; }
+        public DbSet<Usuario_Blacklist> Usuario_Blacklists { get; set; }
+
+
         public MatutosDbContext(DbContextOptions<MatutosDbContext> options) : base(options)
         {
         }
@@ -31,6 +37,8 @@ namespace MatutosApi.Infraestrutura
             modelBuilder.Entity<Agendamento>().ToTable("agendamento");
             modelBuilder.Entity<Agendamento_Servico>().ToTable("agendamento_servico");
             modelBuilder.Entity<Servico>().ToTable("servico");
+            modelBuilder.Entity<Blacklist>().ToTable("blacklist");
+            modelBuilder.Entity<Usuario_Blacklist>().ToTable("usuario_blacklist");
 
             // Ensina o caminho do Usuário para a tabela ponte
             modelBuilder.Entity<UsuarioTelefone>()
@@ -43,6 +51,18 @@ namespace MatutosApi.Infraestrutura
                 .HasOne(ut => ut.Telefone)
                 .WithMany(t => t.UsuariosTelefones)
                 .HasForeignKey(ut => ut.Codigo_Telefone); // CORRIGIDO: Removida a duplicação
+
+            modelBuilder.Entity<Usuario_Blacklist>()
+                .HasOne(ub => ub.Blacklist)
+                .WithMany(b => b.UsuariosBloqueados)
+                .HasForeignKey(ub => ub.Codigo_BlackList)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Usuario_Blacklist>()
+                .HasOne(ub => ub.Barbeiro)
+                .WithMany()
+                .HasForeignKey(ub => ub.Codigo_Usuario)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Agendamento>()
                 .HasOne(a => a.Cliente)        // O Agendamento tem um Cliente

@@ -1,83 +1,124 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MatutosApp.Views.ServicoConsultarView">
+             x:Class="MatutosApp.Views.ServicoConsultarView"
+             xmlns:viewmodels="clr-namespace:MatutosApp.ViewsModels"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False"
+             x:Name="PaginaConsultaServico">
 
     <Grid RowDefinitions="Auto, *, Auto">
 
-        <CollectionView ItemsSource="{Binding ListaServicos}" 
-                    SelectionMode="Single"
-                    Grid.Row="1"
-                    SelectedItem="{Binding ServicoSelecionado}"
-                    Margin="20,20,20,0">
+        <VerticalStackLayout Grid.Row="0" Padding="20,40,20,10" Spacing="5">
+            <Label Text="Nossos Serviços" FontSize="28" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center"/>
+            <Label Text="Clique em um serviço para ver as fotos" FontSize="14" TextColor="#AAAAAA" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding ListaServicos}" 
+                        SelectionMode="Single" 
+                        SelectedItem="{Binding ServicoClicado}"
+                        Margin="20,10,20,0">
 
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" Grid.Row="1" />
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
             </CollectionView.ItemsLayout>
 
-            <CollectionView.ItemTemplate >
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
+                    <Border Stroke="#333333" StrokeThickness="1" BackgroundColor="#1E1E1E" StrokeShape="RoundRectangle 16" Padding="15">
 
-                    <Border Stroke="#333333" 
-                        StrokeThickness="1" 
-                        BackgroundColor="#1E1E1E"
-                        StrokeShape="RoundRectangle 16" 
-                        Padding="15">
+                        <VerticalStackLayout Spacing="0">
 
-                        <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
 
-                            <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                                <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                                    <Label Text="{Binding Descricao}" FontSize="16" FontAttributes="Bold" TextColor="#FFFFFF"/>
+                                    <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" FontSize="15" TextColor="#a15650" FontAttributes="Bold"/>
+                                    <HorizontalStackLayout Spacing="5" Margin="0,4,0,0">
+                                        <Image Source="relogioagendar.png" HeightRequest="20" WidthRequest="20"/>
+                                        <Label Text="{Binding Duracao}" FontSize="12" TextColor="#888888" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
 
-                                <Label Text="{Binding Descricao}" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="#FFFFFF"/>
+                                <Image Grid.Column="1" Source="camera.png" HeightRequest="60" WidthRequest="60" VerticalOptions="Center" />
+                                <Button Text="Alterar"
+                                        IsVisible="{Binding BindingContext.PodeVisualizar, Source={x:Reference PaginaConsultaServico}}"
+                                        TextColor="White" 
+                                        FontAttributes="Bold"
+                                        Grid.Column="1" 
+                                        Grid.Row="2" 
+                                        HeightRequest="40" 
+                                        CornerRadius="8"
+                                        VerticalOptions="Center" 
+                                        BackgroundColor="#a15650" 
+                                        Command="{Binding BindingContext.AbrirAlteracaoServicoCommand, Source={x:Reference PaginaConsultaServico}}" 
+                                        CommandParameter="{Binding .}"/>
+                            </Grid>
 
-                                <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" 
-                                   FontSize="15" 
-                                   TextColor="#E0E0E0" 
-                                   FontAttributes="Bold"/>
+                            <VerticalStackLayout IsVisible="{Binding IsExpanded}" Margin="0,15,0,0" Spacing="15">
 
-                                <HorizontalStackLayout Spacing="5">
-                                    <Image Source="relogioagendar.png" HeightRequest="14" WidthRequest="14" VerticalOptions="Center"/>
-                                    <Label Text="{Binding Duracao}" 
-                                       FontSize="12" 
-                                       TextColor="#888888"
-                                       VerticalOptions="Center"/>
-                                </HorizontalStackLayout>
+                                <BoxView HeightRequest="1" Color="#333333" />
+
+                                <ActivityIndicator IsRunning="{Binding IsCarregando}" 
+                                                           IsVisible="{Binding IsCarregando}" 
+                                                           Color="#E0E0E0" 
+                                                           HorizontalOptions="Center" 
+                                                           HeightRequest="30" />
+
+                                <VerticalStackLayout BindableLayout.ItemsSource="{Binding ImagensDoServico}" Spacing="15">
+
+                                    <BindableLayout.EmptyView>
+                                        <Label Text="Nenhuma foto cadastrada." 
+                                                       TextColor="#666666" 
+                                                       HorizontalOptions="Center"
+                                                       Margin="0,10,0,10" />
+                                    </BindableLayout.EmptyView>
+
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border StrokeShape="RoundRectangle 12" 
+                                                            Stroke="#333333" 
+                                                            StrokeThickness="1" 
+                                                            BackgroundColor="#2A2A2A" 
+                                                            HeightRequest="250" 
+                                                    HorizontalOptions="Fill">
+
+                                                <Image Source="{Binding FonteImagem}" Aspect="AspectFill" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
 
                             </VerticalStackLayout>
-
-                            <Label Grid.Column="1" 
-                               Text=">" 
-                               TextColor="#555555" 
-                               FontSize="20" 
-                               FontAttributes="Bold" 
-                               VerticalOptions="Center" />
-
-                        </Grid>
+                        </VerticalStackLayout>
                     </Border>
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
         <VerticalStackLayout Grid.Row="2" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
-
             <VerticalStackLayout Spacing="15" Padding="20,20,20,30" BackgroundColor="#121212">
-
-                <Button Text="Cadastrar Serviço"
-                  Command="{Binding AbrirCadastroServicoCommand}"
-                  BackgroundColor="#E0E0E0"
-                  TextColor="#121212"
-                  FontAttributes="Bold"
-                  FontSize="16"
-                  CornerRadius="25"
-                  HeightRequest="55" />
-
+                <Button Text="Cadastrar Novo Serviço"
+                        IsVisible="{Binding PodeVisualizar}"
+                        Command="{Binding AbrirCadastroServicoCommand}"
+                        BackgroundColor="#E0E0E0"
+                        TextColor="#121212"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="25"
+                        HeightRequest="55" />
+                <Button Text="Voltar"
+                        Command="{Binding VoltarTela}"
+                        BackgroundColor="#E0E0E0"
+                        TextColor="#121212"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="25"
+                        HeightRequest="55" />
             </VerticalStackLayout>
         </VerticalStackLayout>
 
     </Grid>
-
 </ContentPage>

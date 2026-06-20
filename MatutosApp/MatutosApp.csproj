@@ -84,6 +84,12 @@
 	  <MauiXaml Update="Views\AgendamentoServicoView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\BlacklistCadastrarView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BlacklistConsultarView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ClientePerfilConsultarView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

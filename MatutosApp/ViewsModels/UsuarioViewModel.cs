@@ -14,9 +14,12 @@ using System.Threading.Tasks;
 
 namespace MatutosApp.ViewsModels
 {
-    public partial class UsuarioViewModel : BaseViewModel 
+    //[QueryProperty(nameof(AdministradorCadastro), "CadastroDeUsuario")]
+    public partial class UsuarioViewModel : BaseViewModel, IQueryAttributable
     {
         public readonly UsuarioService? _usuarioService;
+
+        [ObservableProperty] private bool administradorCadastro;
 
         //Propriedade associadas ao usuário
         [ObservableProperty] private string nome;
@@ -26,15 +29,23 @@ namespace MatutosApp.ViewsModels
 
         [ObservableProperty] private bool isModoCadastro;
         [ObservableProperty] private bool isModoAlteracao;
-        
+
+        [ObservableProperty] private UsuarioTipo usuarioTipoLogado;
+
         [ObservableProperty]
-        private bool podeEditar = true;
+        private bool podeEditarTipoUsuario = true;
+
+        [ObservableProperty]
+        private bool podeEditarSenha = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
+        [NotifyPropertyChangedFor(nameof(Mensagem))]
         private AcaoTela _acaoTela;
 
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Criar Conta" : "Alterar Perfil";
+
+        public string Mensagem => AcaoTela == AcaoTela.Cadastro ? "Crie a sua Conta!" : "Editar Dados";
 
         public ObservableCollection<UsuarioTipo> usuarioTipoDisponivel { get; }
 
@@ -43,8 +54,32 @@ namespace MatutosApp.ViewsModels
             _usuarioService = api;
             usuarioTipoDisponivel = new ObservableCollection<UsuarioTipo>(Enum.GetValues(typeof(UsuarioTipo)).Cast<UsuarioTipo>());
 
+            EcontrarTipoUsuarioLogado();
             DefinirModoDaTela();
+        }
 
+        private void EcontrarTipoUsuarioLogado()
+        {
+            var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
+
+            if (usuarioLogado == null)
+            {
+                UsuarioTipoLogado = 0;
+                return;
+            }
+
+            if (usuarioLogado.TipoSelecionado == UsuarioTipo.Cliente)
+            {
+                UsuarioTipoLogado = UsuarioTipo.Cliente;
+            }
+            else if (usuarioLogado.TipoSelecionado == UsuarioTipo.Barbeiro)
+            {
+                UsuarioTipoLogado = UsuarioTipo.Barbeiro;
+            }
+            else
+            {
+                UsuarioTipoLogado = UsuarioTipo.Administrador;
+            }
         }
 
 
@@ -52,13 +87,34 @@ namespace MatutosApp.ViewsModels
         {
             var usuario = UsuarioSessaoService.UsuarioLogado;
 
-            if (usuario != null)
+            if(AdministradorCadastro == true)
             {
-                ModoAlteracao(usuario);
+                if (UsuarioTipoLogado == UsuarioTipo.Administrador)
+                {
+                    _acaoTela = AcaoTela.Cadastro;
+
+                    IsModoAlteracao = false;
+                    IsModoCadastro = true;
+
+                    Nome = string.Empty;
+                    Email = string.Empty;
+                    Senha = string.Empty;
+                    UsuarioTipoSelecionado = UsuarioTipo.Cliente;
+                    PodeEditarSenha = true;
+                    PodeEditarTipoUsuario = true;
+                }
             }
             else
-            {
-                ModoCadastro();
+            { 
+
+                if (usuario != null)
+                {
+                    ModoAlteracao(usuario);
+                }
+                else
+                {
+                    ModoCadastro();
+                }
             }
         }
 
@@ -73,37 +129,30 @@ namespace MatutosApp.ViewsModels
             Nome = usuario.Nome;
             Email = usuario.Email;
             UsuarioTipoSelecionado = usuario.TipoSelecionado;
-            Senha = "**********"; // Apenas máscara visual para a tela
-            PodeEditar = false;
+            Senha = "**********"; 
+            PodeEditarSenha = false;
+            PodeEditarTipoUsuario = false;
         }
 
         private void ModoCadastro()
         {
-            _acaoTela = AcaoTela.Cadastro;
+            if(UsuarioTipoLogado == 0)
+            { 
+                _acaoTela = AcaoTela.Cadastro;
 
-            // Avisa o XAML que é um cadastro novo
-            IsModoAlteracao = false;
-            IsModoCadastro = true;
+                // Avisa o XAML que é um cadastro novo
+                IsModoAlteracao = false;
+                IsModoCadastro = true;
 
-            Nome = string.Empty;
-            Email = string.Empty;
-            Senha = string.Empty;
-            UsuarioTipoSelecionado = UsuarioTipo.Cliente;
-            PodeEditar = true;
-        }
-
-
-        [RelayCommand]
-        private async Task Logar()
-        {
-            if ( string.IsNullOrEmpty(email) || string.IsNullOrEmpty(senha))
-            {
-                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "OK");
-                return;
+                Nome = string.Empty;
+                Email = string.Empty;
+                Senha = string.Empty;
+                UsuarioTipoSelecionado = UsuarioTipo.Cliente;
+                PodeEditarTipoUsuario = false;
+                PodeEditarSenha = true;
             }
-            await LoginUsuario();
-
         }
+
 
         [RelayCommand]
         private async Task CadastrarOuAlterar()
@@ -176,12 +225,27 @@ namespace MatutosApp.ViewsModels
                     TipoSelecionado = UsuarioTipoSelecionado
                 };
 
-                bool sucesso = await _usuarioService.UsuarioCadastrar(usuarioNovo);
-                if (sucesso)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Quase lá!", "Cadastro inicial concluído. Agora, informe seu telefone para contato.", "Continuar");
+                var resultado = await _usuarioService.UsuarioCadastrar(usuarioNovo);
 
-                    await Shell.Current.GoToAsync("TelefoneCadastroView");
+                if (resultado.Sucesso)
+                {
+                    if(UsuarioSessaoService.UsuarioLogado == null)
+                    {
+                        UsuarioSessaoService.IniciarSessao(resultado.Dados);
+                    }
+
+                    var confirmar = await Application.Current.MainPage.DisplayAlert("Quase lá!", "Cadastro concluído. Deseja realizar o cadastro de telefone?", "Sim", "Não");
+
+                    if(!confirmar)
+                    {
+                        await Shell.Current.GoToAsync("PrincipalView");
+                    }
+                    else
+                    {
+
+                        await Shell.Current.GoToAsync("TelefoneCadastroView");
+                    }
+
                 }
                 else
                 {
@@ -194,33 +258,23 @@ namespace MatutosApp.ViewsModels
             }
         }
 
-        private async Task LoginUsuario()
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            try
+            // Verifica se a chave que você enviou existe no pacote
+            if (query.TryGetValue("CadastroDeUsuario", out var valorEnviado))
             {
-                var login = new UsuarioLogin
+                if (valorEnviado is bool valorBooleano)
                 {
-                    Email = Email, 
-                    Senha = Senha
-                };
-                var resultado = await _usuarioService.UsuarioLogin(login);
-
-                if (resultado.Sucesso)
-                {
-                    UsuarioSessaoService.IniciarSessao(resultado.Dados);
-
-                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Seja Bem-vindo!", "Ok");
-
-                    await Shell.Current.GoToAsync(nameof(PrincipalView));
+                    AdministradorCadastro = valorBooleano;
                 }
-                else
+                else if (valorEnviado is string valorString && bool.TryParse(valorString, out bool convertido))
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "OK");
+                    AdministradorCadastro = convertido;
                 }
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "OK");
+
+                // Agora que temos 100% de certeza que a variável recebeu o 'true',
+                // nós chamamos a verificação para configurar os botões e títulos!
+                DefinirModoDaTela();
             }
         }
     }

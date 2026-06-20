@@ -9,7 +9,7 @@
             <VerticalStackLayout>
 
                 <Grid BackgroundColor="#121212" Padding="20,50,20,40" RowDefinitions="Auto, Auto">
-                    <Label Text="Configurações" TextColor="White" FontSize="26" FontAttributes="Bold" />
+                    <Label Text="Configurações" TextColor="White" FontSize="26" FontAttributes="Bold"/>
 
                     <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto" Margin="0,25,0,0">
 
@@ -27,12 +27,13 @@
                         </VerticalStackLayout>
 
                         <Frame Grid.Column="2" WidthRequest="40" HeightRequest="40" CornerRadius="20" 
-                               BackgroundColor="#2A2A2A" BorderColor="#333333" Padding="0" 
+                               BackgroundColor="#121212" BorderColor="#333333" Padding="0" 
                                VerticalOptions="Center" HorizontalOptions="Center">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding AbrirImagemUsuarioCommand}" />
                             </Frame.GestureRecognizers>
-                            <Label Text="✏️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <!--<Label Text="✏️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+                            <Image Source="lapis.png" WidthRequest="30"/>
                         </Frame>
                     </Grid>
                 </Grid>
@@ -45,8 +46,8 @@
                             <TapGestureRecognizer Command="{Binding AbrirAgendamentosCommad}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Label Text="✂️" FontSize="24" HorizontalOptions="Center" />
-                            <Label Text="Cortes" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Image Source="tesourabranca.png" HeightRequest="40" WidthRequest="100"/>
+                            <Label Text="Cortes" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,1,0,0"/>
                         </VerticalStackLayout>
                     </Border>
 
@@ -56,7 +57,7 @@
                             <TapGestureRecognizer Command="{Binding ConsultarTelefoneCommand}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Label Text="📞" FontSize="24" HorizontalOptions="Center" />
+                            <Image Source="telefonebranco.png" HeightRequest="40" WidthRequest="40"/>
                             <Label Text="Telefone" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>
@@ -115,6 +116,9 @@
                     <BoxView HeightRequest="1" Color="#333333" />
 
                     <Grid ColumnDefinitions="*" Padding="0,20,0,0" Margin="0,15,0,0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LogOutCommand}"/>
+                        </Grid.GestureRecognizers>
                         <Label Text="Sair da Conta" TextColor="#FFFFFF" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
 

@@ -188,8 +188,82 @@
         }
       }
     },
+    "/blacklist/consultar": {
+      "get": {
+        "tags": [
+          "Blacklist"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blacklist/cadastrar": {
+      "post": {
+        "tags": [
+          "Blacklist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/servico/cadastrar": {
       "post": {
+        "tags": [
+          "Servico"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servico"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servico"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/servico/alterar": {
+      "put": {
         "tags": [
           "Servico"
         ],
@@ -223,6 +297,71 @@
       "get": {
         "tags": [
           "Servico"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/servico/cadastrar/imagens/{codigoServico}": {
+      "post": {
+        "tags": [
+          "Servico"
+        ],
+        "parameters": [
+          {
+            "name": "codigoServico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdicionarImagemServicoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdicionarImagemServicoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdicionarImagemServicoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/servico/consultar/imagens/{codigoServico}": {
+      "get": {
+        "tags": [
+          "Servico"
+        ],
+        "parameters": [
+          {
+            "name": "codigoServico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -510,6 +649,16 @@
   },
   "components": {
     "schemas": {
+      "AdicionarImagemServicoRequest": {
+        "type": "object",
+        "properties": {
+          "imagemBase64": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Agendamento": {
         "type": "object",
         "properties": {
@@ -565,7 +714,8 @@
         "enum": [
           1,
           2,
-          3
+          3,
+          4
         ],
         "type": "integer",
         "format": "int32"
@@ -661,6 +811,45 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Blacklist": {
+        "type": "object",
+        "properties": {
+          "codigo_BlackList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "inicio_Bloqueio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fim_Bloqueio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "detalhes": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuariosBloqueados": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Usuario_Blacklist"
+            },
+            "nullable": true
+          },
+          "codigo_Agendamento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "agendamento": {
+            "$ref": "#/components/schemas/Agendamento"
           }
         },
         "additionalProperties": false
@@ -876,6 +1065,30 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "Usuario_Blacklist": {
+        "type": "object",
+        "properties": {
+          "codigo_Usuario_BlackList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_BlackList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "barbeiro": {
+            "$ref": "#/components/schemas/Barbeiro"
+          },
+          "blacklist": {
+            "$ref": "#/components/schemas/Blacklist"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "securitySchemes": {

@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosapp\\viewsmodels\\servicoconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\servicoconsultarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -35,19 +30,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ServicoConsultarViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
-              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
-              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
-              "RelativeToolTip": "MatutosApp\\ViewsModels\\ServicoConsultarViewModel.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T00:07:18.665Z",
-              "EditorCaption": ""
             }
           ]
         }
