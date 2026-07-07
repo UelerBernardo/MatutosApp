@@ -18,15 +18,32 @@ namespace MatutosApp.Services
 
         public ServicoService(HttpClient httpClient)
         {
-            string baseURL = "https://localhost:7110/";
+            string baseURL = DeviceInfo.Platform == DevicePlatform.Android
+                ? "https://10.0.2.2:7110/" // 👉 Emulador acessando a máquina (HTTPS)
+                : "https://localhost:7110/";
 
-            _httpClient = new HttpClient
+            _httpClient = new HttpClient(ObterManipuladorInseguro())
             {
                 BaseAddress = new Uri(baseURL)
             };
         }
 
-  
+        private HttpMessageHandler ObterManipuladorInseguro()
+        {
+            #if ANDROID
+                var handler = new Xamarin.Android.Net.AndroidMessageHandler();
+                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+                {
+                    if (cert != null && cert.Issuer.Equals("CN=localhost"))
+                        return true;
+                    return errors == System.Net.Security.SslPolicyErrors.None;
+                };
+                return handler;
+            #else
+                        return new HttpClientHandler();
+            #endif
+        }
+
         public async Task<(bool Sucesso, string Mensagem)> CadastrarImagemServico(string token, int codigoServico, string imagemBase64)
         {
             try
@@ -133,8 +150,10 @@ namespace MatutosApp.Services
         }
 
 
-        public async Task<List<Servico>> ServicoConsultar()
+        public async Task<List<Servico>> ServicoConsultar(string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
             return await _httpClient.GetFromJsonAsync<List<Servico>>("servico/consultar");
         }
 
@@ -166,6 +185,30 @@ namespace MatutosApp.Services
                 return (false, string.Empty);
             }
         }
+        public async Task<(bool Sucesso, string Mensagem)> AlterarServico(Servico servico, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+                var resposta = await _httpClient.PutAsJsonAsync<Servico>("servico/alterar", servico);
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    return (true, "Serviço alterado com sucesso!");
+                }
+                else
+                {
+                    var errorMessage = await resposta.Content.ReadAsStringAsync();
+                    Debug.WriteLine($"Falha ao cadastrar servico. Status: {resposta.StatusCode}, Erro: {errorMessage}");
+                    return (false, errorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao alterar Serviço: {ex.Message}");
+                return (false, string.Empty);
+            }
+        }
     }
 }

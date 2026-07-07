@@ -188,8 +188,82 @@
         }
       }
     },
+    "/blacklist/consultar": {
+      "get": {
+        "tags": [
+          "Blacklist"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/blacklist/cadastrar": {
+      "post": {
+        "tags": [
+          "Blacklist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/servico/cadastrar": {
       "post": {
+        "tags": [
+          "Servico"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servico"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servico"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Servico"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/servico/alterar": {
+      "put": {
         "tags": [
           "Servico"
         ],
@@ -571,6 +645,68 @@
           }
         }
       }
+    },
+    "/usuario/solicitar-codigo": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/usuario/redefinir-senha": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedefinirSenhaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedefinirSenhaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedefinirSenhaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -729,6 +865,15 @@
           "ativo": {
             "type": "boolean"
           },
+          "codigo_Recuperacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_Validade_Codigo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -737,6 +882,46 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Blacklist": {
+        "type": "object",
+        "properties": {
+          "codigo_BlackList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "inicio_Bloqueio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fim_Bloqueio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "detalhes": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuariosBloqueados": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Usuario_Blacklist"
+            },
+            "nullable": true
+          },
+          "codigo_Agendamento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "agendamento": {
+            "$ref": "#/components/schemas/Agendamento"
           }
         },
         "additionalProperties": false
@@ -774,6 +959,15 @@
           "ativo": {
             "type": "boolean"
           },
+          "codigo_Recuperacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_Validade_Codigo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -782,6 +976,24 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RedefinirSenhaRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "novaSenha": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -897,6 +1109,15 @@
           "ativo": {
             "type": "boolean"
           },
+          "codigo_Recuperacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_Validade_Codigo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -952,6 +1173,30 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "Usuario_Blacklist": {
+        "type": "object",
+        "properties": {
+          "codigo_Usuario_BlackList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_BlackList": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "barbeiro": {
+            "$ref": "#/components/schemas/Barbeiro"
+          },
+          "blacklist": {
+            "$ref": "#/components/schemas/Blacklist"
+          }
+        },
+        "additionalProperties": false
       }
     },
     "securitySchemes": {

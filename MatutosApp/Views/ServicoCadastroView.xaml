@@ -10,12 +10,12 @@
 
             <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
                 <Image Source="mais.png" HeightRequest="50" WidthRequest="50"/>
-                <Label Text="Novo Serviço"
+                <Label Text="{Binding TituloPagina}"
                        FontSize="28"
                        FontAttributes="Bold"
                        TextColor="#FFFFFF"
                        HorizontalOptions="Center" />
-                <Label Text="Preencha os dados para cadastrar"
+                <Label Text="Preencha os Dados"
                        FontSize="14"
                        TextColor="#AAAAAA"
                        HorizontalOptions="Center" />
@@ -116,7 +116,7 @@
 
                         <CollectionView.EmptyView>
                             <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5" Margin="0,20">
-                                <Label Text="🖼️" FontSize="30" HorizontalOptions="Center" />
+                                <Label Text="🖼️" FontSize="50" HorizontalOptions="Center" />
                                 <Label Text="Nenhuma imagem." TextColor="#666666" FontSize="14" HorizontalOptions="Center" />
                             </VerticalStackLayout>
                         </CollectionView.EmptyView>
@@ -127,9 +127,25 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Border StrokeShape="RoundRectangle 10" Stroke="#333333" StrokeThickness="1" BackgroundColor="#2A2A2A" WidthRequest="100" HeightRequest="100">
-                                    <Image Source="{Binding FonteImagem}" Aspect="AspectFill" />
-                                </Border>
+                                <Grid WidthRequest="100" HeightRequest="100">
+
+                                    <Border StrokeShape="RoundRectangle 10" Stroke="#333333" StrokeThickness="1" BackgroundColor="#2A2A2A">
+                                        <Image Source="{Binding FonteImagem}" Aspect="AspectFill" />
+                                    </Border>
+
+                                    <ImageButton 
+                                        Source="xvermelho.png"
+                                        WidthRequest="2" 
+                                        HeightRequest="1"
+                                        CornerRadius="15" 
+                                        Padding="0"
+                                        HorizontalOptions="End" 
+                                        VerticalOptions="Start" 
+                                        Margin="3"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoverImagemCommand}"
+                                        CommandParameter="{Binding .}" />   
+
+                                </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
@@ -148,8 +164,8 @@
             </Border>
 
             <VerticalStackLayout Spacing="15" Margin="0,10,0,0">
-                <Button Text="Cadastrar Serviço"
-                        Command="{Binding CadastrarServicoCommand}"
+                <Button Text="{Binding NomeBotaoAcao}"
+                        Command="{Binding CadastrarOuAlterarCommand}"
                         BackgroundColor="#E0E0E0"
                         TextColor="#121212"
                         FontAttributes="Bold"

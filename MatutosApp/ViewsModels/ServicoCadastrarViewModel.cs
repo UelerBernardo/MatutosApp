@@ -12,9 +12,12 @@ using System.Threading.Tasks;
 
 namespace MatutosApp.ViewsModels
 {
+    [QueryProperty(nameof(ServicoParaEditar), "ServicoSelecionado")]
     public partial class ServicoCadastrarViewModel : BaseViewModel
     {
         ServicoService _servicoService;
+
+        [ObservableProperty] Servico? servicoParaEditar;
 
         [ObservableProperty] private string descricao;
         [ObservableProperty] private int tempo_servico;
@@ -27,8 +30,14 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty]
         private int quantidadeImagensSalvas;
 
-        //[ObservableProperty]
-        //private ObservableCollection<string> imagensNovasBase64 = new();
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(TituloPagina))]
+        [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
+        private AcaoTela _acaoTela;
+
+        public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Novo Serviço" : "Alterar Serviço";
+        public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar Serviço" : "Alterar Serviço";
+
 
         [ObservableProperty]
         private ObservableCollection<ImagemServicoTemp> imagensNovasBase64 = new();
@@ -37,8 +46,150 @@ namespace MatutosApp.ViewsModels
         {
             _servicoService = servicoService;
         }
+
+        partial void OnServicoParaEditarChanged(Servico? value)
+        {
+            if(value != null)
+            {
+                AcaoTela = AcaoTela.Alteração;
+
+                Descricao = value.Descricao;
+                Ativo = value.Ativo;
+                Duracao = value.Duracao;
+                Preco = value.Preco;
+                Tempo_servico = value.Tempo_Servico;
+
+                _ = CarregarImagensParaEdicao(value.Codigo_Servico);
+            }
+            else
+            {
+                ModoCadastro();
+            }
+        }
+
+        private void ModoCadastro()
+        {
+            Descricao = string.Empty;
+            Ativo = true;
+            Duracao = string.Empty;
+            Preco = 0;
+            Tempo_servico = 0;
+
+        }
+
+        private async Task CarregarImagensParaEdicao( int codigoServico)
+        {
+            try
+            {
+                ImagensNovasBase64.Clear();
+
+                var token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                var resultado = await _servicoService.ConsultarImagemServico(codigoServico, token);
+
+                if (resultado.Sucesso && resultado.Dados != null)
+                {
+                    foreach(var imgBanco in resultado.Dados)
+                    {
+                        if (!string.IsNullOrEmpty(imgBanco.Imagem))
+                        {
+                            byte[] bytes = Convert.FromBase64String(imgBanco.Imagem);
+                            ImagensNovasBase64.Add(new ImagemServicoTemp
+                            {
+                                Codigo_Imagem = imgBanco.Codigo_Imagem,
+                                Base64 = imgBanco.Imagem,
+                                FonteImagem = ImageSource.FromStream(() => new MemoryStream(bytes))
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "Ok");
+            }
+
+        }
+
+        private async Task AlterarServico()
+        {
+            if (Descricao.IsNullOrEmpty() || Preco <= 0 || Duracao.IsNullOrEmpty() || Tempo_servico <= 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos", "Ok");
+                return;
+            }
+            try
+            { 
+
+                IsBusy = true;
+
+                var token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                var servicoAlterado = new Servico
+                {
+                    Codigo_Servico = ServicoParaEditar.Codigo_Servico,
+                    Descricao = Descricao,
+                    Ativo = Ativo,
+                    Duracao = Duracao,
+                    Preco = Preco,
+                    Tempo_Servico = Tempo_servico,
+
+                    Imagens = ImagensNovasBase64.Select(imgTemp => new Servico_Imagem
+                    {
+                        Codigo_Imagem = imgTemp.Codigo_Imagem,
+                        Imagem = imgTemp.Base64
+                    }).ToList()
+                };
+
+                var resultado = await _servicoService.AlterarServico(servicoAlterado, token);
+
+                if (resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "Ok");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         [RelayCommand]
-        public async Task CadastrarServico()
+        public void RemoverImagem(ImagemServicoTemp imagemParaRemover)
+        {
+            if (imagemParaRemover != null && ImagensNovasBase64.Contains(imagemParaRemover))
+            {
+                ImagensNovasBase64.Remove(imagemParaRemover);
+            }
+        }
+
+
+        [RelayCommand]
+        public async Task CadastrarOuAlterar()
+        {
+            if (AcaoTela == AcaoTela.Cadastro)
+            {
+                CadastrarServico();
+            }
+
+            else
+            {
+                AlterarServico();
+            }
+
+        }
+
+
+        private async Task CadastrarServico()
         {
             if (Descricao.IsNullOrEmpty() || Preco <= 0 || Duracao.IsNullOrEmpty() || Tempo_servico <= 0)
             {
@@ -105,13 +256,11 @@ namespace MatutosApp.ViewsModels
 
                 IsBusy = true;
 
-                // 👉 2. Lemos o arquivo da foto uma única vez
                 using var stream = await foto.OpenReadAsync();
                 using var memoryStream = new MemoryStream();
                 await stream.CopyToAsync(memoryStream);
                 byte[] imageBytes = memoryStream.ToArray();
 
-                // 👉 3. Montamos o objeto duplo (Base64 para API, ImageSource para a Tela)
                 var novaImagem = new ImagemServicoTemp
                 {
                     Base64 = Convert.ToBase64String(imageBytes),
@@ -210,6 +359,7 @@ namespace MatutosApp.ViewsModels
 
         public class ImagemServicoTemp
         {
+            public int Codigo_Imagem { get; set; }
             public string Base64 { get; set; }
             public ImageSource FonteImagem { get; set; } // O XAML vai ler isso aqui!
         }

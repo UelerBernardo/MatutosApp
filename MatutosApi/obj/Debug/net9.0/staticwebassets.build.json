@@ -1,1 +1,640 @@
-{"Version":1,"Hash":"9FAxN02ezOnmH60wlgg6WOHQWmVluiAePBw29XP0LSM=","Source":"MatutosApi","BasePath":"_content/MatutosApi","Mode":"Default","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[{"Name":"MatutosApi\\wwwroot","Source":"MatutosApi","ContentRoot":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\","BasePath":"_content/MatutosApi","Pattern":"**"}],"Assets":[{"Identity":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_13.jpg","SourceId":"MatutosApi","SourceType":"Discovered","ContentRoot":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\","BasePath":"_content/MatutosApi","RelativePath":"Uploads/perfil_13#[.{fingerprint}]?.jpg","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"336mdu14cz","Integrity":"Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\Uploads\\perfil_13.jpg","FileLength":1157902,"LastWriteTime":"2026-06-01T22:16:09+00:00"},{"Identity":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.jpg","SourceId":"MatutosApi","SourceType":"Discovered","ContentRoot":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\","BasePath":"_content/MatutosApi","RelativePath":"Uploads/perfil_2#[.{fingerprint}]?.jpg","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"1jl67slpar","Integrity":"g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\Uploads\\perfil_2.jpg","FileLength":1189997,"LastWriteTime":"2026-06-01T22:16:09+00:00"},{"Identity":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.png","SourceId":"MatutosApi","SourceType":"Discovered","ContentRoot":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\","BasePath":"_content/MatutosApi","RelativePath":"Uploads/perfil_2#[.{fingerprint}]?.png","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"1rnsx4swm1","Integrity":"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\Uploads\\perfil_2.png","FileLength":19393,"LastWriteTime":"2026-05-28T22:21:51+00:00"},{"Identity":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_4.png","SourceId":"MatutosApi","SourceType":"Discovered","ContentRoot":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\","BasePath":"_content/MatutosApi","RelativePath":"Uploads/perfil_4#[.{fingerprint}]?.png","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"b5lvw7qmnn","Integrity":"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\Uploads\\perfil_4.png","FileLength":634906,"LastWriteTime":"2026-05-22T23:47:54+00:00"},{"Identity":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png","SourceId":"MatutosApi","SourceType":"Discovered","ContentRoot":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\","BasePath":"_content/MatutosApi","RelativePath":"Uploads/perfil_5#[.{fingerprint}]?.png","AssetKind":"All","AssetMode":"All","AssetRole":"Primary","AssetMergeBehavior":"","AssetMergeSource":"","RelatedAsset":"","AssetTraitName":"","AssetTraitValue":"","Fingerprint":"b5lvw7qmnn","Integrity":"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=","CopyToOutputDirectory":"Never","CopyToPublishDirectory":"PreserveNewest","OriginalItemSpec":"wwwroot\\Uploads\\perfil_5.png","FileLength":634906,"LastWriteTime":"2026-05-28T22:16:30+00:00"}],"Endpoints":[{"Route":"Uploads/perfil_13.336mdu14cz.jpg","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_13.jpg","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1157902"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\"Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ=\""},{"Name":"Last-Modified","Value":"Mon, 01 Jun 2026 22:16:09 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"336mdu14cz"},{"Name":"label","Value":"Uploads/perfil_13.jpg"},{"Name":"integrity","Value":"sha256-Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ="}]},{"Route":"Uploads/perfil_13.jpg","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_13.jpg","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1157902"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\"Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ=\""},{"Name":"Last-Modified","Value":"Mon, 01 Jun 2026 22:16:09 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ="}]},{"Route":"Uploads/perfil_2.1jl67slpar.jpg","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.jpg","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1189997"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\"g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A=\""},{"Name":"Last-Modified","Value":"Mon, 01 Jun 2026 22:16:09 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"1jl67slpar"},{"Name":"label","Value":"Uploads/perfil_2.jpg"},{"Name":"integrity","Value":"sha256-g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A="}]},{"Route":"Uploads/perfil_2.1rnsx4swm1.png","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.png","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"19393"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""},{"Name":"Last-Modified","Value":"Thu, 28 May 2026 22:21:51 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"1rnsx4swm1"},{"Name":"label","Value":"Uploads/perfil_2.png"},{"Name":"integrity","Value":"sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="}]},{"Route":"Uploads/perfil_2.jpg","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.jpg","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"1189997"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\"g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A=\""},{"Name":"Last-Modified","Value":"Mon, 01 Jun 2026 22:16:09 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A="}]},{"Route":"Uploads/perfil_2.png","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.png","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"19393"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""},{"Name":"Last-Modified","Value":"Thu, 28 May 2026 22:21:51 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="}]},{"Route":"Uploads/perfil_4.b5lvw7qmnn.png","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_4.png","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"634906"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""},{"Name":"Last-Modified","Value":"Fri, 22 May 2026 23:47:54 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"b5lvw7qmnn"},{"Name":"label","Value":"Uploads/perfil_4.png"},{"Name":"integrity","Value":"sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="}]},{"Route":"Uploads/perfil_4.png","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_4.png","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"634906"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""},{"Name":"Last-Modified","Value":"Fri, 22 May 2026 23:47:54 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="}]},{"Route":"Uploads/perfil_5.b5lvw7qmnn.png","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"634906"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""},{"Name":"Last-Modified","Value":"Thu, 28 May 2026 22:16:30 GMT"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"}],"EndpointProperties":[{"Name":"fingerprint","Value":"b5lvw7qmnn"},{"Name":"label","Value":"Uploads/perfil_5.png"},{"Name":"integrity","Value":"sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="}]},{"Route":"Uploads/perfil_5.png","AssetFile":"C:\\Users\\Luiz Felipe\\ESTAGIO\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png","Selectors":[],"ResponseHeaders":[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Content-Length","Value":"634906"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""},{"Name":"Last-Modified","Value":"Thu, 28 May 2026 22:16:30 GMT"},{"Name":"Cache-Control","Value":"no-cache"}],"EndpointProperties":[{"Name":"integrity","Value":"sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="}]}]}
+{
+  "Version": 1,
+  "Hash": "knIB6t5ZnKKFueCmMUDZEGAzSV6dnxs0tfCN2BkgR5Y=",
+  "Source": "MatutosApi",
+  "BasePath": "_content/MatutosApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MatutosApi\\wwwroot",
+      "Source": "MatutosApi",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_13.jpg",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_13#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "336mdu14cz",
+      "Integrity": "Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_13.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.jpg",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_2#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1jl67slpar",
+      "Integrity": "g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_2.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.png",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_2#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1rnsx4swm1",
+      "Integrity": "PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_2.png"
+    },
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_4.png",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_4#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "b5lvw7qmnn",
+      "Integrity": "zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_4.png"
+    },
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_41.png",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_41#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1rnsx4swm1",
+      "Integrity": "PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_41.png"
+    },
+    {
+      "Identity": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png",
+      "SourceId": "MatutosApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\",
+      "BasePath": "_content/MatutosApi",
+      "RelativePath": "Uploads/perfil_5#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "b5lvw7qmnn",
+      "Integrity": "zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\perfil_5.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "Uploads/perfil_13.336mdu14cz.jpg",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_13.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1157902"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 19:40:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "336mdu14cz"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_13.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_13.jpg",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_13.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1157902"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 19:40:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Tz1MDg8GgXAeWolnHQkHos1ncQWDyGpGmVTQ2UrPRxQ="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_2.1jl67slpar.jpg",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1189997"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 19:35:50 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1jl67slpar"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_2.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_2.1rnsx4swm1.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 19:33:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1rnsx4swm1"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_2.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_2.jpg",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1189997"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 19:35:50 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-g2anqfqAYlOHLaf+kw3ph9rU/VPay8gWBF0x6ISTm9A="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_2.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_2.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 19:33:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_4.b5lvw7qmnn.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_4.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "634906"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 26 May 2026 00:48:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "b5lvw7qmnn"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_4.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_4.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_4.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "634906"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 26 May 2026 00:48:28 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_41.1rnsx4swm1.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_41.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 18 Jun 2026 21:46:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1rnsx4swm1"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_41.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_41.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_41.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19393"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 18 Jun 2026 21:46:43 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PXhEinX60OtJjxTm5qRWFz2f9rD8a83vUuSnPslCRzA="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_5.b5lvw7qmnn.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "634906"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 12:24:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "b5lvw7qmnn"
+        },
+        {
+          "Name": "label",
+          "Value": "Uploads/perfil_5.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="
+        }
+      ]
+    },
+    {
+      "Route": "Uploads/perfil_5.png",
+      "AssetFile": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApi\\wwwroot\\Uploads\\perfil_5.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "634906"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 30 May 2026 12:24:29 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zzi5jU55PTdSgyobt1C9C/KGzOY+hkHGobsL0JwpLc4="
+        }
+      ]
+    }
+  ]
+}

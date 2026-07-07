@@ -93,8 +93,10 @@ C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\obj\Debug\net9.0\refint\Matut
 C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.pdb
 C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.genruntimeconfig.cache
 C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\obj\Debug\net9.0\ref\MatutosApi.dll
+C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.runtime.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\appsettings.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.runtime.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.endpoints.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.exe
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.deps.json
@@ -191,5 +193,3 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\refint\Mat
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.pdb
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.genruntimeconfig.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\ref\MatutosApi.dll
-C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.runtime.json
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosApi.staticwebassets.runtime.json

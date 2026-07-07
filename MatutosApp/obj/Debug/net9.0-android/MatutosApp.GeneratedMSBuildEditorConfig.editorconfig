@@ -17,109 +17,133 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MatutosApp
-build_property.ProjectDir = C:\Users\Luiz Felipe\ESTAGIO\MatutosApp\MatutosApp\
+build_property.ProjectDir = C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/App.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/AppShell.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Resources/Styles/Colors.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Resources/Styles/Styles.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/AgendamentoCadastroView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/AgendamentoCadastroView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.AgendamentoCadastroView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AgendamentoCadastroView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AgendamentoCadastroView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/AgendamentoConsultarView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/AgendamentoConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.AgendamentoConsultarView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AgendamentoConsultarView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AgendamentoConsultarView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/AgendamentoDetalhesView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/AgendamentoDetalhesView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.AgendamentoDetalhesView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AgendamentoDetalhesView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AgendamentoDetalhesView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/AgendamentoServicoView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/AgendamentoServicoView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.AgendamentoServicoView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\AgendamentoServicoView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\AgendamentoServicoView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/ClientePerfilConsultarView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/BlacklistCadastrarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.BlacklistCadastrarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\BlacklistCadastrarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\BlacklistCadastrarView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/BlacklistConsultarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.BlacklistConsultarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\BlacklistConsultarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\BlacklistConsultarView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ClientePerfilConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ClientePerfilConsultarView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ClientePerfilConsultarView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ClientePerfilConsultarView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/LoginView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/LoginView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.LoginView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\LoginView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\LoginView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/PrincipalView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/PrincipalView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.PrincipalView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\PrincipalView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\PrincipalView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/ServicoCadastroView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ServicoCadastroView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ServicoCadastroView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ServicoCadastroView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ServicoCadastroView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/ServicoConsultarView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ServicoConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ServicoConsultarView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ServicoConsultarView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ServicoConsultarView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/TelefoneCadastroView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/TelefoneCadastroView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.TelefoneCadastroView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\TelefoneCadastroView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\TelefoneCadastroView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/UsuarioCadastroView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioCadastroView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioCadastroView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\UsuarioCadastroView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UsuarioCadastroView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/UsuarioImagemView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioImagemView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioImagemView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\UsuarioImagemView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UsuarioImagemView.xaml
 
-[C:/Users/Luiz Felipe/ESTAGIO/MatutosApp/MatutosApp/Views/UsuarioTelefoneConsultarView.xaml]
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioRedefinirSenhaView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioRedefinirSenhaView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UsuarioRedefinirSenhaView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UsuarioRedefinirSenhaView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioSolicitarCodigoView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioSolicitarCodigoView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UsuarioSolicitarCodigoView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UsuarioSolicitarCodigoView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioTelefoneConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioTelefoneConsultarView.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\UsuarioTelefoneConsultarView.xaml

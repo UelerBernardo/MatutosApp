@@ -4,7 +4,7 @@ namespace MatutosApp.Views;
 
 public partial class LoginView : ContentPage
 {
-	public LoginView(UsuarioViewModel viewModel)
+	public LoginView(LoginViewModel viewModel)
 	{
 		InitializeComponent();
 		BindingContext = viewModel;

@@ -14,7 +14,7 @@
                        FontAttributes="Bold"
                        HorizontalOptions="Center"
                        TextColor="#FFFFFF"/>
-                <Label Text="Crie sua conta"
+                <Label Text="{Binding Mensagem}"
                        FontSize="14"
                        TextColor="#AAAAAA"
                        HorizontalOptions="Center" />
@@ -64,7 +64,7 @@
                                    TextColor="#FFFFFF"
                                    PlaceholderColor="#888888"
                                    BackgroundColor="Transparent"
-                                   IsEnabled="{Binding PodeEditar}"
+                                   IsEnabled="{Binding PodeEditarSenha}"
                                    VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>
@@ -76,7 +76,7 @@
                      SelectedItem="{Binding UsuarioTipoSelecionado}"
                      BackgroundColor="Transparent"
                      TextColor="#FFFFFF"
-                     IsEnabled="{Binding PodeEditar}"
+                     IsEnabled="{Binding PodeEditarTipoUsuario}"
                      WidthRequest="150"
                     HorizontalOptions="Start"
                      FontAttributes="Bold"
@@ -93,7 +93,7 @@
                         HeightRequest="55" />
 
                 <Button Text="Cancelar"
-                        Command="{Binding VoltarTela}"
+                        Command="{Binding CancelarCommand}"
                         BackgroundColor="Transparent"
                         TextColor="#AAAAAA"
                         BorderColor="#333333"

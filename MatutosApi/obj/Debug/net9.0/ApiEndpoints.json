@@ -105,6 +105,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.BlacklistController",
+    "Method": "CadastrarBlacklist",
+    "RelativePath": "blacklist/cadastrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blacklist",
+        "Type": "MatutosDomain.Blacklist",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.BlacklistController",
+    "Method": "ConsultarBlacklist",
+    "RelativePath": "blacklist/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.ServicoController",
+    "Method": "AlterarServico",
+    "RelativePath": "servico/alterar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "servico",
+        "Type": "MatutosDomain.Servico",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.ServicoController",
     "Method": "CadastrarServico",
     "RelativePath": "servico/cadastrar",
@@ -315,6 +357,38 @@
       {
         "Name": "usuario",
         "Type": "MatutosDomain.UsuarioLogin",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "RedefinirSenha",
+    "RelativePath": "usuario/redefinir-senha",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MatutosApi.Controllers.UsuarioController\u002BRedefinirSenhaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "SolicitarCodigoRecuperacao",
+    "RelativePath": "usuario/solicitar-codigo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailUsuario",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

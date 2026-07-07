@@ -19,7 +19,7 @@ namespace MatutosApi.Controllers
 
         [HttpPatch("alterarSituacao/{codigoAgendamento}")]
         [Authorize]
-        public async Task<IActionResult> AlterarSituacaoAgendamento(int codigoAgendamento,[FromBody] AgendamentoSituacao agendamentoSituacao)
+        public async Task<IActionResult> AlterarSituacaoAgendamento(int codigoAgendamento, [FromBody] AgendamentoSituacao agendamentoSituacao)
         {
             if(codigoAgendamento <= 0)
             {
@@ -35,6 +35,49 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Mensagem = "Código de agendamento não encontrado." });
                 }
                 
+                if (agendamentoSituacao == AgendamentoSituacao.Liberado)
+                {
+                    var existeBloqueio = await _dbContext.Blacklists
+                        .Where(b => b.Ativo &&
+                                    b.Inicio_Bloqueio < agendamento.Data_Fim_Agendamento &&
+                                    b.Fim_Bloqueio > agendamento.Data_Agendamento &&
+                                    b.UsuariosBloqueados.Any(ub => ub.Codigo_Usuario == agendamento.Codigo_Barbeiro))
+                        .AnyAsync();
+
+                    if(existeBloqueio)
+                    {
+                        return BadRequest(new { Mensagem = "Não é possível liberar este agendamento, pois existe um bloqueio na agenda para este barbeiro neste horário." });
+                    }
+
+                    var bloqueioHorario = new Blacklist
+                    {
+                        Inicio_Bloqueio = agendamento.Data_Agendamento.Value,
+                        Fim_Bloqueio = agendamento.Data_Fim_Agendamento.Value,
+                        Ativo = true,
+                        Detalhes = $"Horário bloqueado oriundo do agendamento {codigoAgendamento}.",
+                        Codigo_Agendamento = codigoAgendamento,
+
+                        UsuariosBloqueados = new List<Usuario_Blacklist>
+                        {
+                            new Usuario_Blacklist
+                            {
+                                Codigo_Usuario = agendamento.Codigo_Barbeiro
+                            }
+                        }
+                    };
+
+                    _dbContext.Blacklists.Add(bloqueioHorario);
+                }
+
+                if(agendamentoSituacao == AgendamentoSituacao.Cancelado)
+                {
+                    var inativarBlacklist = await _dbContext.Blacklists
+                        .Where(b => b.Codigo_Agendamento == codigoAgendamento)
+                        .ExecuteUpdateAsync(setters => setters
+                            .SetProperty(bc => bc.Ativo, false)
+                        );
+                }
+
                 agendamento.Codigo_Situacao_Agendamento = agendamentoSituacao;
                 await _dbContext.SaveChangesAsync();
 
@@ -95,8 +138,37 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Mensagem = "Nenhum serviço foi selecionado para este agendamento." });
                 }
 
-                // 3. Montamos uma nova lista limpa apenas com os dados que importam
+                // 1. Descobre de qual agendamento estamos falando
+                int codigoAgendamento = listaServicos.First().Codigo_Agendamento;
+
+                // 2. Busca a "Capa" do agendamento ANTES de tudo, para ter a Data de Início e o Barbeiro
+                var agendamentoCapa = await _dbContext.Agendamentos.FirstOrDefaultAsync(a => a.Codigo_Agendamento == codigoAgendamento);
+
+                if (agendamentoCapa == null || !agendamentoCapa.Data_Agendamento.HasValue)
+                {
+                    return BadRequest(new { Mensagem = "Agendamento principal não encontrado ou sem data de início definida." });
+                }
+
+                // 3. Calcula o Tempo Total e projeta a Data Final (A Estratégia de Projeção!)
+                int tempoTotalServico = listaServicos.Sum(x => x.Tempo_Servico_Item);
+                DateTime dataFimProjetada = agendamentoCapa.Data_Agendamento.Value.AddMinutes(tempoTotalServico);
+
+                // 4. AGORA SIM: Valida a Blacklist com os dados exatos de Início e Fim contra o barbeiro específico
+                var existeBloqueio = await _dbContext.Blacklists
+                    .Where(b => b.Ativo &&
+                                b.Inicio_Bloqueio < dataFimProjetada &&
+                                b.Fim_Bloqueio > agendamentoCapa.Data_Agendamento.Value &&
+                                b.UsuariosBloqueados.Any(ub => ub.Codigo_Usuario == agendamentoCapa.Codigo_Barbeiro))
+                    .AnyAsync();
+
+                if (existeBloqueio)
+                {
+                    return BadRequest(new { Mensagem = "O tempo total destes serviços invade um horário bloqueado na agenda do barbeiro. Escolha um horário mais cedo." });
+                }
+
+                // 5. Se passou da Blacklist, preparamos os serviços para salvar
                 var novosAgendamentosServicos = new List<Agendamento_Servico>();
+                decimal somatotal = 0;
 
                 foreach (var item in listaServicos)
                 {
@@ -108,30 +180,13 @@ namespace MatutosApi.Controllers
                         Valor_Total_Item = item.Valor_Total_Item,
                         Tempo_Servico_Item = item.Tempo_Servico_Item,
                     });
-                }
 
-                // 4. Salva a lista inteira de uma vez no banco de dados!
+                    somatotal += item.Valor_Total_Item;
+                }
+                agendamentoCapa.Valor_Total_Agendamento = somatotal;
+                agendamentoCapa.Data_Fim_Agendamento = dataFimProjetada;
+
                 _dbContext.Agendamento_Servicos.AddRange(novosAgendamentosServicos);
-
-                int codigoAgendamento = novosAgendamentosServicos.First().Codigo_Agendamento;
-
-                var agendamentoCapa = await _dbContext.Agendamentos.FirstOrDefaultAsync(a => a.Codigo_Agendamento == codigoAgendamento);
-
-                if (agendamentoCapa != null)
-                {
-                   decimal somatotal = novosAgendamentosServicos.Sum(x => x.Valor_Total_Item);
-
-                    agendamentoCapa.Valor_Total_Agendamento = somatotal;
-
-                    int tempoTotalServico = novosAgendamentosServicos.Sum(x => x.Tempo_Servico_Item);
-
-                    if (agendamentoCapa.Data_Agendamento.HasValue)
-                    {
-                        DateTime dataFim = agendamentoCapa.Data_Agendamento.Value.AddMinutes(tempoTotalServico);
-                        agendamentoCapa.Data_Fim_Agendamento = dataFim;
-                    }
-                }
-
                 await _dbContext.SaveChangesAsync();
 
                 return Ok(new
@@ -161,6 +216,18 @@ namespace MatutosApi.Controllers
             }
 
             int codigoUsuarioLogado  = int.Parse(usuario);
+
+            var bloqueioAgenda = await _dbContext.Blacklists
+                .Where(b => b.Ativo &&
+                            b.Inicio_Bloqueio <= agendamento.Data_Agendamento &&
+                            b.Fim_Bloqueio > agendamento.Data_Agendamento &&
+                            b.UsuariosBloqueados.Any(ub => ub.Codigo_Usuario == agendamento.Codigo_Barbeiro))
+                .AnyAsync();
+            if(bloqueioAgenda)
+            {
+                return BadRequest(new { Mensagem = "O horário de início escolhido está indisponível para este barbeiro." });
+            }
+
 
             var agendamentoNovo = new Agendamento
             {
@@ -249,6 +316,7 @@ namespace MatutosApi.Controllers
                         Cliente = new { Nome = a.Cliente.Nome},
                         Barbeiro = new {Nome = a.Barbeiro.Nome}
                     })
+                    .OrderByDescending(a => a.Codigo_Agendamento)
                     .ToListAsync();
 
                 if (!agendamento.Any())

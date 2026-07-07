@@ -46,8 +46,8 @@
                             <TapGestureRecognizer Command="{Binding AbrirAgendamentosCommad}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Image Source="tesourabranca.png" HeightRequest="80" WidthRequest="80"/>
-                            <Label Text="Cortes" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" />
+                            <Image Source="tesourabranca.png" HeightRequest="40" WidthRequest="100"/>
+                            <Label Text="Cortes" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,1,0,0"/>
                         </VerticalStackLayout>
                     </Border>
 
@@ -57,7 +57,7 @@
                             <TapGestureRecognizer Command="{Binding ConsultarTelefoneCommand}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Image Source="telefonebranco.png" HeightRequest="70" WidthRequest="70"/>
+                            <Image Source="telefonebranco.png" HeightRequest="40" WidthRequest="40"/>
                             <Label Text="Telefone" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>
@@ -116,6 +116,9 @@
                     <BoxView HeightRequest="1" Color="#333333" />
 
                     <Grid ColumnDefinitions="*" Padding="0,20,0,0" Margin="0,15,0,0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LogOutCommand}"/>
+                        </Grid.GestureRecognizers>
                         <Label Text="Sair da Conta" TextColor="#FFFFFF" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
 

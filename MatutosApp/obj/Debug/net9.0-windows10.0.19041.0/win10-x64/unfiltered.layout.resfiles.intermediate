@@ -1,5 +1,7 @@
+runtimes\win-x64\native\WebView2Loader.dll
 OpenSans-Regular.ttf
 OpenSans-Semibold.ttf
+agendabloqueada.scale-100.png
 appicon.ico
 appiconLargeTile.scale-100.png
 appiconLargeTile.scale-125.png
@@ -48,6 +50,7 @@ appiconWideTile.scale-200.png
 appiconWideTile.scale-400.png
 barbearia.scale-100.png
 barbearialogo.scale-100.jpeg
+camera.scale-100.png
 dotnet_bot.scale-100.png
 dotnet_bot.scale-125.png
 dotnet_bot.scale-150.png
@@ -67,6 +70,7 @@ telefonebranco.scale-100.png
 tesoura.scale-100.png
 tesourabranca.scale-100.png
 tesourapente.scale-100.png
+usuario.scale-100.png
 xvermelho.scale-100.png
 splashSplashScreen.scale-100.png
 splashSplashScreen.scale-125.png

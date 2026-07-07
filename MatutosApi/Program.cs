@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using MatutosApi.Infraestrutura;
+using MatutosApi.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using static MatutosApi.Controllers.UsuarioController;
 
 var key = Encoding.ASCII.GetBytes("MatutosAppUelerBernardoLuizFelipeEstagio");
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +68,7 @@ builder.Services.AddDbContext<MatutosDbContext>(options =>
         mySqlOptions => mySqlOptions.DisableBackslashEscaping()); // Dica extra de compatibilidade
 });
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

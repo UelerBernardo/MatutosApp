@@ -37,9 +37,16 @@ namespace MatutosApp.ViewsModels
         private readonly ServicoService _servicoService;
         private readonly AgendamentoService _agendamentoService;
 
+        private List<ServicoItemWrapper> _listaOriginalServicos = new();
+
+        [ObservableProperty]  private string textoBusca;
+
+        [ObservableProperty]
+        private ObservableCollection<ServicoItemWrapper> listaServico = new();
+
         [ObservableProperty] private int agendamento;
         [ObservableProperty] private decimal valor_Total_Item;
-        public ObservableCollection<ServicoItemWrapper> ListaServico { get; set; } = new();
+        //public ObservableCollection<ServicoItemWrapper> ListaServico { get; set; } = new();
 
         public AgendamentoServicoViewModel(ServicoService servicoService, AgendamentoService agendamentoService)
         {
@@ -54,17 +61,26 @@ namespace MatutosApp.ViewsModels
         {
             try
             {
-                var listaDb = await _servicoService.ServicoConsultar();
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                var listaDb = await _servicoService.ServicoConsultar(token);
                 if (listaDb != null)
                 {
+                    // Limpa as duas listas para evitar duplicação
                     ListaServico.Clear();
+                    _listaOriginalServicos.Clear();
+
                     foreach (var servico in listaDb)
-                    {                    
-                        ListaServico.Add(new ServicoItemWrapper
+                    {
+                        var itemWrapper = new ServicoItemWrapper
                         {
                             ServicoOriginal = servico,
                             QuantidadeSelecionada = 0
-                        });
+                        };
+
+                        // 👉 3. ADICIONA O MESMO WRAPPER NA TELA E NO BACKUP
+                        ListaServico.Add(itemWrapper);
+                        _listaOriginalServicos.Add(itemWrapper);
                     }
                 }
             }
@@ -77,7 +93,7 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task Cadastrar()
         {
-            var itensEscolhidos = ListaServico.Where(x => x.QuantidadeSelecionada > 0).ToList();
+            var itensEscolhidos = _listaOriginalServicos.Where(x => x.QuantidadeSelecionada > 0).ToList();
 
             if (!itensEscolhidos.Any())
             {
@@ -123,7 +139,7 @@ namespace MatutosApp.ViewsModels
         public async Task CancelarAgendamento()
         {
             string token = await SecureStorage.Default.GetAsync("jwt_token");
-            if (Agendamento == null)
+            if (Agendamento <= 0)
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
                 return;
@@ -140,6 +156,25 @@ namespace MatutosApp.ViewsModels
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
             }
+        }
+
+
+        partial void OnTextoBuscaChanged(string value)
+        {
+            // Se a barra estiver vazia, restaura todos os serviços na tela
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                ListaServico = new ObservableCollection<ServicoItemWrapper>(_listaOriginalServicos);
+                return;
+            }
+
+            // Filtra procurando a descrição ignorando letras maiúsculas ou minúsculas
+            var itensFiltrados = _listaOriginalServicos
+                .Where(s => s.ServicoOriginal.Descricao.Contains(value, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            // Atualiza a tela com os resultados
+            ListaServico = new ObservableCollection<ServicoItemWrapper>(itensFiltrados);
         }
     }
 }

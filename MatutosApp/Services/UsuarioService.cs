@@ -1,8 +1,10 @@
 ﻿using Azure;
 using MatutosDomain;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -18,13 +20,31 @@ namespace MatutosApp.Services
 
         public UsuarioService()
         {
-            string baseURL = "https://localhost:7110/";
+            string baseURL = DeviceInfo.Platform == DevicePlatform.Android
+                ? "https://10.0.2.2:7110/" 
+                : "https://localhost:7110/";
 
-            _httpClient = new HttpClient
+            _httpClient = new HttpClient(ObterManipuladorInseguro())
             {
                 BaseAddress = new Uri(baseURL)
 
             };
+        }
+
+        private HttpMessageHandler ObterManipuladorInseguro()
+        {
+            #if ANDROID
+                var handler = new Xamarin.Android.Net.AndroidMessageHandler();
+                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+                {
+                    if (cert != null && cert.Issuer.Equals("CN=localhost"))
+                        return true;
+                    return errors == System.Net.Security.SslPolicyErrors.None;
+                };
+                return handler;
+            #else
+                        return new HttpClientHandler();
+            #endif
         }
 
         public async Task<Usuario> ConsultarPefil(string token)
@@ -134,40 +154,55 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<bool> UsuarioCadastrar(UsuarioCadastro usuario)
+        public async Task<(bool Sucesso, Usuario Dados)> UsuarioCadastrar(UsuarioCadastro usuario)
         {
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("usuario/cadastrar", usuario);
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/cadastrar", usuario);
 
-                if (response.IsSuccessStatusCode)
+                // A configuração para ler o JSON sem frescura com maiúsculas/minúsculas
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resposta.IsSuccessStatusCode)
                 {
-                    var dadosAutenticacao = await response.Content.ReadFromJsonAsync<AuthResponse>();
+                    // 👉 CORREÇÃO 1: Passamos o 'options' para dentro do método de leitura
+                    var dados = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
 
-                    if (dadosAutenticacao != null && !string.IsNullOrEmpty(dadosAutenticacao.Token))
+                    if (dados != null && !string.IsNullOrEmpty(dados.Token))
                     {
-                        await SecureStorage.Default.SetAsync("jwt_token", dadosAutenticacao.Token);
-                        return true;
+                        await SecureStorage.Default.SetAsync("jwt_token", dados.Token);
+
+                        // 👉 CORREÇÃO 2: Montamos a entidade Usuario pura pegando as peças soltas que vieram do AuthResponse
+                        var usuarioSalvo = new Usuario
+                        {
+                            Codigo_Usuario = dados.Usuario.Codigo_Usuario,
+                            Nome = dados.Usuario.Nome,
+                            Email = dados.Usuario.Email,
+                            TipoSelecionado = dados.Usuario.TipoSelecionado
+                        };
+
+                        return (true, usuarioSalvo);
                     }
                     else
                     {
                         Debug.WriteLine("Cadastro realizado, mas o Token não foi recebido.");
-                        return false; 
+                        return (false, null);
                     }
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {response.StatusCode}, Erro: {errorMessage}");
-                    return false;
+                    var errorMessage = await resposta.Content.ReadAsStringAsync();
+                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {errorMessage}");
+                    return (false, null);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
-                return false;
+                return (false, null);
             }
         }
+
         public async Task<(bool Sucesso, string Mensagem, Usuario Dados)> UsuarioLogin(UsuarioLogin login)
         {
             try
@@ -222,6 +257,74 @@ namespace MatutosApp.Services
 
                     Debug.WriteLine($"Falha: {mensagemDaApi}");
                     return (false, mensagemDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> SolicitarCodigo(string emailUsuario)
+        {
+            try
+            {
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/solicitar-codigo", emailUsuario);
+
+                string conteudoResposta = await resposta.Content.ReadAsStringAsync();
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var mensagemApi = JsonSerializer.Deserialize<ApiResposta>(conteudoResposta, options);
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    string mensagemResposta = mensagemApi?.Mensagem ?? "Código enviado com sucesso!";
+                    return (true, mensagemResposta);
+                }
+                else
+                {
+                    string erroDaApi = mensagemApi?.Mensagem ?? "Erro desconhecido de comunicação.";
+                    return(false, erroDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> RedefinirSenha(string emailUsuario, string senhaNova, string codigoConfirmacao)
+        {
+            try
+            {
+                var payload = new
+                {
+                    Email = emailUsuario,
+                    Codigo = codigoConfirmacao,
+                    NovaSenha = senhaNova
+                };
+
+
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/redefinir-senha", payload);
+
+                string conteudo = await resposta.Content.ReadAsStringAsync();
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var mensagemApi = JsonSerializer.Deserialize<ApiResposta>(conteudo, options);
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    string mensagemResposta = mensagemApi.Mensagem;
+                    return (true, mensagemResposta);
+                }
+                else
+                {
+                    string erroDaApi = mensagemApi?.Mensagem ?? "Erro desconhecido de comunicação.";
+                    return (false, erroDaApi);
                 }
             }
             catch (Exception ex)

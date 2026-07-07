@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MatutosApp.ViewsModels"
+             x:Class="MatutosApp.Views.UsuarioRedefinirSenhaView"
+             x:DataType="vm:UsuarioRedefinirSenhaViewModel"
+             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,50,30,30" Spacing="20">
+
+            <Image Source="senha_icon.png" 
+                   HeightRequest="100" 
+                   WidthRequest="100" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,10"/>
+
+            <Label Text="Quase lá!" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}"/>
+
+            <Label Text="Digite o código de 6 dígitos que enviamos para o seu e-mail e crie uma nova senha segura." 
+                   FontSize="14" 
+                   HorizontalTextAlignment="Center" 
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                   Margin="0,0,0,20"/>
+
+            <Label Text="Conta em recuperação:" FontSize="12" TextColor="Gray" Margin="5,0,0,-15" />
+            <Frame BorderColor="LightGray" 
+                   CornerRadius="8" 
+                   Padding="0" 
+                   HasShadow="False"
+                   BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2A2A2A}">
+                <Entry Text="{Binding EmailRecuperacao}" 
+                       IsReadOnly="True" 
+                       TextColor="Gray"
+                       Margin="15,5"/>
+            </Frame>
+
+            <Frame BorderColor="LightGray" 
+                   CornerRadius="8" 
+                   Padding="0" 
+                   HasShadow="False"
+                   BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#1E1E1E}">
+                <Entry Text="{Binding CodigoRecuperacao}" 
+                       Placeholder="Código de 6 dígitos" 
+                       Keyboard="Numeric" 
+                       MaxLength="6"
+                       ClearButtonVisibility="WhileEditing"
+                       Margin="15,5"/>
+            </Frame>
+
+            <Frame BorderColor="LightGray" 
+                   CornerRadius="8" 
+                   Padding="0" 
+                   HasShadow="False"
+                   BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#1E1E1E}">
+                <Entry Text="{Binding SenhaNova}" 
+                       Placeholder="Sua nova senha" 
+                       IsPassword="True" 
+                       ClearButtonVisibility="WhileEditing"
+                       Margin="15,5"/>
+            </Frame>
+
+            <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+                <Label Text="Reenviar Código" 
+                     TextColor="#FFFFFF"
+                     FontAttributes="Bold"
+                     VerticalOptions="Center"
+                     TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SolicitarCodigoCommand}"/>
+                    </Label.GestureRecognizers>
+
+                </Label>
+            </HorizontalStackLayout>
+
+            <Button Text="Redefinir Senha" 
+                    Command="{Binding RedefinirSenhaCommand}" 
+                    BackgroundColor="#D32F2F" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="8" 
+                    HeightRequest="50" 
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
