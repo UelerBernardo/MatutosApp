@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.BlacklistCadastrarView"
-             Title="BlacklistCadastrarView">
+             Title="BlacklistCadastrarView"
+             BackgroundColor="#121212">
     <ScrollView>
         <VerticalStackLayout Padding="20,40,20,30" Spacing="20">
 
@@ -28,19 +29,31 @@
             </VerticalStackLayout>
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+
                 <VerticalStackLayout Grid.Column="0" Spacing="8">
-                    <Label Text="Data de Início" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Início" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" />
+
                     <Border Stroke="#333333" BackgroundColor="#1E1E1E" StrokeShape="RoundRectangle 12" Padding="15,0" HeightRequest="50">
                         <DatePicker Date="{Binding Inicio_Bloqueio}" TextColor="#FFFFFF" VerticalOptions="Center" />
+                    </Border>
+
+                    <Border Stroke="#333333" BackgroundColor="#1E1E1E" StrokeShape="RoundRectangle 12" Padding="15,0" HeightRequest="50">
+                        <TimePicker Time="{Binding HoraInicio_Bloqueio}" TextColor="#FFFFFF" VerticalOptions="Center" />
                     </Border>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="1" Spacing="8">
-                    <Label Text="Data de Fim" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="Fim" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" />
+
                     <Border Stroke="#333333" BackgroundColor="#1E1E1E" StrokeShape="RoundRectangle 12" Padding="15,0" HeightRequest="50">
                         <DatePicker Date="{Binding Fim_Bloqueio}" TextColor="#FFFFFF" VerticalOptions="Center" />
                     </Border>
+
+                    <Border Stroke="#333333" BackgroundColor="#1E1E1E" StrokeShape="RoundRectangle 12" Padding="15,0" HeightRequest="50">
+                        <TimePicker Time="{Binding HoraFim_Bloqueio}" TextColor="#FFFFFF" VerticalOptions="Center" />
+                    </Border>
                 </VerticalStackLayout>
+
             </Grid>
 
             <HorizontalStackLayout Spacing="10" VerticalOptions="Center" Margin="0,5">

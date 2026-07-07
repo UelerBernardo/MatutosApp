@@ -48,12 +48,14 @@ namespace MatutosApp
             builder.Services.AddTransient<BlacklistConsultarViewModel>();
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<BlacklistCadastrarViewModel>();
+            builder.Services.AddTransient<UsuarioSolicitarCodigoViewModel>();
+            builder.Services.AddTransient<UsuarioRedefinirSenhaViewModel>();
 
             //Views
             builder.Services.AddTransient<UsuarioCadastroView>();
             builder.Services.AddTransient<TelefoneCadastroView>();
             builder.Services.AddTransient<BlacklistConsultarView>();
-            builder.Services.AddTransient<AgendamentoDetalhesViewModel>();
+            builder.Services.AddTransient<AgendamentoDetalhesView>();
             builder.Services.AddTransient<LoginView>();
             builder.Services.AddTransient<PrincipalView>();
             builder.Services.AddTransient<AgendamentoCadastroView>();
@@ -65,6 +67,8 @@ namespace MatutosApp
             builder.Services.AddTransient<ServicoConsultarView>();
             builder.Services.AddTransient<ServicoCadastroView>();
             builder.Services.AddTransient<BlacklistCadastrarView>();
+            builder.Services.AddTransient<UsuarioSolicitarCodigoView>();
+            builder.Services.AddTransient<UsuarioRedefinirSenhaView>();
 
 
 

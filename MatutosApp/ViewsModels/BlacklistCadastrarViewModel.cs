@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,8 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] bool ativo = true;
         [ObservableProperty] string detalhes;
         [ObservableProperty] int codigo_Agendamento;
+        [ObservableProperty] private TimeSpan horaInicio_Bloqueio;
+        [ObservableProperty] private TimeSpan horaFim_Bloqueio;
 
         [ObservableProperty] private ObservableCollection<BarbeiroExibicao> listaBarbeiro = new();
 
@@ -73,18 +76,26 @@ namespace MatutosApp.ViewsModels
         {
             try
             {
+                var inicio = Inicio_Bloqueio.Date + HoraInicio_Bloqueio;
+                var fim = Fim_Bloqueio.Date + HoraFim_Bloqueio;
+
                 IsBusy = true;
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
+                if(Detalhes == null)
+                {
+                    Detalhes = "Bloqueio sem motivo";
+                }
+
                 var novaBlacklist = new Blacklist
                 {
-                    Inicio_Bloqueio = Inicio_Bloqueio,
-                    Fim_Bloqueio = Fim_Bloqueio,
+                    Inicio_Bloqueio = inicio,
+                    Fim_Bloqueio = fim,
+
                     Ativo = Ativo,
                     Detalhes = Detalhes,
-                    Codigo_Agendamento = Codigo_Agendamento,
+                    Codigo_Agendamento = null,
 
-                    // Simplifiquei o "== true", o C# já entende direto!
                     UsuariosBloqueados = ListaBarbeiro
                         .Where(b => b.IsSelecionado)
                         .Select(ub => new Usuario_Blacklist
@@ -98,7 +109,7 @@ namespace MatutosApp.ViewsModels
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "OK");
-                    // Opcional: Limpar os campos ou fechar a tela aqui após o sucesso
+                    await VoltarTelaAsync();
                 }
                 else
                 {

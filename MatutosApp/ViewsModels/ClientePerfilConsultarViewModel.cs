@@ -165,7 +165,7 @@ namespace MatutosApp.ViewsModels
             }
 
             UsuarioSessaoService.EncerrarSessao();
-            await Shell.Current.GoToAsync(nameof(LoginView));
+            Application.Current.MainPage = new AppShell();
         }
     }
 }

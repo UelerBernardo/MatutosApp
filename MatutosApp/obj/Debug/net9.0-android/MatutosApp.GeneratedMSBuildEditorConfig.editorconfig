@@ -131,6 +131,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioIm
 build_metadata.AdditionalFiles.TargetPath = Views\UsuarioImagemView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\UsuarioImagemView.xaml
 
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioRedefinirSenhaView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioRedefinirSenhaView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UsuarioRedefinirSenhaView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UsuarioRedefinirSenhaView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioSolicitarCodigoView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioSolicitarCodigoView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\UsuarioSolicitarCodigoView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\UsuarioSolicitarCodigoView.xaml
+
 [C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/UsuarioTelefoneConsultarView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.UsuarioTelefoneConsultarView.xaml

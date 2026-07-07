@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
 using MatutosApp.Views;
 using MatutosDomain;
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -238,7 +239,7 @@ namespace MatutosApp.ViewsModels
 
                     if(!confirmar)
                     {
-                        await Shell.Current.GoToAsync("PrincipalView");
+                        await Shell.Current.GoToAsync("///PrincipalView");
                     }
                     else
                     {
@@ -272,9 +273,20 @@ namespace MatutosApp.ViewsModels
                     AdministradorCadastro = convertido;
                 }
 
-                // Agora que temos 100% de certeza que a variável recebeu o 'true',
-                // nós chamamos a verificação para configurar os botões e títulos!
                 DefinirModoDaTela();
+            }
+        }
+
+        [RelayCommand]
+        public async Task Cancelar()
+        {
+            if(usuarioTipoLogado != null)
+            {
+                await Shell.Current.GoToAsync("..");
+            }
+            else
+            { 
+                Application.Current.MainPage = new AppShell();
             }
         }
     }

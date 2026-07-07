@@ -56,11 +56,11 @@ namespace MatutosApp.ViewsModels
         {
             var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
 
-            //if (usuarioLogado == null)
-            //{
-            //    PodeVisualizar = false;
-            //    return;
-            //}
+            if (usuarioLogado == null)
+            {
+                PodeVisualizar = false;
+                return;
+            }
 
             if (usuarioLogado.TipoSelecionado == UsuarioTipo.Administrador)
             {
@@ -173,7 +173,6 @@ namespace MatutosApp.ViewsModels
                 await App.Current.MainPage.DisplayAlert("Erro", "Não foi possível abrir o link.", "OK");
             }
         }
-
         [RelayCommand]
         private async Task LogOut()
         {
@@ -184,8 +183,11 @@ namespace MatutosApp.ViewsModels
                 return;
             }
 
+            // 1. Limpa os dados de sessão (Token, etc)
             UsuarioSessaoService.EncerrarSessao();
-            await Shell.Current.GoToAsync(nameof(LoginView));
+
+            // 2. A mágica: Substitui a fundação do app por uma nova, zerada!
+            Application.Current.MainPage = new AppShell();
         }
     }
 }

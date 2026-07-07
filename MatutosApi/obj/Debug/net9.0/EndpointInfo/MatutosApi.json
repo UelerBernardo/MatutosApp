@@ -645,6 +645,68 @@
           }
         }
       }
+    },
+    "/usuario/solicitar-codigo": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/usuario/redefinir-senha": {
+      "post": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedefinirSenhaRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedefinirSenhaRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RedefinirSenhaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -803,6 +865,15 @@
           "ativo": {
             "type": "boolean"
           },
+          "codigo_Recuperacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_Validade_Codigo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -846,7 +917,8 @@
           },
           "codigo_Agendamento": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "agendamento": {
             "$ref": "#/components/schemas/Agendamento"
@@ -887,6 +959,15 @@
           "ativo": {
             "type": "boolean"
           },
+          "codigo_Recuperacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_Validade_Codigo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -895,6 +976,24 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RedefinirSenhaRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "novaSenha": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1009,6 +1108,15 @@
           },
           "ativo": {
             "type": "boolean"
+          },
+          "codigo_Recuperacao": {
+            "type": "string",
+            "nullable": true
+          },
+          "data_Validade_Codigo": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "imagem_Usuario": {
             "type": "string",

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MatutosApp.ViewsModels"
+             x:Class="MatutosApp.Views.UsuarioSolicitarCodigoView"
+             x:DataType="vm:UsuarioSolicitarCodigoViewModel"
+             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#121212}">
+    <ScrollView>
+        <VerticalStackLayout Padding="30,50,30,30" Spacing="25">
+
+            <Image Source="cadeado_icon.png" 
+                   HeightRequest="100" 
+                   WidthRequest="100" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,20"/>
+
+            <Label Text="Esqueceu sua senha?" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}"/>
+
+            <Label Text="Digite o e-mail cadastrado na sua conta. Nós enviaremos um código de 6 dígitos para você criar uma nova senha." 
+                   FontSize="14" 
+                   HorizontalTextAlignment="Center" 
+                   TextColor="{AppThemeBinding Light=#666666, Dark=#AAAAAA}"
+                   Margin="0,0,0,20"/>
+
+            <Frame BorderColor="LightGray" 
+                   CornerRadius="8" 
+                   Padding="0" 
+                   HasShadow="False"
+                   BackgroundColor="{AppThemeBinding Light=#F8F9FA, Dark=#1E1E1E}">
+                <Entry Text="{Binding Email}" 
+                       Placeholder="Seu endereço de e-mail" 
+                       Keyboard="Email" 
+                       ClearButtonVisibility="WhileEditing"
+                       Margin="15,5"/>
+            </Frame>
+
+            <Button Text="Enviar Código" 
+                    Command="{Binding SolicitarCodigoCommand}" 
+                    BackgroundColor="#D32F2F" 
+                    TextColor="White" 
+                    FontAttributes="Bold" 
+                    CornerRadius="8" 
+                    HeightRequest="50" 
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

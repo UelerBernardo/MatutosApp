@@ -8,8 +8,16 @@
     Title="MatutosApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:LoginView}"
-        Route="MainPage" />
+        x:Name="ItemLogin"
+        Title="Login"
+        Route="LoginView"
+        FlyoutItem.IsVisible="False"
+        ContentTemplate="{DataTemplate views:LoginView}" />
+
+    <FlyoutItem Title="Início" Icon="home_icon.png">
+        <ShellContent 
+            Route="PrincipalView" 
+            ContentTemplate="{DataTemplate views:PrincipalView}" />
+    </FlyoutItem>
 
 </Shell>

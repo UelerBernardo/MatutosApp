@@ -361,5 +361,37 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "RedefinirSenha",
+    "RelativePath": "usuario/redefinir-senha",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MatutosApi.Controllers.UsuarioController\u002BRedefinirSenhaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "SolicitarCodigoRecuperacao",
+    "RelativePath": "usuario/solicitar-codigo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailUsuario",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

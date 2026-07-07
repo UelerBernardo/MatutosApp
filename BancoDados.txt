@@ -1,0 +1,216 @@
+-- ====================================================================
+-- SCRIPT UNIFICADO DBMATUTOS (16 Tabelas)
+-- ====================================================================
+
+-- Desabilita a verificação de chaves estrangeiras para evitar erros de ordem
+SET FOREIGN_KEY_CHECKS=0;
+
+-- --------------------------------------------------------
+-- 1. Auditoria Log
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `auditoria_log` (
+  `Codigo_Log` int(11) NOT NULL AUTO_INCREMENT,
+  `Entidade_Afetada` varchar(250) DEFAULT NULL,
+  `Tipo_Acao` int(11) DEFAULT NULL,
+  `Valor_Afetado` int(11) DEFAULT NULL,
+  `Usuario_Acao` varchar(250) DEFAULT NULL,
+  `Ativo` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Log`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 2. Notificação
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `notificacao` (
+  `Codigo_Notificacao` int(11) NOT NULL AUTO_INCREMENT,
+  `Ativo` tinyint(1) DEFAULT 1,
+  `Descricao` varchar(250) DEFAULT NULL,
+  `Mensagem` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Notificacao`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 3. Serviço
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `servico` (
+  `Codigo_Servico` int(11) NOT NULL AUTO_INCREMENT,
+  `Descricao` varchar(250) DEFAULT NULL,
+  `Duracao` varchar(250) DEFAULT NULL,
+  `Preco` decimal(10,2) DEFAULT NULL,
+  `Tempo_Servico` int(11) DEFAULT NULL,
+  `Ativo` tinyint(1) DEFAULT 1,
+  PRIMARY KEY (`Codigo_Servico`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 4. Usuário (Atualizado)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `Codigo_Usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `Nome` varchar(250) NOT NULL,
+  `E_mail` varchar(250) NOT NULL,
+  `Senha` varchar(250) NOT NULL,
+  `Ativo` tinyint(1) DEFAULT 1,
+  `Imagem_Usuario` varchar(250) DEFAULT NULL,
+  `Codigo_Recuperacao` varchar(10) DEFAULT NULL,
+  `Data_Validade_Codigo` datetime DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 5. Administrador
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `administrador` (
+  `Codigo_Usuario` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Usuario`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Usuario`) REFERENCES `usuario` (`Codigo_Usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 6. Barbeiro
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `barbeiro` (
+  `Codigo_Usuario` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Usuario`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Usuario`) REFERENCES `usuario` (`Codigo_Usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 7. Cliente
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `cliente` (
+  `Codigo_Usuario` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Usuario`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Usuario`) REFERENCES `usuario` (`Codigo_Usuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 8. Situação Agendamento (Atualizado)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `situacao_agendamento` (
+  `Codigo_Situacao_Agendamento` int(11) NOT NULL AUTO_INCREMENT,
+  `Descricao` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Situacao_Agendamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 9. Agendamento
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `agendamento` (
+  `Codigo_Agendamento` int(11) NOT NULL AUTO_INCREMENT,
+  `Data_Agendamento` datetime NOT NULL,
+  `Data_Fim_Agendamento` datetime DEFAULT NULL,
+  `Codigo_Cliente` int(11) NOT NULL,
+  `Codigo_Barbeiro` int(11) NOT NULL,
+  `Codigo_Situacao_Agendamento` int(11) NOT NULL,
+  `Valor_Total_Agendamento` decimal(18,2) DEFAULT NULL,
+  `Ativo` tinyint(1) NOT NULL,
+  PRIMARY KEY (`Codigo_Agendamento`),
+  KEY `Codigo_Cliente` (`Codigo_Cliente`),
+  KEY `Codigo_Barbeiro` (`Codigo_Barbeiro`),
+  KEY `3` (`Codigo_Situacao_Agendamento`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Cliente`) REFERENCES `cliente` (`Codigo_Usuario`),
+  CONSTRAINT `2` FOREIGN KEY (`Codigo_Barbeiro`) REFERENCES `barbeiro` (`Codigo_Usuario`),
+  CONSTRAINT `3` FOREIGN KEY (`Codigo_Situacao_Agendamento`) REFERENCES `situacao_agendamento` (`Codigo_Situacao_Agendamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 10. Agendamento Serviço
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `agendamento_servico` (
+  `Codigo_Agendamento_Servico` int(11) NOT NULL AUTO_INCREMENT,
+  `Codigo_Agendamento` int(11) NOT NULL,
+  `Codigo_Servico` int(11) NOT NULL,
+  `Quantidade_Servico` int(11) DEFAULT 1,
+  `Campo` int(11) DEFAULT NULL,
+  `Valor_Total_Item` decimal(18,2) DEFAULT NULL,
+  `Tempo_Servico_Item` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Agendamento_Servico`),
+  KEY `Codigo_Agendamento` (`Codigo_Agendamento`),
+  KEY `Codigo_Servico` (`Codigo_Servico`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Agendamento`) REFERENCES `agendamento` (`Codigo_Agendamento`),
+  CONSTRAINT `2` FOREIGN KEY (`Codigo_Servico`) REFERENCES `servico` (`Codigo_Servico`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 11. Blacklist
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `blacklist` (
+  `Codigo_Blacklist` int(11) NOT NULL AUTO_INCREMENT,
+  `Inicio_Bloqueio` datetime NOT NULL,
+  `Fim_Bloqueio` datetime NOT NULL,
+  `Ativo` tinyint(1) DEFAULT 1,
+  `Codigo_Agendamento` int(11) DEFAULT NULL,
+  `Detalhes` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Blacklist`) USING BTREE,
+  KEY `FK_blacklist_agendamento` (`Codigo_Agendamento`),
+  CONSTRAINT `FK_blacklist_agendamento` FOREIGN KEY (`Codigo_Agendamento`) REFERENCES `agendamento` (`Codigo_Agendamento`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 12. Configura Notificação
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `configura_notificacao` (
+  `Codigo_Configura_Notificacao` int(11) NOT NULL AUTO_INCREMENT,
+  `Codigo_Notificacao` int(11) NOT NULL,
+  `Codigo_Agendamento` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Configura_Notificacao`),
+  KEY `Codigo_Notificacao` (`Codigo_Notificacao`),
+  KEY `Codigo_Agendamento` (`Codigo_Agendamento`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Notificacao`) REFERENCES `notificacao` (`Codigo_Notificacao`),
+  CONSTRAINT `2` FOREIGN KEY (`Codigo_Agendamento`) REFERENCES `agendamento` (`Codigo_Agendamento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 13. Telefone (Novo)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `telefone` (
+  `Codigo_Telefone` int(11) NOT NULL AUTO_INCREMENT,
+  `Numero_Telefone` varchar(11) NOT NULL,
+  `Principal` bit(1) NOT NULL,
+  `DDD` char(2) DEFAULT NULL,
+  PRIMARY KEY (`Codigo_Telefone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 14. Serviço Imagem (Novo)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `servico_imagem` (
+  `Codigo_Imagem` int(11) NOT NULL AUTO_INCREMENT,
+  `Imagem` longtext DEFAULT NULL,
+  `Codigo_Servico` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Imagem`),
+  KEY `FK_servico_imagem_servico` (`Codigo_Servico`),
+  CONSTRAINT `FK_servico_imagem_servico` FOREIGN KEY (`Codigo_Servico`) REFERENCES `servico` (`Codigo_Servico`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 15. Usuário Blacklist (Novo/Atualizado)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `usuario_blacklist` (
+  `Codigo_Usuario_BlackList` int(11) NOT NULL AUTO_INCREMENT,
+  `Codigo_Usuario` int(11) NOT NULL,
+  `Codigo_BlackList` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Usuario_BlackList`),
+  KEY `Codigo_Usuario` (`Codigo_Usuario`),
+  KEY `Codigo_BlackList` (`Codigo_BlackList`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Usuario`) REFERENCES `barbeiro` (`Codigo_Usuario`),
+  CONSTRAINT `2` FOREIGN KEY (`Codigo_BlackList`) REFERENCES `blacklist` (`Codigo_Blacklist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+-- 16. Usuário Telefone (Novo)
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `usuario_telefone` (
+  `Codigo_Usuario_Telefone` int(11) NOT NULL AUTO_INCREMENT,
+  `Codigo_Usuario` int(11) NOT NULL,
+  `Codigo_Telefone` int(11) NOT NULL,
+  PRIMARY KEY (`Codigo_Usuario_Telefone`),
+  KEY `Codigo_Usuario` (`Codigo_Usuario`),
+  KEY `Codigo_Telefone` (`Codigo_Telefone`),
+  CONSTRAINT `1` FOREIGN KEY (`Codigo_Usuario`) REFERENCES `usuario` (`Codigo_Usuario`),
+  CONSTRAINT `2` FOREIGN KEY (`Codigo_Telefone`) REFERENCES `telefone` (`Codigo_Telefone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- Reativa a verificação de chaves estrangeiras
+SET FOREIGN_KEY_CHECKS=1;

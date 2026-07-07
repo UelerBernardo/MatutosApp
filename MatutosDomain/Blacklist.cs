@@ -19,8 +19,10 @@ namespace MatutosDomain
         public DateTime Fim_Bloqueio { get; set; }
         public string? Detalhes { get; set; }
         public ICollection<Usuario_Blacklist>? UsuariosBloqueados { get; set;}
-        [ForeignKey("agendamento")]
-        public int Codigo_Agendamento { get; set; }
+        public int? Codigo_Agendamento { get; set; }
+
+        // 👉 2. A Foreign Key avisa: "MAS... se tiver um número, ele tem que existir na tabela Agendamento!"
+        [ForeignKey("Codigo_Agendamento")]
         public Agendamento? Agendamento { get; set; }
     }
 }

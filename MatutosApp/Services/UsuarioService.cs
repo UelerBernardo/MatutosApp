@@ -4,6 +4,7 @@ using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -19,13 +20,31 @@ namespace MatutosApp.Services
 
         public UsuarioService()
         {
-            string baseURL = "https://localhost:7110/";
+            string baseURL = DeviceInfo.Platform == DevicePlatform.Android
+                ? "https://10.0.2.2:7110/" 
+                : "https://localhost:7110/";
 
-            _httpClient = new HttpClient
+            _httpClient = new HttpClient(ObterManipuladorInseguro())
             {
                 BaseAddress = new Uri(baseURL)
 
             };
+        }
+
+        private HttpMessageHandler ObterManipuladorInseguro()
+        {
+            #if ANDROID
+                var handler = new Xamarin.Android.Net.AndroidMessageHandler();
+                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+                {
+                    if (cert != null && cert.Issuer.Equals("CN=localhost"))
+                        return true;
+                    return errors == System.Net.Security.SslPolicyErrors.None;
+                };
+                return handler;
+            #else
+                        return new HttpClientHandler();
+            #endif
         }
 
         public async Task<Usuario> ConsultarPefil(string token)
@@ -238,6 +257,74 @@ namespace MatutosApp.Services
 
                     Debug.WriteLine($"Falha: {mensagemDaApi}");
                     return (false, mensagemDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> SolicitarCodigo(string emailUsuario)
+        {
+            try
+            {
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/solicitar-codigo", emailUsuario);
+
+                string conteudoResposta = await resposta.Content.ReadAsStringAsync();
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var mensagemApi = JsonSerializer.Deserialize<ApiResposta>(conteudoResposta, options);
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    string mensagemResposta = mensagemApi?.Mensagem ?? "Código enviado com sucesso!";
+                    return (true, mensagemResposta);
+                }
+                else
+                {
+                    string erroDaApi = mensagemApi?.Mensagem ?? "Erro desconhecido de comunicação.";
+                    return(false, erroDaApi);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> RedefinirSenha(string emailUsuario, string senhaNova, string codigoConfirmacao)
+        {
+            try
+            {
+                var payload = new
+                {
+                    Email = emailUsuario,
+                    Codigo = codigoConfirmacao,
+                    NovaSenha = senhaNova
+                };
+
+
+                var resposta = await _httpClient.PostAsJsonAsync("usuario/redefinir-senha", payload);
+
+                string conteudo = await resposta.Content.ReadAsStringAsync();
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var mensagemApi = JsonSerializer.Deserialize<ApiResposta>(conteudo, options);
+
+                if(resposta.IsSuccessStatusCode)
+                {
+                    string mensagemResposta = mensagemApi.Mensagem;
+                    return (true, mensagemResposta);
+                }
+                else
+                {
+                    string erroDaApi = mensagemApi?.Mensagem ?? "Erro desconhecido de comunicação.";
+                    return (false, erroDaApi);
                 }
             }
             catch (Exception ex)

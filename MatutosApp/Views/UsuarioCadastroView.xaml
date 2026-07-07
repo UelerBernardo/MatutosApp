@@ -93,7 +93,7 @@
                         HeightRequest="55" />
 
                 <Button Text="Cancelar"
-                        Command="{Binding VoltarTela}"
+                        Command="{Binding CancelarCommand}"
                         BackgroundColor="Transparent"
                         TextColor="#AAAAAA"
                         BorderColor="#333333"

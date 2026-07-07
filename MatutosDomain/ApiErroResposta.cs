@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MatutosDomain
 {
-    public  class ApiErroResposta
+    public class ApiErroResposta
     {
         public string Mensagem { get; set; } 
     }

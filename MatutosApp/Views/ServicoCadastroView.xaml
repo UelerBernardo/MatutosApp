@@ -134,7 +134,7 @@
                                     </Border>
 
                                     <ImageButton 
-                                        Source="xred.png"
+                                        Source="xvermelho.png"
                                         WidthRequest="2" 
                                         HeightRequest="1"
                                         CornerRadius="15" 

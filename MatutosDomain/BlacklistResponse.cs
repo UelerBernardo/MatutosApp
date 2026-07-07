@@ -17,6 +17,6 @@ namespace MatutosDomain
         // 👉 O SEGREDO: Aqui nós dizemos ao MAUI que vai chegar apenas uma lista de números (IDs)!
         public List<int> UsuariosBloqueados { get; set; }
         public string? Detalhes { get; set; }
-        public int Codigo_Agendamento { get; set; }
+        public int? Codigo_Agendamento { get; set; }
     }
 }

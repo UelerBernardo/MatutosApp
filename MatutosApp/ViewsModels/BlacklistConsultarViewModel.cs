@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
+using MatutosApp.Views;
 using MatutosDomain;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,12 @@ namespace MatutosApp.ViewsModels
             {
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível carregar os serviços. Erro: {ex.Message}", "OK");
             }
+        }
+
+        [RelayCommand]
+        public async Task AbrirBlacklistCadastro()
+        {
+            await Shell.Current.GoToAsync(nameof(BlacklistCadastrarView));
         }
     }
 }

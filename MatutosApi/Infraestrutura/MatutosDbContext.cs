@@ -58,6 +58,11 @@ namespace MatutosApi.Infraestrutura
                 .HasForeignKey(ub => ub.Codigo_BlackList)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Blacklist>()
+                .HasOne(b => b.Agendamento)
+                .WithMany() // ou a propriedade de coleção lá na classe Agendamento, se houver
+                .HasForeignKey(b => b.Codigo_Agendamento);
+
             modelBuilder.Entity<Usuario_Blacklist>()
                 .HasOne(ub => ub.Barbeiro)
                 .WithMany()

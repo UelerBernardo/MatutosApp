@@ -86,7 +86,7 @@ namespace MatutosApp.ViewsModels
                     if(resultado.Sucesso)
                     {
                         await Application.Current.MainPage.DisplayAlert("Aviso", "Agendamento cancelado com sucesso!", "Ok");
-                        _ = ConsultarDetalhesAgendamento();
+                        await Shell.Current.GoToAsync("///PrincipalView");
                     }
                 }
                 else
@@ -97,8 +97,8 @@ namespace MatutosApp.ViewsModels
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento cancelado.", "Ok");
-                    await Shell.Current.GoToAsync(nameof(PrincipalView));
-                }
+                    await Shell.Current.GoToAsync("///PrincipalView");
+                    }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
@@ -135,7 +135,8 @@ namespace MatutosApp.ViewsModels
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento liberado.", "Ok");
-                    await Shell.Current.GoToAsync(nameof(PrincipalView));
+                    //await Shell.Current.GoToAsync(nameof(PrincipalView));
+                    await Shell.Current.GoToAsync("///PrincipalView");
                 }
                 else
                 {

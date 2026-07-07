@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MatutosApi.Services;
 using System.Runtime.CompilerServices;
+using static MatutosApi.Controllers.UsuarioController;
 
 
 namespace MatutosApi.Controllers
@@ -15,10 +16,12 @@ namespace MatutosApi.Controllers
     public class UsuarioController : ControllerBase
     {
         private MatutosDbContext _dbcontext;
+        private readonly IEmailService _emailService;
 
-        public UsuarioController(MatutosDbContext dbcontext)
+        public UsuarioController(MatutosDbContext dbcontext, IEmailService emailService)
         {
             _dbcontext = dbcontext ?? throw new ArgumentNullException(nameof(dbcontext));
+            _emailService = emailService;
         }
 
         [HttpPut("alterar")]
@@ -268,7 +271,6 @@ namespace MatutosApi.Controllers
 
         [HttpPost("alterar/senha")]
         [Authorize]
-        // 1. Mudamos o nome do parâmetro para o novo nome da classe
         public async Task<IActionResult> AlterarSenhaPerfil([FromBody] AlterarSenhaPerfilRequest dados)
         {
             try
@@ -306,6 +308,81 @@ namespace MatutosApi.Controllers
             }
         }
 
+        [HttpPost("solicitar-codigo")]
+        [AllowAnonymous]
+        public async Task<IActionResult> SolicitarCodigoRecuperacao([FromBody] string emailUsuario)
+        {
+            try
+            {
+                var usuario = await _dbcontext.Usuarios.FirstOrDefaultAsync(u => u.Email == emailUsuario);
+
+                if (usuario == null)
+                {
+                    return Ok(new { Mensagem = "Se o e-mail estiver cadastrado, você receberá um código em instantes." });
+                }
+
+                Random random = new Random();
+                string codigoRecuperacao = random.Next(100000, 999999).ToString();
+
+                usuario.Codigo_Recuperacao = codigoRecuperacao;
+                usuario.Data_Validade_Codigo = DateTime.Now.AddMinutes(15);
+
+                await _dbcontext.SaveChangesAsync();
+
+                await _emailService.EnviarEmailRecuperacaoAsync(usuario.Email, codigoRecuperacao);
+
+                return Ok(new { Mensagem = "Se o e-mail estiver cadastrado, você receberá um código em instantes." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao processar a solicitação: {ex.Message}" });
+            }
+        }
+
+        [HttpPost("redefinir-senha")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RedefinirSenha([FromBody] RedefinirSenhaRequest request)
+        {
+            try
+            {
+                var usuario = await _dbcontext.Usuarios.FirstOrDefaultAsync(u => u.Email == request.Email);
+
+                // Funil 1: O e-mail existe?
+                if (usuario == null)
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos." }); // Mensagem genérica de propósito para não vazar e-mails
+                }
+
+                // Funil 2: O código está correto?
+                if (usuario.Codigo_Recuperacao != request.Codigo)
+                {
+                    return BadRequest(new { Mensagem = "Código de recuperação inválido ou incorreto." });
+                }
+
+                // Funil 3: O código ainda está no prazo de 15 minutos?
+                if (usuario.Data_Validade_Codigo < DateTime.Now)
+                {
+                    return BadRequest(new { Mensagem = "O código de recuperação expirou. Por favor, solicite um novo." });
+                }
+
+                // Passou em tudo! Vamos criptografar e salvar a nova senha
+                usuario.Senha = BCrypt.Net.BCrypt.HashPassword(request.NovaSenha);
+
+                // 👉 REGRA DE OURO: Limpar o código para que ele não possa ser reusado por um invasor!
+                usuario.Codigo_Recuperacao = null;
+                usuario.Data_Validade_Codigo = null;
+
+                await _dbcontext.SaveChangesAsync();
+
+                return Ok(new { Mensagem = "Senha redefinida com sucesso! Você já pode fazer o login." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao redefinir a senha: {ex.Message}" });
+            }
+        }
+
+
         // FIM DA CLASSE CONTROLLER
         // --------------------------------------------------------
 
@@ -315,6 +392,13 @@ namespace MatutosApi.Controllers
         {
             public string? SenhaAntiga { get; set; }
             public string? SenhaNova { get; set; }
+        }
+
+        public class RedefinirSenhaRequest
+        {
+            public string? Email { get; set; }
+            public string? Codigo { get; set; }
+            public string? NovaSenha { get; set; }
         }
     }
 }

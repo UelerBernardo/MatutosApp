@@ -53,7 +53,7 @@ namespace MatutosApp.ViewsModels
 
                     await Application.Current.MainPage.DisplayAlert("Sucesso", "Seja Bem-vindo!", "Ok");
 
-                    await Shell.Current.GoToAsync(nameof(PrincipalView));
+                    await Shell.Current.GoToAsync("///PrincipalView");
                 }
                 else
                 {

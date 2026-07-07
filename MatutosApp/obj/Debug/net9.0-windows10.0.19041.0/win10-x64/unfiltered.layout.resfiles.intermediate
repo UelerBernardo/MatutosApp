@@ -1,6 +1,7 @@
 runtimes\win-x64\native\WebView2Loader.dll
 OpenSans-Regular.ttf
 OpenSans-Semibold.ttf
+agendabloqueada.scale-100.png
 appicon.ico
 appiconLargeTile.scale-100.png
 appiconLargeTile.scale-125.png
@@ -70,7 +71,6 @@ tesoura.scale-100.png
 tesourabranca.scale-100.png
 tesourapente.scale-100.png
 usuario.scale-100.png
-xred.scale-100.png
 xvermelho.scale-100.png
 splashSplashScreen.scale-100.png
 splashSplashScreen.scale-125.png

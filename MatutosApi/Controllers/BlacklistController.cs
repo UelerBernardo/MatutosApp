@@ -33,10 +33,7 @@ namespace MatutosApi.Controllers
                         b.Inicio_Bloqueio,
                         b.Fim_Bloqueio,
                         b.Ativo,
-                        b.Detalhes,
-                        b.Codigo_Agendamento,
-
-                        UsuariosBloqueados = b.UsuariosBloqueados.Select(ub => ub.Codigo_Usuario).ToList()
+                        b.Detalhes
                     }).ToListAsync();
 
                 return Ok(blacklists);
