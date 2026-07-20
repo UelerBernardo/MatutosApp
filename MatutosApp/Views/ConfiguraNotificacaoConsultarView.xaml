@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.ConfiguraNotificacaoConsultarView"
+             Title="Regras Cadastradas"
+             BackgroundColor="#121212">
+
+    <Grid RowDefinitions="Auto, *" Padding="20">
+
+        <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,20">
+            <Label Text="Regras de Notificação" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="#FFFFFF"/>
+            <Label Text="Gerencie os alertas automáticos do sistema" 
+                   FontSize="14" 
+                   TextColor="#888888"/>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding ListaRegraNotificacao}"
+                        SelectionMode="None">
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border BackgroundColor="#2A2A2A" 
+                            StrokeThickness="0" 
+                            StrokeShape="RoundRectangle 12" 
+                            Margin="0,0,0,15" 
+                            Padding="15">
+
+                        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
+
+                            <Label Grid.Row="0" Grid.Column="0" 
+                                   Text="{Binding Descricao}" 
+                                   FontSize="16" 
+                                   FontAttributes="Bold" 
+                                   TextColor="#FFFFFF" 
+                                   VerticalOptions="Center"/>
+
+                            <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                <Label Text="Ativa:" FontSize="12" TextColor="#CCCCCC" VerticalOptions="Center"/>
+                                <Switch IsToggled="{Binding Ativo}" IsEnabled="False" OnColor="#4CAF50" Scale="0.8"/>
+                            </HorizontalStackLayout>
+
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                                   Text="{Binding Mensagem}" 
+                                   FontSize="14" 
+                                   TextColor="#AAAAAA" 
+                                   FontAttributes="Italic"
+                                   LineBreakMode="WordWrap"/>
+
+                            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="15" Margin="0,5,0,0">
+
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="Tipo:" FontSize="12" FontAttributes="Bold" TextColor="#4CAF50"/>
+                                    <Label Text="{Binding Codigo_Tipo}" FontSize="12" TextColor="#FFFFFF"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="Valor:" FontSize="12" FontAttributes="Bold" TextColor="#4CAF50"/>
+                                    <Label Text="{Binding Valor, TargetNullValue='N/A'}" FontSize="12" TextColor="#FFFFFF"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="5">
+                                    <Label Text="Tempo:" FontSize="12" FontAttributes="Bold" TextColor="#4CAF50"/>
+                                    <Label Text="{Binding UnidadeTempo, TargetNullValue='N/A'}" FontSize="12" TextColor="#FFFFFF"/>
+                                </HorizontalStackLayout>
+
+                            </HorizontalStackLayout>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                    <Label Text="Nenhuma regra encontrada." TextColor="#888888" FontSize="16" HorizontalOptions="Center"/>
+                    <Label Text="Cadastre uma nova regra para começar." TextColor="#555555" FontSize="14" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+        </CollectionView>
+    </Grid>
+</ContentPage>

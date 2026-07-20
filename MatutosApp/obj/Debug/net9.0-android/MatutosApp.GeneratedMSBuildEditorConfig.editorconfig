@@ -89,6 +89,18 @@ build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ClientePe
 build_metadata.AdditionalFiles.TargetPath = Views\ClientePerfilConsultarView.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ClientePerfilConsultarView.xaml
 
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ConfiguraNotificacaoCadastrarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ConfiguraNotificacaoCadastrarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ConfiguraNotificacaoCadastrarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ConfiguraNotificacaoCadastrarView.xaml
+
+[C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/ConfiguraNotificacaoConsultarView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.ConfiguraNotificacaoConsultarView.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ConfiguraNotificacaoConsultarView.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ConfiguraNotificacaoConsultarView.xaml
+
 [C:/Users/Ueler/Desktop/Estagio/MatutosApp/MatutosApp/Views/LoginView.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = MatutosApp.Views.LoginView.xaml

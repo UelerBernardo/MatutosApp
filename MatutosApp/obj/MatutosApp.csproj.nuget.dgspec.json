@@ -94,6 +94,10 @@
               "target": "Package",
               "version": "[9.0.2, )",
               "autoReferenced": true
+            },
+            "Plugin.Firebase": {
+              "target": "Package",
+              "version": "[3.1.4, )"
             }
           },
           "imports": [
@@ -143,6 +147,10 @@
             "Microsoft.Maui.Controls": {
               "target": "Package",
               "version": "[9.0.14, )"
+            },
+            "Plugin.Firebase": {
+              "target": "Package",
+              "version": "[3.1.4, )"
             }
           },
           "imports": [

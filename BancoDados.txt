@@ -212,5 +212,65 @@ CREATE TABLE IF NOT EXISTS `usuario_telefone` (
   CONSTRAINT `2` FOREIGN KEY (`Codigo_Telefone`) REFERENCES `telefone` (`Codigo_Telefone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
+-- 1. TABELA DOMÍNIO: DICIONÁRIO DE TIPOS DE EVENTO
+CREATE TABLE Tipo_Evento (
+    Codigo_Tipo INT(11) NOT NULL AUTO_INCREMENT,
+    Nome VARCHAR(50) NOT NULL COMMENT 'Nome técnico: PreAgendamento, Inatividade, etc',
+    Descricao VARCHAR(150) DEFAULT NULL COMMENT 'Explicação para exibir na tela do admin',
+    PRIMARY KEY (Codigo_Tipo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;a
+
+-- População inicial do dicionário
+INSERT INTO Tipo_Evento (Codigo_Tipo, Nome, Descricao) VALUES
+(1, 'Pré-Agendamento', 'Envia um aviso X minutos antes do horário marcado.'),
+(2, 'Inatividade', 'Alerta clientes que estão há X dias sem realizar agendamentos.'),
+(3, 'Promocional', 'Disparos de mensagens gerais ou campanhas de marketing.');
+
+
+-- 2. TABELA DE CONFIGURAÇÃO: AS REGRAS DO ADMINISTRADOR
+CREATE TABLE Configura_Notificacao (
+    Codigo_Notificacao INT(11) NOT NULL AUTO_INCREMENT,
+    Ativo TINYINT(1) DEFAULT 1,
+    Codigo_Tipo INT(11) NOT NULL COMMENT 'Chave Estrangeira ligada à tabela Tipo_Evento',
+    Descricao VARCHAR(250) DEFAULT NULL,
+    Mensagem VARCHAR(250) DEFAULT NULL,
+    Valor INT(11) DEFAULT NULL,
+    UnidadeTempo INT(11) DEFAULT NULL COMMENT '1 = Minutos, 2 = Horas, 3 = Dias',
+    PRIMARY KEY (Codigo_Notificacao),
+    
+    -- Relacionamento com a tabela de tipos
+    CONSTRAINT FK_Configura_TipoEvento FOREIGN KEY (Codigo_Tipo) 
+        REFERENCES Tipo_Evento (Codigo_Tipo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 3. TABELA DE HISTÓRICO: OS DISPAROS REALIZADOS
+CREATE TABLE Notificacao (
+    Codigo_Historico INT(11) NOT NULL AUTO_INCREMENT,
+    Codigo_Notificacao INT(11) NOT NULL COMMENT 'Qual regra gerou este disparo',
+    Codigo_Usuario INT(11) NOT NULL COMMENT 'Quem vai receber o aviso',
+    Codigo_Agendamento INT(11) DEFAULT NULL COMMENT 'Pode ser nulo se for notificação de inatividade',
+    MensagemEnviada VARCHAR(500) NOT NULL COMMENT 'O texto final processado com o nome/hora',
+    DataDisparo DATETIME NOT NULL,
+    Lida TINYINT(1) DEFAULT 0 COMMENT '0 = Não lida, 1 = Lida pelo app',
+    PRIMARY KEY (Codigo_Historico),
+    
+    -- Relacionamentos (Chaves Estrangeiras)
+    CONSTRAINT FK_Notificacao_Configura FOREIGN KEY (Codigo_Notificacao) 
+        REFERENCES Configura_Notificacao (Codigo_Notificacao),
+        
+    CONSTRAINT FK_Notificacao_Usuario FOREIGN KEY (Codigo_Usuario) 
+        REFERENCES Usuario (Codigo_Usuario),
+        
+    CONSTRAINT FK_Notificacao_Agendamento FOREIGN KEY (Codigo_Agendamento) 
+        REFERENCES Agendamento (Codigo_Agendamento)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;
+
+
+
+
+ALTER TABLE Usuario 
+ADD COLUMN TokenFCM VARCHAR(255) NULL;
+
 -- Reativa a verificação de chaves estrangeiras
 SET FOREIGN_KEY_CHECKS=1;

@@ -90,6 +90,12 @@ namespace MatutosApp.ViewsModels
             }
         }
 
+        [RelayCommand]
+        public async Task AbrirNotificacoes()
+        {
+            await Shell.Current.GoToAsync(nameof(ConfiguraNotificacaoConsultarView));
+        }
+
 
         [RelayCommand]
         public async Task AbrirServico()

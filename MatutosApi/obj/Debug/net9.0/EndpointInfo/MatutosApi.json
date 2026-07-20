@@ -231,6 +231,61 @@
         }
       }
     },
+    "/notificacao/regra-consultar": {
+      "get": {
+        "tags": [
+          "Notificacao"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notificacao/tipo-evento/consultar": {
+      "get": {
+        "tags": [
+          "Notificacao"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notificacao/regra-cadastrar": {
+      "post": {
+        "tags": [
+          "Notificacao"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Configura_Notificacao"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Configura_Notificacao"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Configura_Notificacao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/servico/cadastrar": {
       "post": {
         "tags": [
@@ -707,6 +762,37 @@
           }
         }
       }
+    },
+    "/usuario/atualizar-token-fcm": {
+      "put": {
+        "tags": [
+          "Usuario"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenFcmDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenFcmDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TokenFcmDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -777,7 +863,8 @@
           1,
           2,
           3,
-          4
+          4,
+          5
         ],
         "type": "integer",
         "format": "int32"
@@ -874,6 +961,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "tokenFCM": {
+            "type": "string",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -968,6 +1059,10 @@
             "format": "date-time",
             "nullable": true
           },
+          "tokenFCM": {
+            "type": "string",
+            "nullable": true
+          },
           "imagem_Usuario": {
             "type": "string",
             "nullable": true
@@ -976,6 +1071,89 @@
             "type": "string",
             "nullable": true,
             "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Configura_Notificacao": {
+        "type": "object",
+        "properties": {
+          "codigo_Notificacao": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "codigo_Tipo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "descricao": {
+            "type": "string",
+            "nullable": true
+          },
+          "mensagem": {
+            "type": "string",
+            "nullable": true
+          },
+          "valor": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "unidadeTempo": {
+            "$ref": "#/components/schemas/UnidadeTempoEnum"
+          },
+          "tipoEventoRelacionado": {
+            "$ref": "#/components/schemas/Tipo_Evento"
+          },
+          "notificacoes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Notificacao"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Notificacao": {
+        "type": "object",
+        "properties": {
+          "codigo_Historico": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Notificacao": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "codigo_Agendamento": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "mensagemEnviada": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataDisparo": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lida": {
+            "type": "boolean"
+          },
+          "configuraOrigem": {
+            "$ref": "#/components/schemas/Configura_Notificacao"
+          },
+          "usuarioDestino": {
+            "$ref": "#/components/schemas/Usuario"
           }
         },
         "additionalProperties": false
@@ -1076,6 +1254,43 @@
         },
         "additionalProperties": false
       },
+      "Tipo_Evento": {
+        "type": "object",
+        "properties": {
+          "codigo_Tipo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "descricao": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TokenFcmDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UnidadeTempoEnum": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Usuario": {
         "required": [
           "email",
@@ -1116,6 +1331,10 @@
           "data_Validade_Codigo": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "tokenFCM": {
+            "type": "string",
             "nullable": true
           },
           "imagem_Usuario": {

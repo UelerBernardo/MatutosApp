@@ -1,4 +1,5 @@
-﻿using MatutosApi.Infraestrutura;
+﻿
+using MatutosApi.Infraestrutura;
 using MatutosDomain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

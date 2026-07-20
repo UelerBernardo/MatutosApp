@@ -166,7 +166,7 @@ namespace MatutosApp.ViewsModels
 
             if(_acaoTela == AcaoTela.Alteração)
             {
-                AlterarUsuario();
+                await AlterarUsuario();
             }
             else
             {

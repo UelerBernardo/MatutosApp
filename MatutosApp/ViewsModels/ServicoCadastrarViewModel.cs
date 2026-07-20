@@ -178,12 +178,12 @@ namespace MatutosApp.ViewsModels
         {
             if (AcaoTela == AcaoTela.Cadastro)
             {
-                CadastrarServico();
+                await CadastrarServico();
             }
 
             else
             {
-                AlterarServico();
+                await AlterarServico();
             }
 
         }

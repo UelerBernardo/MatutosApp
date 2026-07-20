@@ -1,8 +1,18 @@
-﻿using MatutosApp.Services;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Maui; // Resolve o IPropertyMapper (AppendToMapping)
+using Microsoft.Maui.Hosting; // Resolve o MauiAppBuilder
+using Microsoft.Maui.Controls.Hosting; // 👉 Resolve o UseMauiApp
+using Microsoft.Extensions.DependencyInjection; // 👉 Resolve o AddHttpClient
+using Microsoft.Maui.Devices;                   // 👉 Resolve o DeviceInfo e DevicePlatform
+using Microsoft.Maui.Controls;
+using MatutosApp.Services;
 using MatutosApp.Views;
 using MatutosApp.ViewsModels;
 using Microsoft.Extensions.Logging;
+using Plugin.Firebase.Bundled.Shared;
+using Microsoft.Maui.LifecycleEvents;
+#if ANDROID
+using Plugin.Firebase.Bundled.Platforms.Android;
+#endif
 
 namespace MatutosApp
 {
@@ -13,26 +23,92 @@ namespace MatutosApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .ConfigureLifecycleEvents(events =>
+                {
+#if ANDROID
+                    events.AddAndroid(android => android.OnCreate((activity, state) =>
+                    {
+                        // 👉 Na versão 3.x, passamos apenas o activity e as configurações!
+                        CrossFirebase.Initialize(activity, CreateCrossFirebaseSettings());
+                    }));
+#endif
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            //Serviços
-            //builder.Services.AddSingleton<ApiServicesSessaoPessoa>();
-            builder.Services.AddSingleton<UsuarioService>();
-            builder.Services.AddSingleton<TelefoneService>();
-            builder.Services.AddSingleton<AgendamentoService>();
-            builder.Services.AddSingleton<ServicoService>();
-            builder.Services.AddSingleton<ClienteService>();
-            builder.Services.AddSingleton<BlacklistService>();
-            builder.Services.AddHttpClient<BarbeiroService>(cliente =>
-            {
-               cliente.BaseAddress = new Uri("https://localhost:7110/"); 
-            });
+            string ipDaApi = DeviceInfo.Platform == DevicePlatform.Android
+      ? "https://10.0.2.2:7110/"
+      : "https://localhost:7110/";
 
-            //ViewModels
+
+
+            // 👉 2. O passaporte de segurança do emulador
+#if ANDROID
+            var devSslHandler = new HttpClientHandler();
+            devSslHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+#endif
+
+            // 👉 3. Todas as services registradas recebendo a rede e a segurança!
+            builder.Services.AddHttpClient<UsuarioService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<BarbeiroService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<TelefoneService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<AgendamentoService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<ServicoService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<ClienteService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<BlacklistService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+            ;
+
+            builder.Services.AddHttpClient<NotificacaoService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+           .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+           ;
+
+            //// Demais serviços
+            //builder.Services.AddSingleton<TelefoneService>();
+            //builder.Services.AddSingleton<AgendamentoService>();
+            //builder.Services.AddSingleton<ServicoService>();
+            //builder.Services.AddSingleton<ClienteService>();
+            //builder.Services.AddSingleton<BlacklistService>();
+
+
+            // 👉 3. ViewModels
             builder.Services.AddTransient<UsuarioViewModel>();
             builder.Services.AddTransient<TelefoneViewModel>();
             builder.Services.AddTransient<AgendamentoViewModel>();
@@ -50,8 +126,10 @@ namespace MatutosApp
             builder.Services.AddTransient<BlacklistCadastrarViewModel>();
             builder.Services.AddTransient<UsuarioSolicitarCodigoViewModel>();
             builder.Services.AddTransient<UsuarioRedefinirSenhaViewModel>();
+            builder.Services.AddTransient<ConfiguraNotificacaoCadastrarViewModel>();
+            builder.Services.AddTransient<ConfiguraNotificacaoConsultarViewModel>();
 
-            //Views
+            // 👉 4. Views
             builder.Services.AddTransient<UsuarioCadastroView>();
             builder.Services.AddTransient<TelefoneCadastroView>();
             builder.Services.AddTransient<BlacklistConsultarView>();
@@ -69,30 +147,38 @@ namespace MatutosApp
             builder.Services.AddTransient<BlacklistCadastrarView>();
             builder.Services.AddTransient<UsuarioSolicitarCodigoView>();
             builder.Services.AddTransient<UsuarioRedefinirSenhaView>();
+            builder.Services.AddTransient<ConfiguraNotificacaoCadastrarView>();
+            builder.Services.AddTransient<ConfiguraNotificacaoConsultarView>();
 
-
-
+            // 👉 5. Configuração Visual (Somente regra de interface aqui dentro!)
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemBorda", (handler, view) =>
             {
+                if (handler.PlatformView == null) return;
+
 #if ANDROID
-                handler.PlatformView.Background = null;
-                handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent);
+                handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #elif IOS
-        handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+                handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #elif WINDOWS
-        handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
-        handler.PlatformView.FocusVisualMargin = new Microsoft.UI.Xaml.Thickness(0);
+                handler.PlatformView.BorderThickness = new Microsoft.UI.Xaml.Thickness(0);
+                handler.PlatformView.FocusVisualMargin = new Microsoft.UI.Xaml.Thickness(0);
 #endif
             });
-
-
-
 
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
+        }
+        private static CrossFirebaseSettings CreateCrossFirebaseSettings()
+        {
+            return new CrossFirebaseSettings(
+                isAuthEnabled: false,
+                isCloudMessagingEnabled: true,
+                isAnalyticsEnabled: false,
+                isCrashlyticsEnabled: false
+                );
         }
     }
 }

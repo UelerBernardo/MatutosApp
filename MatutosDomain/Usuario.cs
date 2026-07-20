@@ -34,7 +34,7 @@ namespace MatutosDomain
         public bool Ativo { get; set; } = true;
         public string? Codigo_Recuperacao { get; set; }
         public DateTime? Data_Validade_Codigo { get; set; }
-
+        public string? TokenFCM { get; set; }
         public string? Imagem_Usuario { get; set; }
 
         [JsonIgnore]

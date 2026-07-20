@@ -26,8 +26,8 @@ namespace MatutosApp
             Routing.RegisterRoute(nameof(BlacklistCadastrarView), typeof(BlacklistCadastrarView));
             Routing.RegisterRoute(nameof(UsuarioSolicitarCodigoView), typeof(UsuarioSolicitarCodigoView));
             Routing.RegisterRoute(nameof(UsuarioRedefinirSenhaView), typeof(UsuarioRedefinirSenhaView));
-
-            this.CurrentItem = ItemLogin;
+            Routing.RegisterRoute(nameof(ConfiguraNotificacaoCadastrarView), typeof(ConfiguraNotificacaoCadastrarView));
+            Routing.RegisterRoute(nameof(ConfiguraNotificacaoConsultarView), typeof(ConfiguraNotificacaoConsultarView));
 
         }
     }

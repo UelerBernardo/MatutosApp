@@ -150,7 +150,7 @@ namespace MatutosApp.ViewsModels
             if (resultado.Sucesso)
             {
                 await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento cancelado.", "Ok");
-                await Shell.Current.GoToAsync(nameof(PrincipalView));
+                await Shell.Current.GoToAsync("///PrincipalView");
             }
             else
             {

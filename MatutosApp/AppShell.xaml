@@ -7,11 +7,19 @@
     xmlns:views="clr-namespace:MatutosApp.Views"
     Title="MatutosApp">
 
-    <ShellContent
+    <!--<ShellContent
         x:Name="ItemLogin"
         Title="Login"
         Route="LoginView"
         FlyoutItem.IsVisible="False"
+        ContentTemplate="{DataTemplate views:LoginView}" />-->
+
+    <ShellContent
+        x:Name="ItemLogin"
+        Title="Login"
+        Route="LoginView"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.NavBarIsVisible="False"
         ContentTemplate="{DataTemplate views:LoginView}" />
 
     <FlyoutItem Title="Início" Icon="home_icon.png">
