@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MatutosDomain
+{
+    [Table("tipo_evento")]
+    public class Tipo_Evento
+    {
+        [Key]
+        public int Codigo_Tipo { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public string? Descricao { get; set; }
+    }
+}

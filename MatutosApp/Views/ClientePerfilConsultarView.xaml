@@ -43,7 +43,7 @@
                     <Border Grid.Column="0" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 15" 
                             Padding="15" HeightRequest="100" >
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AbrirAgendamentosCommad}" />
+                            <TapGestureRecognizer Command="{Binding AbrirAgendamentosCommand}" />
                         </Border.GestureRecognizers>
                         <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
                             <Image Source="tesourabranca.png" HeightRequest="40" WidthRequest="100"/>

@@ -16,6 +16,10 @@
           "Microsoft.Extensions.Http": "10.0.7",
           "Microsoft.Extensions.Logging.Debug": "9.0.9",
           "Microsoft.Maui.Controls": "9.0.14",
+          "Plugin.Firebase": "3.1.4",
+          "Microsoft.Maui.Controls.HotReload.Forms": "17.0.0.0",
+          "Microsoft.VisualStudio.DesignTools.MobileTapContracts": "17.0.0.0",
+          "Microsoft.VisualStudio.DesignTools.TapContract": "17.0.0.0",
           "Microsoft.Web.WebView2.Core.Projection": "1.0.2792.45",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.57"
         },
@@ -790,6 +794,131 @@
           }
         }
       },
+      "Plugin.Firebase/3.1.4": {
+        "dependencies": {
+          "Plugin.Firebase.Analytics": "3.1.2",
+          "Plugin.Firebase.Auth": "3.1.1",
+          "Plugin.Firebase.CloudMessaging": "3.1.2",
+          "Plugin.Firebase.Core": "3.1.1",
+          "Plugin.Firebase.Crashlytics": "3.1.1",
+          "Plugin.Firebase.DynamicLinks": "3.1.1",
+          "Plugin.Firebase.Firestore": "3.1.3",
+          "Plugin.Firebase.Functions": "3.1.1",
+          "Plugin.Firebase.RemoteConfig": "3.1.1",
+          "Plugin.Firebase.Storage": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Analytics/3.1.2": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Analytics.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Auth/3.1.1": {
+        "dependencies": {
+          "Microsoft.Maui.Essentials": "9.0.14",
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Auth.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.CloudMessaging/3.1.2": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.CloudMessaging.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Core/3.1.1": {
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Crashlytics/3.1.1": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Crashlytics.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.DynamicLinks/3.1.1": {
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.DynamicLinks.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Firestore/3.1.3": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Firestore.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Functions/3.1.1": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Functions.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.RemoteConfig/3.1.1": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.RemoteConfig.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Plugin.Firebase.Storage/3.1.1": {
+        "dependencies": {
+          "Plugin.Firebase.Core": "3.1.1"
+        },
+        "runtime": {
+          "lib/net8.0/Plugin.Firebase.Storage.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "runtime.any.System.Runtime/4.3.0": {
         "dependencies": {
           "System.Private.Uri": "4.3.0"
@@ -970,6 +1099,30 @@
           "MatutosDomain.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Microsoft.Maui.Controls.HotReload.Forms/17.0.0.0": {
+        "runtime": {
+          "Microsoft.Maui.Controls.HotReload.Forms.dll": {
+            "assemblyVersion": "17.0.0.0",
+            "fileVersion": "17.13.39978.13290"
+          }
+        }
+      },
+      "Microsoft.VisualStudio.DesignTools.MobileTapContracts/17.0.0.0": {
+        "runtime": {
+          "Microsoft.VisualStudio.DesignTools.MobileTapContracts.dll": {
+            "assemblyVersion": "17.0.0.0",
+            "fileVersion": "17.13.39978.13290"
+          }
+        }
+      },
+      "Microsoft.VisualStudio.DesignTools.TapContract/17.0.0.0": {
+        "runtime": {
+          "Microsoft.VisualStudio.DesignTools.TapContract.dll": {
+            "assemblyVersion": "17.0.0.0",
+            "fileVersion": "17.13.39978.13290"
           }
         }
       },
@@ -1372,6 +1525,83 @@
       "path": "microsoft.windowsappsdk/1.6.240923002",
       "hashPath": "microsoft.windowsappsdk.1.6.240923002.nupkg.sha512"
     },
+    "Plugin.Firebase/3.1.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nZ40FKkvg0C5Xbhyhq02ygOjgZfhzB8rpmxYsPMsBdEVzpHzwpBO4LlRpLo1OFOqczkegUrSNR/uscXWrUGCRg==",
+      "path": "plugin.firebase/3.1.4",
+      "hashPath": "plugin.firebase.3.1.4.nupkg.sha512"
+    },
+    "Plugin.Firebase.Analytics/3.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ok7EtzUeZMacVNARgMCFXJgRW+Q51/Yw+gx/WFeOfnW6lmAGOAOBZGAsm3mRApsthuDDd+97HVhXB2SFpRaFnA==",
+      "path": "plugin.firebase.analytics/3.1.2",
+      "hashPath": "plugin.firebase.analytics.3.1.2.nupkg.sha512"
+    },
+    "Plugin.Firebase.Auth/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ln6FDYYjjGGim2YcFHg3QDTO7J14hyQKGxxgWXNyWM6xt+U2Fm/R7u1uujnGNzPohMo9TM620myB7aQBqU4EzQ==",
+      "path": "plugin.firebase.auth/3.1.1",
+      "hashPath": "plugin.firebase.auth.3.1.1.nupkg.sha512"
+    },
+    "Plugin.Firebase.CloudMessaging/3.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-R9xmaZ46uYXAyuVgo69na9iPcNsjz/hl97g3hNknv3r0BTohKZFWx8rWMS/x8WdqSWWkpw32+mV+O8IXCs9LOA==",
+      "path": "plugin.firebase.cloudmessaging/3.1.2",
+      "hashPath": "plugin.firebase.cloudmessaging.3.1.2.nupkg.sha512"
+    },
+    "Plugin.Firebase.Core/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KopMpVA5nG/ykUV3Ya5Rvq0QC5yNQicoRW1TlyUh4dbWBxDEAfzWa8g6sfASPMxnY+BMN6FlruHF2yZsy6GKlw==",
+      "path": "plugin.firebase.core/3.1.1",
+      "hashPath": "plugin.firebase.core.3.1.1.nupkg.sha512"
+    },
+    "Plugin.Firebase.Crashlytics/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-eQB7REMC7pINgZk2NmyXm5nwcmUKFhtsS4NXzWR4VII3eRNZvdpw1hS1+mVIukpiqVI0vIZOGlj7/lrnD4Ym0w==",
+      "path": "plugin.firebase.crashlytics/3.1.1",
+      "hashPath": "plugin.firebase.crashlytics.3.1.1.nupkg.sha512"
+    },
+    "Plugin.Firebase.DynamicLinks/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nkfXEFnWIBWX49CmFSEpQuR4dJ194Gr2Jwag9bFvSSRx1JAMEnK7Sw+RgKs3R7ZjWmFEUIeA9l90hAlln0dqWQ==",
+      "path": "plugin.firebase.dynamiclinks/3.1.1",
+      "hashPath": "plugin.firebase.dynamiclinks.3.1.1.nupkg.sha512"
+    },
+    "Plugin.Firebase.Firestore/3.1.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-K9SM+NcZW/pZ+So9O3ReYtNrAJg2kubxmps02WOiVWzpsnylhyMi3nQnqv6aZwZoa0TgOekqJt0H6Jp62unMRw==",
+      "path": "plugin.firebase.firestore/3.1.3",
+      "hashPath": "plugin.firebase.firestore.3.1.3.nupkg.sha512"
+    },
+    "Plugin.Firebase.Functions/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bYMeeBYwLQ5h3+vIz/rH8Hz977NI6nu6hilhbxyjlwv5VTSExsFfCHaeLpCzarAcDilGHSJFHB2i2f14wjTHbA==",
+      "path": "plugin.firebase.functions/3.1.1",
+      "hashPath": "plugin.firebase.functions.3.1.1.nupkg.sha512"
+    },
+    "Plugin.Firebase.RemoteConfig/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3CoFf3fDymUZd3PS4UJdjeCztF1RD4CmGeoucc5qcDmUGMXhQmv97LAU1lEwWRBBAAQxQaFGPQ5mwL/5rGZX+w==",
+      "path": "plugin.firebase.remoteconfig/3.1.1",
+      "hashPath": "plugin.firebase.remoteconfig.3.1.1.nupkg.sha512"
+    },
+    "Plugin.Firebase.Storage/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Kt75emQ5m8/jHatyvwSyt3U+kVK2GFVKzWqwC2QUHR0o05DdSxbjK1IbPRRYB7/Ga08fr4WauazYFy0Kws1djw==",
+      "path": "plugin.firebase.storage/3.1.1",
+      "hashPath": "plugin.firebase.storage.3.1.1.nupkg.sha512"
+    },
     "runtime.any.System.Runtime/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1563,6 +1793,21 @@
     },
     "MatutosDomain/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Maui.Controls.HotReload.Forms/17.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.VisualStudio.DesignTools.MobileTapContracts/17.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.VisualStudio.DesignTools.TapContract/17.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

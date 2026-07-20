@@ -120,7 +120,21 @@
                     </Border.GestureRecognizers>
                     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
                         <Image Source="agendabloqueada.png" WidthRequest="90" HeightRequest="90" VerticalOptions="Center" />
-                        <Label Text="Bloqueio Agenda" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                        <Label Text="Bloqueio" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="0" 
+                         StrokeShape="RoundRectangle 20" 
+                         BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
+                         HeightRequest="140"
+                         IsVisible="{Binding PodeVisualizar}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirBlacklistCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image Source="agendabloqueada.png" WidthRequest="90" HeightRequest="90" VerticalOptions="Center" />
+                        <Label Text="Bloqueio" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
 
@@ -136,6 +150,17 @@
                     HorizontalOptions="Center" 
                     Margin="0, 30, 0, 30"
                     Command="{Binding LogOutCommand}" />
+
+            <Button Text="Notificações" 
+                BackgroundColor="#E0E0E0" 
+                TextColor="#121212" 
+                FontAttributes="Bold" 
+                CornerRadius="25" 
+                HeightRequest="55" 
+                WidthRequest="200" 
+                HorizontalOptions="Center" 
+                Margin="0, 30, 0, 30"
+                Command="{Binding AbrirNotificacoesCommand}" />    
 
         </VerticalStackLayout>
     </ScrollView>

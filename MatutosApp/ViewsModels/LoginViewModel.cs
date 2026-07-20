@@ -24,6 +24,7 @@ namespace MatutosApp.ViewsModels
             _usuarioService = usuarioService;
         }
 
+
         [RelayCommand]
         private async Task Logar()
         {
@@ -51,7 +52,11 @@ namespace MatutosApp.ViewsModels
                 {
                     UsuarioSessaoService.IniciarSessao(resultado.Dados);
 
+                    await _usuarioService.RegistrarTokenFCMAsync(resultado.TokenFCM);
+
                     await Application.Current.MainPage.DisplayAlert("Sucesso", "Seja Bem-vindo!", "Ok");
+
+                    await SolicitarPermissaoNotificacao();
 
                     await Shell.Current.GoToAsync("///PrincipalView");
                 }
@@ -63,6 +68,29 @@ namespace MatutosApp.ViewsModels
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Erro Crítico", $"Falha de comunicação: {ex.Message}", "OK");
+            }
+        }
+
+        [RelayCommand]
+        public async Task AbrirTela(string nomeDaRota)
+        {
+            // Navega para a tela solicitada
+            await Shell.Current.GoToAsync(nomeDaRota);
+        }
+
+        public async Task SolicitarPermissaoNotificacao()
+        {
+            // A regra só se aplica se o aparelho for Android e versão 13 ou superior
+            if (DeviceInfo.Platform == DevicePlatform.Android && DeviceInfo.Version.Major >= 13)
+            {
+                // Verifica se o usuário já deu permissão antes
+                var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+
+                if (status != PermissionStatus.Granted)
+                {
+                    // Se não deu, sobe o pop-up nativo do Android perguntando!
+                    await Permissions.RequestAsync<Permissions.PostNotifications>();
+                }
             }
         }
     }

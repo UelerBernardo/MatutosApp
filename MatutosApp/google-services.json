@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "312748298399",
+    "project_id": "matutosapp",
+    "storage_bucket": "matutosapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312748298399:android:b864933274faaac42792aa",
+        "android_client_info": {
+          "package_name": "com.companyname.matutosapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVcOkduPHwBK8Znk5VQ_RXjNekVJW3UTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

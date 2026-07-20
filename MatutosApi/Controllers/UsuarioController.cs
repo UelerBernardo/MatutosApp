@@ -1,5 +1,6 @@
 ﻿using MatutosApi.Infraestrutura;
 using MatutosDomain;
+using MatutosApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MatutosApi.Services;
 using System.Runtime.CompilerServices;
 using static MatutosApi.Controllers.UsuarioController;
+using System.Security.Claims;
 
 
 namespace MatutosApi.Controllers
@@ -379,6 +381,35 @@ namespace MatutosApi.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { Mensagem = $"Erro ao redefinir a senha: {ex.Message}" });
+            }
+        }
+        [HttpPut("atualizar-token-fcm")]
+        [Authorize]
+        public async Task<IActionResult> AtualizarTokenFCM([FromBody] TokenFcmDto dto)
+        {
+            try
+            {
+                // Pega o ID do usuário logado direto do token JWT (Segurança)
+                var usuarioIdClaim = User.FindFirst("id")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(usuarioIdClaim))
+                    return Unauthorized(new { Mensagem = "Usuário não autorizado." });
+
+                int codigoUsuario = int.Parse(usuarioIdClaim);
+
+                var usuario = await _dbcontext.Usuarios.FindAsync(codigoUsuario); // Ajuste "_dbContext.Usuarios" se necessário
+                if (usuario == null)
+                    return NotFound(new { Mensagem = "Usuário não encontrado." });
+
+                // Atualiza o token do aparelho e salva no MariaDB
+                usuario.TokenFCM = dto.Token;
+                await _dbcontext.SaveChangesAsync();
+
+                return Ok(new { Mensagem = "Token FCM atualizado com sucesso." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao atualizar token: {ex.Message}" });
             }
         }
 

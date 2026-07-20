@@ -6,17 +6,20 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="30" VerticalOptions="Center">
+    <ScrollView VerticalOptions="Center">
+        <VerticalStackLayout Spacing="25" Padding="30">
 
-            <Border StrokeShape="RoundRectangle 75" 
-                    Stroke="#333333" 
+            <Border Stroke="#333333" 
                     StrokeThickness="2" 
                     WidthRequest="150" 
                     HeightRequest="150" 
                     BackgroundColor="#1E1E1E"
                     HorizontalOptions="Center"
                     Margin="0, 0, 0, 10">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="75" />
+                </Border.StrokeShape>
+
                 <Image Source="logomatutos.jpg" Aspect="AspectFill" WidthRequest="150" HeightRequest="150"/>
             </Border>
 
@@ -35,8 +38,10 @@
             <Border BackgroundColor="#1E1E1E" 
                     Stroke="#333333" 
                     StrokeThickness="1" 
-                    StrokeShape="RoundRectangle 20" 
                     Padding="20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20" />
+                </Border.StrokeShape>
 
                 <VerticalStackLayout Spacing="20">
 
@@ -86,8 +91,8 @@
                        VerticalOptions="Center"
                        TextDecorations="Underline">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AbrirTela}"
-                                              CommandParameter="{x:Type TypeName=views:UsuarioCadastroView}"/>
+                        <TapGestureRecognizer Command="{Binding AbrirTelaCommand}"
+                          CommandParameter="UsuarioCadastroView"/>
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>
@@ -99,8 +104,8 @@
                        VerticalOptions="Center"
                        TextDecorations="Underline">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AbrirTela}"
-                                  CommandParameter="{x:Type TypeName=views:UsuarioSolicitarCodigoView}"/>
+                        <TapGestureRecognizer Command="{Binding AbrirTelaCommand}"
+                          CommandParameter="UsuarioSolicitarCodigoView"/>
                     </Label.GestureRecognizers>
                 </Label>
             </HorizontalStackLayout>
@@ -108,3 +113,17 @@
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
+
+<!--<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.LoginView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
+    <Label Text="TESTE DE TELA" 
+           TextColor="White" 
+           FontSize="30"
+           HorizontalOptions="Center" 
+           VerticalOptions="Center" />
+
+</ContentPage>-->

@@ -1,6 +1,7 @@
 ﻿using Azure;
 using MatutosDomain;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using Plugin.Firebase.CloudMessaging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,33 +19,9 @@ namespace MatutosApp.Services
     {
         private readonly HttpClient? _httpClient;
 
-        public UsuarioService()
+        public UsuarioService(HttpClient httpClient)
         {
-            string baseURL = DeviceInfo.Platform == DevicePlatform.Android
-                ? "https://10.0.2.2:7110/" 
-                : "https://localhost:7110/";
-
-            _httpClient = new HttpClient(ObterManipuladorInseguro())
-            {
-                BaseAddress = new Uri(baseURL)
-
-            };
-        }
-
-        private HttpMessageHandler ObterManipuladorInseguro()
-        {
-            #if ANDROID
-                var handler = new Xamarin.Android.Net.AndroidMessageHandler();
-                handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
-                {
-                    if (cert != null && cert.Issuer.Equals("CN=localhost"))
-                        return true;
-                    return errors == System.Net.Security.SslPolicyErrors.None;
-                };
-                return handler;
-            #else
-                        return new HttpClientHandler();
-            #endif
+            _httpClient = httpClient;
         }
 
         public async Task<Usuario> ConsultarPefil(string token)
@@ -203,7 +180,7 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<(bool Sucesso, string Mensagem, Usuario Dados)> UsuarioLogin(UsuarioLogin login)
+        public async Task<(bool Sucesso, string Mensagem, Usuario Dados, string TokenFCM)> UsuarioLogin(UsuarioLogin login)
         {
             try
             {
@@ -219,22 +196,22 @@ namespace MatutosApp.Services
                     {
                         await SecureStorage.Default.SetAsync("jwt_token", dadosLogin.Token);
 
-                        return (true, string.Empty, dadosLogin.Usuario);
+                        return (true, string.Empty, dadosLogin.Usuario, dadosLogin.Token);
                     }
 
-                    return (false, "Falha ao ler o token de acesso.", null);
+                    return (false, "Falha ao ler o token de acesso.", null, null);
                 }
                 else
                 {
                     var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
                     string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
-                    return (false, mensagemDaApi, null);
+                    return (false, mensagemDaApi, null, null);
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Erro de conexão no login: {ex.Message}");
-                return (false, "Falha de comunicação com o servidor.", null);
+                return (false, "Falha de comunicação com o servidor.", null, null);
             }
         }
 
@@ -332,6 +309,61 @@ namespace MatutosApp.Services
                 Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.");
             }
+        }
+
+        public async Task RegistrarTokenFCMAsync(string jwtToken)
+        {
+            // 👉 A trava mágica: O código abaixo SÓ existe se for Android
+#if ANDROID
+            try
+            {
+                // 1. Pede a permissão na tela do celular
+                await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.CheckIfValidAsync();
+
+                // 2. Captura o Token Físico
+                var fcmToken = await Plugin.Firebase.CloudMessaging.CrossFirebaseCloudMessaging.Current.GetTokenAsync();
+
+                if (!string.IsNullOrEmpty(fcmToken))
+                {
+                    // 3. Prepara o envio para a API
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken.Replace("Bearer ", "").Trim());
+
+                    var dto = new { Token = fcmToken };
+
+                    var resposta = await _httpClient.PutAsJsonAsync("usuario/atualizar-token-fcm", dto);
+
+                    if (resposta.IsSuccessStatusCode)
+                    {
+                        Console.WriteLine("Sucesso: Token do aparelho salvo no banco de dados SMR!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Erro ao salvar token na API.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[FCM_DIAG] Erro crítico: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"[FCM_DIAG_STACK] {ex.StackTrace}");
+
+                // 2. Cospe o erro diretamente no ecrã do emulador para veres na hora!
+                if (Application.Current?.MainPage != null)
+                {
+                    MainThread.BeginInvokeOnMainThread(async () =>
+                    {
+                        await Application.Current.MainPage.DisplayAlert(
+                            "Erro de Inicialização FCM",
+                            $"Detalhes do erro:\n{ex.Message}\n\nVerifique se o emulador tem a Google Play Store ativa.",
+                            "Entendido");
+                    });
+                }
+            }
+#else
+            // Se rodar no Windows, ele cai aqui, finge que nada aconteceu e segue a vida!
+            Console.WriteLine("Registro de Token ignorado: Firebase Push não é suportado no Windows.");
+            await Task.CompletedTask;
+#endif
         }
     }
 }

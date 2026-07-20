@@ -18,6 +18,9 @@ namespace MatutosApi.Infraestrutura
         public DbSet<Servico_Imagem> Servico_Imagens { get; set; }
         public DbSet<Blacklist> Blacklists { get; set; }
         public DbSet<Usuario_Blacklist> Usuario_Blacklists { get; set; }
+        public DbSet<Configura_Notificacao> Configura_Notificacoes { get; set; }
+        public DbSet<Notificacao> Notificacoes { get; set; }
+        public DbSet<Tipo_Evento> Tipo_Eventos { get; set; }
 
 
         public MatutosDbContext(DbContextOptions<MatutosDbContext> options) : base(options)
@@ -39,6 +42,41 @@ namespace MatutosApi.Infraestrutura
             modelBuilder.Entity<Servico>().ToTable("servico");
             modelBuilder.Entity<Blacklist>().ToTable("blacklist");
             modelBuilder.Entity<Usuario_Blacklist>().ToTable("usuario_blacklist");
+            modelBuilder.Entity<Notificacao>().ToTable("notificacao");
+            modelBuilder.Entity<Notificacao>().ToTable("tipo_evento");
+
+
+
+
+
+            //modelBuilder.Entity<Configura_Notificacao>()
+            //    .HasOne(ut => ut.TipoEventoRelacionado)
+            //    .WithMany(u => u.Codigo_Tipo)
+            //    .HasForeignKey(ut => ut.Codigo_Notificacao);
+
+            modelBuilder.Entity<Tipo_Evento>()
+                 .ToTable("Tipo_Evento");
+
+            modelBuilder.Entity<Notificacao>()
+                .HasOne(n => n.UsuarioDestino) // A propriedade de navegação
+                .WithMany() // Ou com a coleção correspondente na classe Usuario
+                .HasForeignKey(n => n.Codigo_Usuario); // 👉 A coluna real do MariaDB!
+
+        // O ERRO PROVAVELMENTE ESTÁ AQUI: 
+        // Veja se a Notificacao não está apontando para "Tipo_Evento" também.
+        // O correto é:
+        modelBuilder.Entity<Notificacao>()
+                .ToTable("Notificacao");
+
+            // 👉 A linha que salva o dia avisando qual é a chave primária:
+            modelBuilder.Entity<Notificacao>()
+                .HasKey(n => n.Codigo_Historico);
+
+            // O seu relacionamento que você já tinha feito continua logo abaixo:
+            modelBuilder.Entity<Notificacao>()
+                .HasOne(ut => ut.ConfiguraOrigem)
+                .WithMany(u => u.Notificacoes)
+                .HasForeignKey(ut => ut.Codigo_Notificacao);
 
             // Ensina o caminho do Usuário para a tabela ponte
             modelBuilder.Entity<UsuarioTelefone>()

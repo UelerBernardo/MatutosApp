@@ -5,11 +5,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using System.IO;
 using static MatutosApi.Controllers.UsuarioController;
 
 var key = Encoding.ASCII.GetBytes("MatutosAppUelerBernardoLuizFelipeEstagio");
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+var caminhoConfigFirebase = Path.Combine(AppContext.BaseDirectory, "firebase-config.json");
+if (File.Exists(caminhoConfigFirebase))
+{
+    FirebaseApp.Create(new AppOptions()
+    {
+        Credential = GoogleCredential.FromFile(caminhoConfigFirebase)
+    });
+}
+
+builder.Services.AddHostedService<NotificacaoWorker>();
 
 builder.Services.AddAuthentication(x =>
 {
@@ -29,6 +45,8 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddHostedService<NotificacaoWorker>();
+builder.Services.AddSingleton<FirebaseService>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Matutos-API", Version = "v1" });

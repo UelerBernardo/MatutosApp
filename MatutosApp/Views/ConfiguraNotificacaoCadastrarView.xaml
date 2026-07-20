@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.ConfiguraNotificacaoCadastrarView"
+             BackgroundColor="#121212">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="30">
+
+            <Label Text="Configurar Avisos e Alertas"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="#FFFFFF" 
+                   Margin="0,0,0,10"/>
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Descrição Interna" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                    <Entry Placeholder="Ex: Aviso 20 minutos antes"
+                           Text="{Binding Descricao}"
+                           TextColor="#FFFFFF"
+                           PlaceholderColor="#888888"
+                           BackgroundColor="Transparent"
+                           VerticalOptions="Center"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+
+                <VerticalStackLayout Spacing="8" Grid.Column="0">
+                    <Label Text="Valor (Tempo)" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                        <Entry Placeholder="Ex: 20"
+                               Text="{Binding Valor}"
+                               Keyboard="Numeric"
+                               TextColor="#FFFFFF"
+                               PlaceholderColor="#888888"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8" Grid.Column="1">
+                    <Label Text="Status da Regra" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                    
+                        <HorizontalStackLayout Spacing="0" VerticalOptions="Center" HorizontalOptions="Start">
+
+                        <Label Text="Ativa" TextColor="White" VerticalOptions="Center" FontSize="15" Margin="20"/>
+                        <Switch IsToggled="{Binding Ativo}" OnColor="#4CAF50" VerticalOptions="Center" />
+                            
+                        </HorizontalStackLayout>
+                    
+                </VerticalStackLayout>
+            </Grid>
+
+            <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+
+                <VerticalStackLayout Spacing="8" Grid.Column="0">
+                    <Label Text="Tipo de Evento" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="10,0">
+                        <Picker 
+                                ItemsSource="{Binding TiposEventos}"
+                                ItemDisplayBinding="{Binding Nome}"
+                                SelectedItem="{Binding TipoEventoSelecionado}"
+                                TextColor="#FFFFFF"
+                                TitleColor="#888888"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8" Grid.Column="1">
+                    <Label Text="Unidade Tempo" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="10,0">
+                        <Picker 
+                                ItemsSource="{Binding UnidadesDeTempo}"
+                                SelectedItem="{Binding UnidadeTempo}"
+                                TextColor="#FFFFFF"
+                                TitleColor="#888888"
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Mensagem para o Cliente" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="100" Padding="15,10">
+                    <Editor Placeholder="Digite o texto da notificação..."
+                            Text="{Binding Mensagem}"
+                            TextColor="#FFFFFF"
+                            PlaceholderColor="#888888"
+                            BackgroundColor="Transparent"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <Button Text="Salvar Regra"
+                    Command="{Binding CadastrarConfiguracaoNotificacaoCommand}"
+                    BackgroundColor="#E0E0E0"
+                    TextColor="#121212"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="55"
+                    Margin="0, 20, 0, 0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

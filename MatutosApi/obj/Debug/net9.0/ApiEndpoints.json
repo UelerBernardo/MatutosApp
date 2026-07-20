@@ -131,6 +131,42 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "CadastrarNotificacao",
+    "RelativePath": "notificacao/regra-cadastrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notificacaoNova",
+        "Type": "MatutosDomain.Configura_Notificacao",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "ConsultarRegraNotificacao",
+    "RelativePath": "notificacao/regra-consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "ConsultarTipoEvento",
+    "RelativePath": "notificacao/tipo-evento/consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.ServicoController",
     "Method": "AlterarServico",
     "RelativePath": "servico/alterar",
@@ -299,6 +335,22 @@
       {
         "Name": "dados",
         "Type": "MatutosApi.Controllers.UsuarioController\u002BAlterarSenhaPerfilRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "AtualizarTokenFCM",
+    "RelativePath": "usuario/atualizar-token-fcm",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "MatutosApi.DTOs.TokenFcmDto",
         "IsRequired": true
       }
     ],
