@@ -226,12 +226,100 @@ namespace MatutosApi.Controllers
                     Nome = login.Nome,
                     Email = login.Email,
                     Imagem_Usuario = login.Imagem_Usuario,
-                    TipoSelecionado = tipoDescoberto  
+                    TipoSelecionado = tipoDescoberto
                 }
             });
-
         }
 
+        [HttpGet("consultar-lista")]
+        [Authorize]
+        // 👉 MUDANÇA 1: O parâmetro 'ativo' agora é bool? (anulável)
+        public async Task<IActionResult> ConsultarListaUsuario(UsuarioTipo usuarioTipo, string? nome, bool? ativo)
+        {
+            try
+            {
+                if (usuarioTipo == UsuarioTipo.Cliente)
+                {
+                    var clienteLista = await (
+                            from cliente in _dbcontext.Clientes
+                            join usuario in _dbcontext.Usuarios
+                            on cliente.Codigo_Usuario equals usuario.Codigo_Usuario
+                            // 👉 MUDANÇA 2: Aceita nome vazio E aceita ativo nulo (opção "Todos")
+                            where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
+                                  && (!ativo.HasValue || usuario.Ativo == ativo)
+                            select new
+                            {
+                                Codigo_Usuario = cliente.Codigo_Usuario,
+                                Nome = usuario.Nome,
+                                TipoSelecionado = usuarioTipo,
+                                E_mail = usuario.Email,
+                                Ativo = usuario.Ativo,
+                                ImagemUsuario = usuario.Imagem_Usuario
+                            }).ToListAsync();
+
+                    if (clienteLista.Count <= 0)
+                    {
+                        return BadRequest(new { Mensagem = "Não foi encontrado nenhum cliente com essas informações." });
+                    }
+
+                    return Ok(clienteLista);
+                }
+                else if (usuarioTipo == UsuarioTipo.Barbeiro)
+                {
+                    var barbeiroLista = await (
+                        from barbeiro in _dbcontext.Barbeiros
+                        join usuario in _dbcontext.Usuarios
+                        on barbeiro.Codigo_Usuario equals usuario.Codigo_Usuario
+                        where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
+                              && (!ativo.HasValue || usuario.Ativo == ativo)
+                        select new
+                        {
+                            Codigo_Usuario = barbeiro.Codigo_Usuario,
+                            Nome = usuario.Nome,
+                            TipoSelecionado = usuarioTipo,
+                            E_mail = usuario.Email,
+                            Ativo = usuario.Ativo,
+                            ImagemUsuario = usuario.Imagem_Usuario
+                        }).ToListAsync();
+
+                    if (barbeiroLista.Count <= 0)
+                    {
+                        return BadRequest(new { Mensagem = "Não foi encontrado nenhum barbeiro com essas informações." });
+                    }
+
+                    return Ok(barbeiroLista);
+                }
+                else
+                {
+                    var admLista = await (
+                        from adm in _dbcontext.Administradores
+                        join usuario in _dbcontext.Usuarios
+                        on adm.Codigo_Usuario equals usuario.Codigo_Usuario
+                        where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
+                              && (!ativo.HasValue || usuario.Ativo == ativo)
+                        select new
+                        {
+                            Codigo_Usuario = adm.Codigo_Usuario,
+                            Nome = usuario.Nome,
+                            TipoSelecionado = usuarioTipo,
+                            E_mail = usuario.Email,
+                            Ativo = usuario.Ativo,
+                            ImagemUsuario = usuario.Imagem_Usuario
+                        }).ToListAsync();
+
+                    if (admLista.Count <= 0)
+                    {
+                        return BadRequest(new { Mensagem = "Não foi encontrado nenhum administrador com essas informações." });
+                    }
+
+                    return Ok(admLista);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = "Erro interno ao consultar usuários.", Erro = ex.Message });
+            }
+        }
 
         [HttpGet("consultar")]
         [Authorize]

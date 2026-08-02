@@ -24,6 +24,54 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
+        // 👉 CORREÇÃO 1: A assinatura agora retorna uma List<Usuario>
+        public async Task<(bool Sucesso, string Mensagem, List<Usuario>? Dados)> ConsultarListaUsuario(string token, UsuarioTipo usuarioTipo, string? nome, bool? ativo)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                // 👉 CORREÇÃO 2: Montando os parâmetros na URL (Query String)
+                var queryParams = new List<string> { $"usuarioTipo={(int)usuarioTipo}" };
+
+                if (!string.IsNullOrWhiteSpace(nome))
+                {
+                    queryParams.Add($"nome={nome}");
+                }
+
+                if (ativo.HasValue)
+                {
+                    queryParams.Add($"ativo={ativo.Value}");
+                }
+
+                // Junta tudo com '&'. Exemplo: usuario/consultar-lista?usuarioTipo=1&nome=teste&ativo=True
+                var url = $"usuario/consultar-lista?{string.Join("&", queryParams)}";
+
+                // Chama o GetAsync apenas com a URL montada
+                var resultado = await _httpClient.GetAsync(url);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<Usuario>>(options);
+                    return (true, string.Empty, dados);
+                }
+                else
+                {
+                    var mensagemErro = await resultado.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    // 👉 CORREÇÃO 3: Retornando false e pegando apenas a propriedade Mensagem do erro
+                    return (false, mensagemErro?.Mensagem ?? "Erro desconhecido ao consultar.", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.", null);
+            }
+        }
+
         public async Task<Usuario> ConsultarPefil(string token)
         {
             var tokenLimpo = token.Replace("Bearer ", "").Trim();

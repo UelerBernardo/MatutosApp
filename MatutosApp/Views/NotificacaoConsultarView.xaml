@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.NotificacaoConsultarView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, *" Padding="20">
+
+        <!-- Cabeçalho -->
+        <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,20">
+            <Label Text="Notificações" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   TextColor="#FFFFFF"/>
+            <Label Text="Fique por dentro das novidades da barbearia" 
+                   FontSize="14" 
+                   TextColor="#888888"/>
+        </VerticalStackLayout>
+
+        <!-- Lista com Pull-to-Refresh -->
+        <RefreshView Grid.Row="1" 
+                     Command="{Binding ConsultarNotificacaoCommand}" 
+                     RefreshColor="#4CAF50">
+
+            <CollectionView ItemsSource="{Binding ListaNotificacao}"
+                            SelectionMode="None">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border BackgroundColor="#1E1E1E" 
+                                Stroke="White"
+                                StrokeThickness="1" 
+                                StrokeShape="RoundRectangle 16" 
+                                Margin="0,0,0,15" 
+                                Padding="16">
+
+                            <!-- Ajustado para 3 linhas -->
+                            <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="8" ColumnDefinitions="*, Auto">
+
+                                <!-- LINHA 0: ID (Esquerda) e Data de Disparo (Direita) -->
+                                <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                                    <Label Text="Notificação:" TextColor="#888888" FontAttributes="Bold" FontSize="20"/>
+                                    <Label Text="{Binding ConfiguraNotificacao}" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="20"/>
+                                </HorizontalStackLayout>
+
+                                <Label Grid.Row="0" Grid.Column="1" 
+                                       Text="{Binding DataDisparo, StringFormat='{0:dd/MM/yyyy HH:mm}'}" 
+                                       FontSize="15" TextColor="#4CAF50" FontAttributes="Bold" 
+                                       HorizontalOptions="End" VerticalOptions="Center"/>
+
+
+                                <!-- LINHA 1: Descrição da Regra (Removida de dentro do StackLayout) -->
+                                <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                       Text="{Binding DescricaoRegra, StringFormat='Regra: {0}'}" 
+                                       FontSize="14" TextColor="White" FontAttributes="Bold" />
+
+
+                                <!-- LINHA 2: Status de Leitura com DataTrigger para mudar de cor -->
+                                <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="5" Margin="0,5,0,0">
+                                    <Label Text="Status:" TextColor="#888888" FontSize="12" VerticalOptions="Center"/>
+                                    <Label FontSize="12" FontAttributes="Bold" VerticalOptions="Center">
+                                        <Label.Triggers>
+
+                                            <!-- Se Lida == True (Verde) -->
+                                            <DataTrigger TargetType="Label" Binding="{Binding Lida}" Value="True">
+                                                <Setter Property="Text" Value="Visualizada" />
+                                                <Setter Property="TextColor" Value="#4CAF50" />
+                                            </DataTrigger>
+
+                                            <!-- Se Lida == False (Vermelho/Rosa) -->
+                                            <DataTrigger TargetType="Label" Binding="{Binding Lida}" Value="False">
+                                                <Setter Property="Text" Value="Não Lida" />
+                                                <Setter Property="TextColor" Value="#CF6679" />
+                                            </DataTrigger>
+
+                                        </Label.Triggers>
+                                    </Label>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Row="2" Grid.Column="2">
+                                    <ImageButton Source="olhonotificacao.png" HeightRequest="20" WidthRequest="20" Background="#1E1E1E"/>
+                                    <!--<Image Source="olhonotificacao.png" HeightRequest="80" WidthRequest="80" Background="#1E1E1E"/>-->
+                                </HorizontalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <!-- Visual de Lista Vazia -->
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                        <Label Text="Caixa de entrada vazia." TextColor="#FFFFFF" FontSize="18" HorizontalOptions="Center"/>
+                        <Label Text="Você não possui novas notificações no momento." TextColor="#888888" FontSize="14" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+</ContentPage>

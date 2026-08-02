@@ -18,6 +18,46 @@ namespace MatutosApi.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpGet ("notificacao-consultar")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarNotificacao()
+        {
+            var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
+            int codigoUsuarioLogado = int.Parse(usuario);
+
+            if (string.IsNullOrEmpty(usuario))
+            {
+                return BadRequest(new { Mensagem = "Usuário não identificado no token." });
+            }
+
+            try
+            {
+                var listaDeNotificacao = await _dbContext.Notificacoes
+                    .Where(n => n.Codigo_Usuario == codigoUsuarioLogado)
+                    .Join(
+                        _dbContext.Configura_Notificacoes,
+                        notificacao => notificacao.Codigo_Notificacao,
+                        configuracao => configuracao.Codigo_Notificacao,
+                        (notificacao, configuracao) => new
+                        {
+                            ConfiguraNotificacao = notificacao.Codigo_Notificacao,
+                            Mensagem = notificacao.MensagemEnviada,
+                            DataDisparo = notificacao.DataDisparo,
+                            Lida = notificacao.Lida,
+
+                            DescricaoRegra = configuracao.Descricao,
+                            TipoEvento = configuracao.Codigo_Tipo
+                        })
+                    .ToListAsync();
+
+                return Ok(listaDeNotificacao);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao consultar notificações: {ex.Message}" });
+            }
+
+        }
 
         [HttpGet("regra-consultar")]
         [Authorize]

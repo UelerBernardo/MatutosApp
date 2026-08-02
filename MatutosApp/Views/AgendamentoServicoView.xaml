@@ -8,7 +8,7 @@
 
     <Grid RowDefinitions="Auto, Auto, *, Auto">
 
-        <VerticalStackLayout Grid.Row="0" Spacing="5" HorizontalOptions="Center" Margin="0,40,0,20">
+        <VerticalStackLayout Grid.Row="0" Spacing="5" HorizontalOptions="Center" Margin="0,20,0,10">
             <Image Source="tesourapente.png" HeightRequest="100"/>
             <Label Text="O que vamos fazer?" FontSize="24" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center" />
             <Label Text="Selecione os serviços desejados" FontSize="14" TextColor="#AAAAAA" HorizontalOptions="Center" />
@@ -66,9 +66,9 @@
 
         <VerticalStackLayout Grid.Row="3" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
-            <VerticalStackLayout Spacing="15" Padding="20,20,20,30" BackgroundColor="#121212">
-                <Button Text="Finalizar" Command="{Binding CadastrarCommand}" BackgroundColor="#E0E0E0" TextColor="#121212" FontAttributes="Bold" FontSize="16" CornerRadius="25" HeightRequest="55" />
-                <Button Text="Cancelar" Command="{Binding CancelarAgendamentoCommand}" BackgroundColor="Transparent" TextColor="#AAAAAA" BorderColor="#333333" BorderWidth="1" FontAttributes="Bold" FontSize="16" CornerRadius="25" HeightRequest="55" />
+            <VerticalStackLayout Spacing="15" Padding="20,10,20,20" BackgroundColor="#121212">
+                <Button Text="Finalizar" Command="{Binding CadastrarCommand}" BackgroundColor="#E0E0E0" TextColor="#121212" FontAttributes="Bold" FontSize="16" CornerRadius="12"  />
+                <Button Text="Cancelar" Command="{Binding CancelarAgendamentoCommand}" BackgroundColor="Transparent" TextColor="#AAAAAA" BorderColor="#333333" BorderWidth="1" FontAttributes="Bold" FontSize="16" CornerRadius="12"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
 

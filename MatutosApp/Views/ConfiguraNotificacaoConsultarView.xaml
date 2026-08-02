@@ -2,86 +2,113 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.ConfiguraNotificacaoConsultarView"
-             Title="Regras Cadastradas"
-             BackgroundColor="#121212">
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto, *" Padding="20">
+    <!-- 1. CORREÇÃO: "Auto" para topo, "*" para o meio (expande), e "Auto" para o rodapé -->
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
 
+        <!-- Cabeçalho (Fica no topo: Row 0) -->
         <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,20">
             <Label Text="Regras de Notificação" 
-                   FontSize="24" 
+                   FontSize="28" 
                    FontAttributes="Bold" 
                    TextColor="#FFFFFF"/>
-            <Label Text="Gerencie os alertas automáticos do sistema" 
+            <Label Text="Gerencie os alertas automáticos" 
                    FontSize="14" 
                    TextColor="#888888"/>
         </VerticalStackLayout>
 
+        <!-- Lista (Fica no meio e empurra o resto para baixo: Row 1) -->
         <CollectionView Grid.Row="1" 
                         ItemsSource="{Binding ListaRegraNotificacao}"
                         SelectionMode="None">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-
-                    <Border BackgroundColor="#2A2A2A" 
-                            StrokeThickness="0" 
-                            StrokeShape="RoundRectangle 12" 
+                    <Border BackgroundColor="#1E1E1E" 
+                            Stroke="#333333"
+                            StrokeThickness="1" 
+                            StrokeShape="RoundRectangle 16" 
                             Margin="0,0,0,15" 
-                            Padding="15">
+                            Padding="16">
 
-                        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
+                        <!-- 3 Colunas: Esquerda (Texto), Centro (Ativo), Direita (Lápis) -->
+                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="12" RowSpacing="8">
 
+                            <!-- 1. Regra / ID (Esquerda - Linha 0) -->
                             <Label Grid.Row="0" Grid.Column="0" 
-                                   Text="{Binding Descricao}" 
-                                   FontSize="16" 
-                                   FontAttributes="Bold" 
-                                   TextColor="#FFFFFF" 
+                                   Text="{Binding Codigo_Notificacao, StringFormat='Regra: {0}'}" 
+                                   FontSize="18" 
+                                   TextColor="#4CAF50" 
+                                   FontAttributes="Bold"
                                    VerticalOptions="Center"/>
 
-                            <HorizontalStackLayout Grid.Row="0" Grid.Column="1" Spacing="8" VerticalOptions="Center">
-                                <Label Text="Ativa:" FontSize="12" TextColor="#CCCCCC" VerticalOptions="Center"/>
-                                <Switch IsToggled="{Binding Ativo}" IsEnabled="False" OnColor="#4CAF50" Scale="0.8"/>
-                            </HorizontalStackLayout>
+                            <!-- 2. Descrição / Título (Esquerda - Linha 1) -->
+                            <Label Grid.Row="1" Grid.Column="0" 
+                                   Text="{Binding Descricao, StringFormat='Título: {0}'}" 
+                                   FontSize="13" 
+                                   TextColor="#CCCCCC"
+                                   VerticalOptions="Center"/>
 
-                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                                   Text="{Binding Mensagem}" 
-                                   FontSize="14" 
-                                   TextColor="#AAAAAA" 
-                                   FontAttributes="Italic"
-                                   LineBreakMode="WordWrap"/>
+                            <!-- 3. Status ATIVO (Centro - Ocupa as 2 linhas verticalmente) -->
+                            <VerticalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" 
+                                                 VerticalOptions="Center" 
+                                                 HorizontalOptions="Center" 
+                                                 Spacing="2">
+                                <Label Text="Ativa" FontSize="11" TextColor="#888888" HorizontalOptions="Center"/>
+                                <Switch IsToggled="{Binding Ativo}" 
+                                        IsEnabled="False" 
+                                        OnColor="#4CAF50" 
+                                        Scale="0.75"/>
+                            </VerticalStackLayout>
 
-                            <HorizontalStackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Spacing="15" Margin="0,5,0,0">
-
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Tipo:" FontSize="12" FontAttributes="Bold" TextColor="#4CAF50"/>
-                                    <Label Text="{Binding Codigo_Tipo}" FontSize="12" TextColor="#FFFFFF"/>
-                                </HorizontalStackLayout>
-
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Valor:" FontSize="12" FontAttributes="Bold" TextColor="#4CAF50"/>
-                                    <Label Text="{Binding Valor, TargetNullValue='N/A'}" FontSize="12" TextColor="#FFFFFF"/>
-                                </HorizontalStackLayout>
-
-                                <HorizontalStackLayout Spacing="5">
-                                    <Label Text="Tempo:" FontSize="12" FontAttributes="Bold" TextColor="#4CAF50"/>
-                                    <Label Text="{Binding UnidadeTempo, TargetNullValue='N/A'}" FontSize="12" TextColor="#FFFFFF"/>
-                                </HorizontalStackLayout>
-
-                            </HorizontalStackLayout>
-
+                            <!-- 4. Botão Lápis / Edição (Direita - Ocupa as 2 linhas verticalmente) -->
+                            <Frame Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" 
+                                   WidthRequest="42" HeightRequest="42" 
+                                   CornerRadius="21" 
+                                   BackgroundColor="#252525" 
+                                   BorderColor="#333333" 
+                                   Padding="0" 
+                                   VerticalOptions="Center" 
+                                   HorizontalOptions="End">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AbrirImagemUsuarioCommand}" />
+                                </Frame.GestureRecognizers>
+                                <Image Source="lapis.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Frame>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
             <CollectionView.EmptyView>
-                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
-                    <Label Text="Nenhuma regra encontrada." TextColor="#888888" FontSize="16" HorizontalOptions="Center"/>
-                    <Label Text="Cadastre uma nova regra para começar." TextColor="#555555" FontSize="14" HorizontalOptions="Center"/>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                    <Label Text="Nenhuma regra encontrada." TextColor="#FFFFFF" FontSize="18" HorizontalOptions="Center"/>
+                    <Label Text="Cadastre uma nova regra para começar." TextColor="#888888" FontSize="14" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
-
         </CollectionView>
+
+        <!-- 2. CORREÇÃO: Rodapé com Botões agora na Row 2, colado na parte inferior -->
+        <VerticalStackLayout Grid.Row="2" Spacing="0" VerticalOptions="End" Margin="0,0,0,0">
+            <BoxView HeightRequest="1" Color="#333333" Margin="0,0,0,15" />
+            <VerticalStackLayout Spacing="15" BackgroundColor="#121212">
+                <Button Text="Nova Regra"
+                        Command="{Binding AbrirRegraNotificacaoCommand}"
+                        BackgroundColor="#E0E0E0"
+                        TextColor="#121212"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                         />
+                <Button Text="Voltar"
+                        Command="{Binding VoltarTela}"
+                        BackgroundColor="#E0E0E0"
+                        TextColor="#121212"
+                        FontAttributes="Bold"
+                        FontSize="16"/>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
     </Grid>
 </ContentPage>

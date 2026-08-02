@@ -134,8 +134,7 @@
                         BackgroundColor="#4CAF50"
                         TextColor="#FFFFFF"
                         FontAttributes="Bold"
-                        CornerRadius="25"
-                        HeightRequest="55"
+                        CornerRadius="12"
                         FontSize="16"/>
 
                 <Button Text="Cancelar Agendamento" 
@@ -145,8 +144,7 @@
                         BorderWidth="1"
                         TextColor="#E63946"
                         FontAttributes="Bold"
-                        CornerRadius="25"
-                        HeightRequest="55"
+                        CornerRadius="12"
                         FontSize="16"/>
 
             </VerticalStackLayout>

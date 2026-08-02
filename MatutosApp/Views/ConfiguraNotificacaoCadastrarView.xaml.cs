@@ -4,7 +4,7 @@ namespace MatutosApp.Views;
 
 public partial class ConfiguraNotificacaoCadastrarView : ContentPage
 {
-	public ConfiguraNotificacaoCadastrarView(ConfiguraNotificacaoConsultarViewModel viewModel)
+	public ConfiguraNotificacaoCadastrarView(ConfiguraNotificacaoCadastrarViewModel viewModel)
 	{
 		InitializeComponent();
 

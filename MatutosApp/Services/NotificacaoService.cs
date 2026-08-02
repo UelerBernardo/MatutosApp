@@ -20,6 +20,35 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
+        public async Task<(bool Sucesso, List<NotificacaoResponseDTO>? Dados)> ConsultarNotificacao(string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var resposta = await _httpClient.GetAsync("notificacao/notificacao-consultar");
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<NotificacaoResponseDTO>>(options);
+                    return (true, dados ?? new List<NotificacaoResponseDTO>());
+                }
+                else
+                {
+                    var errorMessage = await resposta.Content.ReadAsStringAsync();
+                    Debug.WriteLine($"Falha ao consultar a notificação. Status {resposta.StatusCode}, Erro: {errorMessage}");
+                    return (false, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar a notificação: {ex.Message}");
+                return (false, null);
+            }
+        }
+
         public async Task<(bool Sucesso, List<Configura_Notificacao>? Dados)> ConsultarRegraNotificacao(string token)
         {
             try

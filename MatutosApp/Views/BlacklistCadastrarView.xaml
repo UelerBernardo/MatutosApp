@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.BlacklistCadastrarView"
-             Title="BlacklistCadastrarView"
+             Shell.NavBarIsVisible="False"
              BackgroundColor="#121212">
     <ScrollView>
         <VerticalStackLayout Padding="20,40,20,30" Spacing="20">
@@ -85,15 +85,13 @@
                 </Border>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="15" Margin="0, 20, 0, 0">
+            <VerticalStackLayout Spacing="15" Margin="0, 30, 0, 0">
                 <Button Text="Salvar Bloqueio" 
                         Command="{Binding CadastrarBlacklistCommand}" 
                         BackgroundColor="#a15650" 
                         TextColor="White" 
                         FontAttributes="Bold" 
-                        FontSize="16" 
-                        CornerRadius="25" 
-                        HeightRequest="55" />
+                        FontSize="16"/>
             </VerticalStackLayout>
 
         </VerticalStackLayout>

@@ -116,7 +116,7 @@
 
                         <CollectionView.EmptyView>
                             <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="5" Margin="0,20">
-                                <Label Text="🖼️" FontSize="50" HorizontalOptions="Center" />
+                                <Image Source="imagemservico.png" HorizontalOptions="Center" WidthRequest="80" HeightRequest="80"/>
                                 <Label Text="Nenhuma imagem." TextColor="#666666" FontSize="14" HorizontalOptions="Center" />
                             </VerticalStackLayout>
                         </CollectionView.EmptyView>
@@ -150,7 +150,7 @@
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <Button Text="📷 Selecionar Foto"
+                    <Button Text="Selecionar Foto"
                              Command="{Binding SelecionarImagemServicoCommand}"
                              BackgroundColor="#2A2A2A"
                              TextColor="#FFFFFF"
@@ -176,13 +176,12 @@
                 <Button Text="Cancelar"
                         Command="{Binding VoltarTela}"
                         BackgroundColor="Transparent"
-                        TextColor="#AAAAAA"
-                        BorderColor="#333333"
+                        TextColor="#a15650"
+                        BorderColor="#a15650"
                         BorderWidth="1"
                         FontAttributes="Bold"
                         FontSize="16"
-                        CornerRadius="12"
-                        HeightRequest="55" />
+                        CornerRadius="12"/>
             </VerticalStackLayout>
 
         </VerticalStackLayout>

@@ -131,12 +131,7 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task AbrirUsuarioCadastro()
         {
-            var parametros = new Dictionary<string, object>
-                    {
-                        { "CadastroDeUsuario", true } 
-                    };
-
-            await Shell.Current.GoToAsync(nameof(UsuarioCadastroView), parametros);
+            await Shell.Current.GoToAsync(nameof(UsuarioConsultarView));
         }
 
         public async Task ConsultarPerfil()

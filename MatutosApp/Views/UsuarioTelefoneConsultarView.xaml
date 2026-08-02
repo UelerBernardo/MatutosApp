@@ -108,12 +108,11 @@
 
         <VerticalStackLayout Grid.Row="2" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
-            <Grid Padding="20,20,20,30" BackgroundColor="#121212">
+            <Grid Padding="20,10,20,15" BackgroundColor="#121212">
                 <Button Text="Adicionar Novo Telefone" 
                         BackgroundColor="#E0E0E0" 
                         TextColor="#121212" 
-                        CornerRadius="25" 
-                        HeightRequest="55" 
+                        CornerRadius="12" 
                         FontAttributes="Bold" 
                         FontSize="16"
                         Command="{Binding AbrirAdicionarTelefoneCommand}"/>

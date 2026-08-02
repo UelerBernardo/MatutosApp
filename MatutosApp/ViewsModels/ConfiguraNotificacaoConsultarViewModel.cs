@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
+using MatutosApp.Views;
 using MatutosDomain;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,11 @@ namespace MatutosApp.ViewsModels
             _notificacaoService = notificacaoService;
         }
 
+        [RelayCommand]
+        public async Task AbrirRegraNotificacao()
+        {
+           await Shell.Current.GoToAsync(nameof(ConfiguraNotificacaoCadastrarView));
+        }
 
         [RelayCommand]
         public async Task ConsultarRegraNotificacao()

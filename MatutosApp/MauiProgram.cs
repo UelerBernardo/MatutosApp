@@ -100,12 +100,6 @@ namespace MatutosApp
 #endif
            ;
 
-            //// Demais serviços
-            //builder.Services.AddSingleton<TelefoneService>();
-            //builder.Services.AddSingleton<AgendamentoService>();
-            //builder.Services.AddSingleton<ServicoService>();
-            //builder.Services.AddSingleton<ClienteService>();
-            //builder.Services.AddSingleton<BlacklistService>();
 
 
             // 👉 3. ViewModels
@@ -128,6 +122,9 @@ namespace MatutosApp
             builder.Services.AddTransient<UsuarioRedefinirSenhaViewModel>();
             builder.Services.AddTransient<ConfiguraNotificacaoCadastrarViewModel>();
             builder.Services.AddTransient<ConfiguraNotificacaoConsultarViewModel>();
+            builder.Services.AddTransient<NotificacaoConsultarViewModel>();
+            builder.Services.AddTransient<UsuarioConsultarViewModel>();
+
 
             // 👉 4. Views
             builder.Services.AddTransient<UsuarioCadastroView>();
@@ -149,6 +146,9 @@ namespace MatutosApp
             builder.Services.AddTransient<UsuarioRedefinirSenhaView>();
             builder.Services.AddTransient<ConfiguraNotificacaoCadastrarView>();
             builder.Services.AddTransient<ConfiguraNotificacaoConsultarView>();
+            builder.Services.AddTransient<NotificacaoConsultarView>();
+            builder.Services.AddTransient<UsuarioConsultarView>();
+
 
             // 👉 5. Configuração Visual (Somente regra de interface aqui dentro!)
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemBorda", (handler, view) =>
