@@ -49,6 +49,11 @@ namespace MatutosApp.ViewsModels
                     : ImageSource.FromUri(new Uri($"https://localhost:7110{usuarioLogado.Imagem_Usuario}"));
             }
         }
+        [RelayCommand]
+        public async Task AbrirNotificacao()
+        {
+            await Shell.Current.GoToAsync(nameof(NotificacaoConsultarView));
+        }
 
         [RelayCommand]
         public async Task ConsultarTelefone()

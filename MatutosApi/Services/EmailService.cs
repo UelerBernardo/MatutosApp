@@ -9,7 +9,7 @@ namespace MatutosApi.Services
         public async Task EnviarEmailRecuperacaoAsync(string emailDestino, string codigo)
         {
             string remetente = "barbeariamatutos@gmail.com";
-            string senhaRemetente = "kvnn krdr gctv tect";
+            string senhaRemetente = "kgrl uixq gbfy upic";
 
             using (var clienteSmtp = new SmtpClient("smtp.gmail.com", 587))
             {

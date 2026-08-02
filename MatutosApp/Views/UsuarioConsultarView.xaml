@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.UsuarioConsultarView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto, Auto,*" Padding="15">
+
+        <!-- PAINEL DE FILTROS (Linha 0) -->
+        <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="0,0,0,20">
+
+            <Label Text="Buscar Usuários" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="#FFFFFF"/>
+
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- Novo Layout de Filtros: 2 Linhas para não espremer os campos -->
+                    <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" RowSpacing="12">
+
+                        <!-- LINHA 0 | COLUNA 0: Tipo -->
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="5">
+                            <Label Text="Tipo (Obrigatório)" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                            <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                                <Picker ItemsSource="{Binding UsuarioTiposDisponiveis}"
+                                        SelectedItem="{Binding UsuarioSelecionado}"
+                                        TitleColor="#888888"
+                                        TextColor="White"
+                                        BackgroundColor="Transparent"
+                                        VerticalOptions="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- LINHA 0 | COLUNA 1: Status -->
+                        <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="5">
+                            <Label Text="Status" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                            <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                                <Picker ItemsSource="{Binding OpcoesStatus}"
+                                        SelectedItem="{Binding StatusSelecionado}"
+                                        TextColor="White"
+                                        BackgroundColor="Transparent"
+                                        VerticalOptions="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- LINHA 1 | COLUNA ÚNICA: Nome -->
+                        <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Spacing="5">
+                            <Label Text="Nome (Opcional)" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                            <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                                <Entry Text="{Binding Nome}"
+                                       Placeholder="Ex: João"
+                                       PlaceholderColor="#888888"
+                                       TextColor="White"
+                                       BackgroundColor="Transparent"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </Grid>
+
+                    <!-- Botão de Pesquisa -->
+                    <Button Text="Pesquisar" 
+                            Command="{Binding ConsultarUsuariosCommand}"
+                            BackgroundColor="#4CAF50" 
+                            TextColor="White" 
+                            FontAttributes="Bold" 
+                            CornerRadius="8" 
+                            HeightRequest="45" 
+                            Margin="0,5,0,0"/>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- LISTA DE RESULTADOS (Linha 1) -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding ListaUsuarios}" SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
+            </CollectionView.ItemsLayout>
+
+            <!-- Card de cada Usuário -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
+
+                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+
+                            <!-- Foto / Ícone (Esquerda) -->
+                            <Frame Grid.Column="0" WidthRequest="50" HeightRequest="50" CornerRadius="25" 
+                                   Padding="0" IsClippedToBounds="True" BorderColor="#333333" BackgroundColor="#2A2A2A"
+                                   VerticalOptions="Center">
+                                <Image Source="usuariosistema.png" Aspect="AspectFit" Margin="10"/>
+                            </Frame>
+
+                            <!-- Dados do Usuário (Centro) -->
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Nome}" TextColor="White" FontSize="16" FontAttributes="Bold" />
+                                <Label Text="{Binding E_mail}" TextColor="#AAAAAA" FontSize="13" />
+                                <Label Text="{Binding TipoSelecionado}" TextColor="#03DAC6" FontSize="12" FontAttributes="Bold" Margin="0,4,0,0"/>
+                            </VerticalStackLayout>
+
+                            <!-- Status (Direita) -->
+                            <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End">
+                                <Border StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,4">
+                                    <Border.Triggers>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="True">
+                                            <Setter Property="BackgroundColor" Value="#1A4CAF50" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="False">
+                                            <Setter Property="BackgroundColor" Value="#1ACF6679" />
+                                        </DataTrigger>
+                                    </Border.Triggers>
+
+                                    <Label FontSize="12" FontAttributes="Bold">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Ativo}" Value="True">
+                                                <Setter Property="Text" Value="ATIVO" />
+                                                <Setter Property="TextColor" Value="#4CAF50" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Ativo}" Value="False">
+                                                <Setter Property="Text" Value="INATIVO" />
+                                                <Setter Property="TextColor" Value="#CF6679" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Border>
+                            </VerticalStackLayout>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- Visual de Lista Vazia -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" Spacing="10" Margin="0,40,0,0">
+                    <Image Source="usuariosistema.png" HeightRequest="60" Opacity="0.5" HorizontalOptions="Center"/>
+                    <Label Text="Nenhum usuário listado." TextColor="#FFFFFF" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="Preencha os filtros acima e clique em Pesquisar." TextColor="#888888" FontSize="14" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+        <VerticalStackLayout Grid.Row="3" VerticalOptions="End" >
+            <Button Text="Novo Usuário" BorderColor="Black" Background="White" TextColor="Black" FontAttributes="Bold" Command="{Binding AbrirCadastroUsuarioCommand}"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

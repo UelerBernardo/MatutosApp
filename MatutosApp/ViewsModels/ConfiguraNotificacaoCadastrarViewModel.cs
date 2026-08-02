@@ -15,19 +15,77 @@ namespace MatutosApp.ViewsModels
     public partial class ConfiguraNotificacaoCadastrarViewModel : BaseViewModel
     {
         private readonly NotificacaoService _notificacaoService;
-        [ObservableProperty] private Tipo_Evento tipoEventoSelecionado;
+
         [ObservableProperty] private bool ativo = true;
         [ObservableProperty] private string mensagem;
         [ObservableProperty] private string descricao;
-        [ObservableProperty] private int valor;
-        [ObservableProperty] private UnidadeTempoEnum unidadeTempo;
+        [ObservableProperty] private int? valor;
+        [ObservableProperty] private UnidadeTempoEnum? unidadeTempo;
         [ObservableProperty] private ObservableCollection<Tipo_Evento> tiposEventos = new ObservableCollection<Tipo_Evento>();
-        public List<UnidadeTempoEnum> UnidadesDeTempo { get; } = Enum.GetValues(typeof(UnidadeTempoEnum)).Cast<UnidadeTempoEnum>().ToList();
+
+        [ObservableProperty] private bool isValorVisivel = true;
+        [ObservableProperty] private bool isUnidadeTempoVisivel = true;
+        // Propriedades de controle de tela (geradas automaticamente pelo Toolkit)
+        [ObservableProperty] private bool isValorHabilitado = true;
+        [ObservableProperty] private bool isUnidadeTempoHabilitada = true;
+
+
+        public List<UnidadeTempoEnum> UnidadesDeTempo { get; set; } = Enum.GetValues(typeof(UnidadeTempoEnum)).Cast<UnidadeTempoEnum>().ToList();
         public ConfiguraNotificacaoCadastrarViewModel(NotificacaoService notificacaoService)
         {
             _notificacaoService = notificacaoService;
             _ = ConsultarTipoEvento();
         }
+
+        private Tipo_Evento _tipoSelecionado;
+        public Tipo_Evento TipoSelecionado
+        {
+            get => _tipoSelecionado;
+            set
+            {
+                if (SetProperty(ref _tipoSelecionado, value))
+                {
+                    AplicarRegrasDeTela();
+                }
+            }
+        }
+
+        private void AplicarRegrasDeTela()
+        {
+            if (TipoSelecionado == null || string.IsNullOrWhiteSpace(TipoSelecionado.Nome)) return;
+
+            // 👉 CORREÇÃO: Voltamos a testar o Nome (igual está no XAML) e ignorando maiúsculas/minúsculas
+            if (TipoSelecionado.Nome.Trim().Equals("Promocional", StringComparison.OrdinalIgnoreCase))
+            {
+                // Regra: Ficam INVISÍVEIS
+                IsValorVisivel = false;
+                IsUnidadeTempoVisivel = false;
+
+                Valor = null;
+                UnidadeTempo = null;
+            }
+            else if (TipoSelecionado.Nome.Trim().Equals("Inatividade", StringComparison.OrdinalIgnoreCase))
+            {
+                // Regra: Ficam visíveis, mas a Unidade de tempo fica SOMENTE LEITURA
+                IsValorVisivel = true;
+                IsUnidadeTempoVisivel = true;
+
+                IsValorHabilitado = true;
+                IsUnidadeTempoHabilitada = false; // Trava o campo
+
+                UnidadeTempo = UnidadesDeTempo.FirstOrDefault(u => (int)u == 3);
+            }
+            else
+            {
+                // Regra padrão: Tudo visível e liberado
+                IsValorVisivel = true;
+                IsUnidadeTempoVisivel = true;
+                IsValorHabilitado = true;
+                IsUnidadeTempoHabilitada = true;
+            }
+        }
+
+
         [RelayCommand]
         public async Task ConsultarTipoEvento()
         {
@@ -66,19 +124,18 @@ namespace MatutosApp.ViewsModels
                 await Shell.Current.GoToAsync("///LoginView"); // Redireciona para o login
                 return;
             }
-
-            if (TipoEventoSelecionado.Codigo_Tipo <= 0 || Mensagem.IsNullOrEmpty() || Descricao.IsNullOrEmpty() || Valor <= 0)
-            {
-                await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "Ok");
-                return;
-            }
+            //if (IsValorHabilitado && (Valor == null || Valor <= 0))
+            //{
+            //    await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "Ok");
+            //    return;
+            //}
 
             try
             {
                 var notificacaoNova = new Configura_Notificacao
                 {
                     Ativo = Ativo,
-                    Codigo_Tipo = TipoEventoSelecionado.Codigo_Tipo,
+                    Codigo_Tipo = TipoSelecionado.Codigo_Tipo,
                     Mensagem = Mensagem,
                     Descricao = Descricao,
                     Valor = Valor,

@@ -2,23 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.ClientePerfilConsultarView"
-             BackgroundColor="#121212">
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
 
     <Grid>
         <ScrollView>
             <VerticalStackLayout>
 
-                <Grid BackgroundColor="#121212" Padding="20,50,20,40" RowDefinitions="Auto, Auto">
+                <!-- CABEÇALHO E PERFIL -->
+                <Grid BackgroundColor="#121212" Padding="20,50,20,30" RowDefinitions="Auto, Auto">
                     <Label Text="Configurações" TextColor="White" FontSize="26" FontAttributes="Bold"/>
 
                     <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto" Margin="0,25,0,0">
 
-                        <Frame Grid.Column="0" WidthRequest="64" HeightRequest="64" CornerRadius="32" 
-                               Padding="0" IsClippedToBounds="True" BorderColor="#333333" BackgroundColor="#2A2A2A">
+                        <!-- Foto de Perfil -->
+                        <Frame Grid.Column="0" WidthRequest="70" HeightRequest="70" CornerRadius="35" 
+                               Padding="0" IsClippedToBounds="True" BorderColor="White" BackgroundColor="#2A2A2A">
                             <Image Source="{Binding FotoPerfilSource}" Aspect="AspectFill" />
                         </Frame>
 
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0,0,0">
+                        <!-- Informações do Usuário -->
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0,0,0" Spacing="2">
                             <Label Text="Olá," TextColor="#AAAAAA" FontSize="14" />
                             <Label Text="{Binding UsuarioPerfil.Nome, TargetNullValue='Carregando...'}" 
                                    TextColor="White" FontSize="18" FontAttributes="Bold" />
@@ -26,106 +30,111 @@
                                    TextColor="#AAAAAA" FontSize="12" />
                         </VerticalStackLayout>
 
+                        <!-- Botão de Editar Foto -->
                         <Frame Grid.Column="2" WidthRequest="40" HeightRequest="40" CornerRadius="20" 
-                               BackgroundColor="#121212" BorderColor="#333333" Padding="0" 
+                               BackgroundColor="#1E1E1E" BorderColor="White" Padding="0" 
                                VerticalOptions="Center" HorizontalOptions="Center">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding AbrirImagemUsuarioCommand}" />
                             </Frame.GestureRecognizers>
-                            <!--<Label Text="✏️" FontSize="16" HorizontalOptions="Center" VerticalOptions="Center"/>-->
-                            <Image Source="lapis.png" WidthRequest="30"/>
+                            <Image Source="lapis.png" WidthRequest="20" HeightRequest="20" Aspect="AspectFit" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Frame>
                     </Grid>
                 </Grid>
 
-                <Grid ColumnDefinitions="*, *, *" Padding="20" ColumnSpacing="15" Margin="0,-20,0,0">
+                <!-- CARDS DE AÇÃO (Ajustado para 2 colunas proporcionais) -->
+                <Grid ColumnDefinitions="*, *" Padding="20,0,20,20" ColumnSpacing="15">
 
-                    <Border Grid.Column="0" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 15" 
-                            Padding="15" HeightRequest="100" >
+                    <Border Grid.Column="0" BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 15" 
+                            Padding="15" HeightRequest="110" >
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding AbrirAgendamentosCommand}" />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Image Source="tesourabranca.png" HeightRequest="40" WidthRequest="100"/>
-                            <Label Text="Cortes" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,1,0,0"/>
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                            <Image Source="tesouraclienteperfil.png" HeightRequest="35" WidthRequest="35" Aspect="AspectFit"/>
+                            <Label Text="Cortes" TextColor="White" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>
 
-                    <Border Grid.Column="1" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 15" 
-                            Padding="15" HeightRequest="100">
+                    <Border Grid.Column="1" BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 15" 
+                            Padding="15" HeightRequest="110">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ConsultarTelefoneCommand}" />
                         </Border.GestureRecognizers>
-                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Image Source="telefonebranco.png" HeightRequest="40" WidthRequest="40"/>
-                            <Label Text="Telefone" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" />
-                        </VerticalStackLayout>
-                    </Border>
-
-                    <Border Grid.Column="2" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 15" 
-                            Padding="15" HeightRequest="100">
-                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-                            <Label Text="🕒" FontSize="24" HorizontalOptions="Center" />
-                            <Label Text="Histórico" TextColor="White" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" />
+                        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                            <Image Source="telefoneclienteperfil.png" HeightRequest="35" WidthRequest="35" Aspect="AspectFit"/>
+                            <Label Text="Telefone" TextColor="White" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" />
                         </VerticalStackLayout>
                     </Border>
                 </Grid>
 
-                <VerticalStackLayout BackgroundColor="#121212" Padding="20,10,20,30" Margin="0,10,0,0">
+                <!-- LISTA DE MENU -->
+                <VerticalStackLayout BackgroundColor="#121212" Padding="20,0,20,30" Spacing="0">
 
-                    <Grid ColumnDefinitions="*, Auto" Padding="0,15">
+                    <!-- Meus Dados -->
+                    <Grid ColumnDefinitions="*, Auto" Padding="0,18">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding AbrirMeusDadosCommand}" />
                         </Grid.GestureRecognizers>
                         <Label Grid.Column="0" Text="Meus Dados" TextColor="White" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
-                    <BoxView HeightRequest="1" Color="#333333" />
+                    <BoxView HeightRequest="1" Color="#2A2A2A" />
 
-                    <Grid ColumnDefinitions="*, Auto, Auto" Padding="0,15">
+                    <!-- Notificações -->
+                    <Grid ColumnDefinitions="*, Auto, Auto" Padding="0,18">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirNotificacaoCommand}"/>
+                        </Grid.GestureRecognizers>
                         <Label Grid.Column="0" Text="Notificações" TextColor="White" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
-                        <Frame Grid.Column="1" BackgroundColor="#E0E0E0" CornerRadius="10" Padding="6,2" 
+
+                        <Frame Grid.Column="1" BackgroundColor="#E0E0E0" CornerRadius="12" Padding="8,2" 
                                Margin="0,0,10,0" BorderColor="Transparent" HasShadow="False" VerticalOptions="Center">
-                            <Label Text="3" TextColor="#121212" FontSize="10" FontAttributes="Bold" />
+                            <Label Text="3" TextColor="#121212" FontSize="12" FontAttributes="Bold" />
                         </Frame>
                         <Label Grid.Column="2" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
-                    <BoxView HeightRequest="1" Color="#333333" />
+                    <BoxView HeightRequest="1" Color="#2A2A2A" />
 
-                    <Grid ColumnDefinitions="*, Auto, Auto" Padding="0,15">
+                    <!-- Status da Conta -->
+                    <Grid ColumnDefinitions="*, Auto, Auto" Padding="0,18">
                         <Label Grid.Column="0" Text="Status da Conta" TextColor="White" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text="{Binding UsuarioPerfil.Ativo, StringFormat='Ativo: {0}'}" 
-                               TextColor="#E0E0E0" FontSize="15" VerticalOptions="Center" Margin="0,0,10,0"/>
+                               TextColor="#E0E0E0" FontSize="14" VerticalOptions="Center" Margin="0,0,10,0"/>
                         <Label Grid.Column="2" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
-                    <BoxView HeightRequest="1" Color="#333333" />
+                    <BoxView HeightRequest="1" Color="#2A2A2A" />
 
-                    <Grid ColumnDefinitions="*, Auto" Padding="0,15">
+                    <!-- Alterar Senha -->
+                    <Grid ColumnDefinitions="*, Auto" Padding="0,18">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding AbrirPopupSenhaCommand}" />
                         </Grid.GestureRecognizers>
                         <Label Grid.Column="0" Text="Alterar Senha" TextColor="White" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
-                    <BoxView HeightRequest="1" Color="#333333" />
+                    <BoxView HeightRequest="1" Color="#2A2A2A" />
 
-                    <Grid ColumnDefinitions="*, Auto" Padding="0,15">
+                    <!-- Suporte -->
+                    <Grid ColumnDefinitions="*, Auto" Padding="0,18">
                         <Label Grid.Column="0" Text="Suporte" TextColor="White" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
-                    <BoxView HeightRequest="1" Color="#333333" />
+                    <BoxView HeightRequest="1" Color="#2A2A2A" />
 
-                    <Grid ColumnDefinitions="*" Padding="0,20,0,0" Margin="0,15,0,0">
+                    <!-- Sair da Conta (Destacado em vermelho) -->
+                    <Grid ColumnDefinitions="*" Padding="0,25,0,0" Margin="0,10,0,0">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding LogOutCommand}"/>
                         </Grid.GestureRecognizers>
-                        <Label Text="Sair da Conta" TextColor="#FFFFFF" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label Text="Sair da Conta" TextColor="#E63946" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
 
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
 
+        <!-- POPUP ALTERAR SENHA -->
         <Grid BackgroundColor="#99000000" 
               IsVisible="{Binding IsPopupSenhaVisivel}" 
               ZIndex="100">
@@ -137,29 +146,30 @@
             <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
                     VerticalOptions="Center" 
                     HorizontalOptions="Center" 
-                    WidthRequest="320" 
-                    Padding="20" 
-                    StrokeShape="RoundRectangle 15">
+                    WidthRequest="330" 
+                    Padding="25" 
+                    StrokeShape="RoundRectangle 20">
 
                 <Border.GestureRecognizers>
+                    <!-- Impede que o toque no popup feche-o -->
                     <TapGestureRecognizer />
                 </Border.GestureRecognizers>
 
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="Alterar Senha" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
+                <VerticalStackLayout Spacing="20">
+                    <Label Text="Alterar Senha" FontSize="20" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" />
 
-                    <VerticalStackLayout Spacing="10">
+                    <VerticalStackLayout Spacing="12">
                         <Entry Placeholder="Senha Atual" IsPassword="True" Text="{Binding SenhaAtual}" 
-                               BackgroundColor="#2A2A2A" TextColor="White" PlaceholderColor="#888888" />
+                               BackgroundColor="#2A2A2A" TextColor="White" PlaceholderColor="#888888" HeightRequest="45" />
                         <Entry Placeholder="Nova Senha" IsPassword="True" Text="{Binding NovaSenha}" 
-                               BackgroundColor="#2A2A2A" TextColor="White" PlaceholderColor="#888888" />
+                               BackgroundColor="#2A2A2A" TextColor="White" PlaceholderColor="#888888" HeightRequest="45" />
                         <Entry Placeholder="Confirmar Nova Senha" IsPassword="True" Text="{Binding ConfirmarNovaSenha}" 
-                               BackgroundColor="#2A2A2A" TextColor="White" PlaceholderColor="#888888" />
+                               BackgroundColor="#2A2A2A" TextColor="White" PlaceholderColor="#888888" HeightRequest="45" />
                     </VerticalStackLayout>
 
-                    <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,10,0,0">
-                        <Button Grid.Column="0" Text="Cancelar" BackgroundColor="Transparent" BorderColor="#333333" BorderWidth="1" TextColor="#AAAAAA" Command="{Binding FecharPopupSenhaCommand}" />
-                        <Button Grid.Column="1" Text="Salvar" BackgroundColor="#E0E0E0" TextColor="#121212" FontAttributes="Bold" CornerRadius="8" Command="{Binding SalvarNovaSenhaCommand}" />
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15" Margin="0,15,0,0">
+                        <Button Grid.Column="0" Text="Cancelar" BackgroundColor="Transparent" BorderColor="#555555" BorderWidth="1" TextColor="#AAAAAA" HeightRequest="45" Command="{Binding FecharPopupSenhaCommand}" />
+                        <Button Grid.Column="1" Text="Salvar" BackgroundColor="#E0E0E0" TextColor="#121212" FontAttributes="Bold" CornerRadius="8" HeightRequest="45" Command="{Binding SalvarNovaSenhaCommand}" />
                     </Grid>
 
                 </VerticalStackLayout>

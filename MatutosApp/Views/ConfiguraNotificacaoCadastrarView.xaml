@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.ConfiguraNotificacaoCadastrarView"
-             BackgroundColor="#121212">
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
 
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="30">
@@ -29,15 +30,16 @@
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
 
                 <VerticalStackLayout Spacing="8" Grid.Column="0">
-                    <Label Text="Valor (Tempo)" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
-                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
-                        <Entry Placeholder="Ex: 20"
-                               Text="{Binding Valor}"
-                               Keyboard="Numeric"
-                               TextColor="#FFFFFF"
-                               PlaceholderColor="#888888"
-                               BackgroundColor="Transparent"
-                               VerticalOptions="Center"/>
+                    <Label Text="Tipo de Evento" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="10,0">
+                        <Picker 
+                            ItemsSource="{Binding TiposEventos}"
+                            ItemDisplayBinding="{Binding Nome}"
+                            SelectedItem="{Binding TipoSelecionado}" 
+                            TextColor="#FFFFFF"
+                            TitleColor="#888888"
+                            BackgroundColor="Transparent"
+                            VerticalOptions="Center"/>
                     </Border>
                 </VerticalStackLayout>
 
@@ -56,32 +58,36 @@
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
 
-                <VerticalStackLayout Spacing="8" Grid.Column="0">
-                    <Label Text="Tipo de Evento" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
-                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="10,0">
-                        <Picker 
-                                ItemsSource="{Binding TiposEventos}"
-                                ItemDisplayBinding="{Binding Nome}"
-                                SelectedItem="{Binding TipoEventoSelecionado}"
-                                TextColor="#FFFFFF"
-                                TitleColor="#888888"
-                                BackgroundColor="Transparent"
-                                VerticalOptions="Center"/>
+                <!-- 👉 ADICIONADO: IsVisible no layout do Valor -->
+                <VerticalStackLayout Spacing="8" Grid.Column="0" IsVisible="{Binding IsValorVisivel}">
+                    <Label Text="Valor (Tempo)" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                    <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                        <Entry Placeholder="Ex: 20"
+                   Text="{Binding Valor}"
+                   IsEnabled="{Binding IsValorHabilitado}"
+                   Keyboard="Numeric"
+                   TextColor="#FFFFFF"
+                   PlaceholderColor="#888888"
+                   BackgroundColor="Transparent"
+                   VerticalOptions="Center"/>
                     </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout Spacing="8" Grid.Column="1">
+                <!-- 👉 ADICIONADO: IsVisible no layout da Unidade de Tempo -->
+                <VerticalStackLayout Spacing="8" Grid.Column="1" IsVisible="{Binding IsUnidadeTempoVisivel}">
                     <Label Text="Unidade Tempo" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
                     <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="10,0">
                         <Picker 
-                                ItemsSource="{Binding UnidadesDeTempo}"
-                                SelectedItem="{Binding UnidadeTempo}"
-                                TextColor="#FFFFFF"
-                                TitleColor="#888888"
-                                BackgroundColor="Transparent"
-                                VerticalOptions="Center"/>
+                    ItemsSource="{Binding UnidadesDeTempo}"
+                    SelectedItem="{Binding UnidadeTempo}"
+                    IsEnabled="{Binding IsUnidadeTempoHabilitada}"
+                    TextColor="#FFFFFF"
+                    TitleColor="#888888"
+                    BackgroundColor="Transparent"
+                    VerticalOptions="Center"/>
                     </Border>
                 </VerticalStackLayout>
+
             </Grid>
 
             <VerticalStackLayout Spacing="8">

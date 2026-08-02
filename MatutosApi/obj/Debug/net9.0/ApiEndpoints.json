@@ -132,6 +132,16 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "ConsultarNotificacao",
+    "RelativePath": "notificacao/notificacao-consultar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
     "Method": "CadastrarNotificacao",
     "RelativePath": "notificacao/regra-cadastrar",
     "HttpMethod": "POST",
@@ -396,6 +406,32 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "ConsultarListaUsuario",
+    "RelativePath": "usuario/consultar-lista",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuarioTipo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "nome",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ativo",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

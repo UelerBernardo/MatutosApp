@@ -9,11 +9,12 @@
     <ScrollView>
         <VerticalStackLayout Padding="20" Spacing="10">
 
+            <!-- Cabeçalho (Engrenagem e Logo) -->
             <Grid ColumnDefinitions="60, *, 60" Margin="0, 20, 0, 10">
                 <ImageButton Grid.Column="0"
-                             Source="engrenagembraca.png"
-                             WidthRequest="80"
-                             HeightRequest="80"
+                             Source="configuracaobarbearia.png"
+                             WidthRequest="5"
+                             HeightRequest="5"
                              VerticalOptions="Start"
                              HorizontalOptions="Start"
                              BackgroundColor="Transparent"
@@ -21,7 +22,7 @@
 
                 <VerticalStackLayout Grid.Column="1" Spacing="15" HorizontalOptions="Center">
                     <Border StrokeShape="RoundRectangle 75" 
-                            Stroke="#333333" 
+                            Stroke="#121212" 
                             StrokeThickness="2" 
                             WidthRequest="200" 
                             HeightRequest="200" 
@@ -43,125 +44,114 @@
                    HorizontalOptions="Center" 
                    Margin="0, 0, 0, 10" />
 
-            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="15">
+            <!-- Grid de Botões do Menu -->
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="15">
 
+                <!-- Botão: Agendar -->
                 <Border Grid.Row="0" Grid.Column="0" 
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirAgendamentoCommand}"/>
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
-                        <Image Source="tesoura.png" WidthRequest="75" HeightRequest="60" HorizontalOptions="Center" />
-                        <Label Text="Agendar" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="agendarbarbearia.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Agendar" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Botão: Agendamentos -->
                 <Border Grid.Row="0" Grid.Column="1"
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding MeusAgendamentosCommand}"/>
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
-                        <Image Source="meusagendamento.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center" />
-                        <Label Text="Meus Agendamentos" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" TextType="Html" HorizontalTextAlignment="Center"/>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="agendamentosbranco.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Agendamentos" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Botão: Serviços -->
                 <Border Grid.Row="1" Grid.Column="0" 
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirServicoCommand}"/>
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
-                        <Image Source="servicos.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center" />
-                        <Label Text="Serviços" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="servicosbarbearia.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Serviços" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Botão: Localização -->
                 <Border Grid.Row="1" Grid.Column="1" 
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirLocalizacaoCommand}"/>
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" Spacing="15">
-                        <Image Source="localizacao.png" WidthRequest="80" HeightRequest="80" HorizontalOptions="Center" />
-                        <Label Text="Localização" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="14" HorizontalOptions="Center" />
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="localizacaobranca.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Localização" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- Botão: Usuários -->
                 <Border Grid.Row="2" Grid.Column="0" 
                         StrokeShape="RoundRectangle 20" 
-                        BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
+                        BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140"
                         IsVisible="{Binding PodeVisualizar}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirUsuarioCadastroCommand}"/>
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                        <Image Source="usuario.png" WidthRequest="90" HeightRequest="90" VerticalOptions="Center" />
-                        <Label Text="Usuários do Sistema" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="1" 
-                     StrokeShape="RoundRectangle 20" 
-                     BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
-                     HeightRequest="140"
-                     IsVisible="{Binding PodeVisualizar}">  
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding AbrirBlacklistCommand}"/>
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                        <Image Source="agendabloqueada.png" WidthRequest="90" HeightRequest="90" VerticalOptions="Center" />
-                        <Label Text="Bloqueio" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="usuariosistema.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Usuários" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
 
-                <Border Grid.Row="3" Grid.Column="0" 
-                         StrokeShape="RoundRectangle 20" 
-                         BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" 
-                         HeightRequest="140"
-                         IsVisible="{Binding PodeVisualizar}">
+                <!-- Botão: Bloqueio -->
+                <Border Grid.Row="2" Grid.Column="1" 
+                     StrokeShape="RoundRectangle 20" 
+                     BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
+                     HeightRequest="140"
+                     IsVisible="{Binding PodeVisualizar}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding AbrirBlacklistCommand}"/>
                     </Border.GestureRecognizers>
-                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                        <Image Source="agendabloqueada.png" WidthRequest="90" HeightRequest="90" VerticalOptions="Center" />
-                        <Label Text="Bloqueio" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" VerticalOptions="Center" />
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="bloqueiovermelho.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Bloqueio" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Botão: Notificação -->
+                <Border Grid.Row="3" Grid.Column="0" 
+                         StrokeShape="RoundRectangle 20" 
+                         BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
+                         HeightRequest="140"
+                         IsVisible="{Binding PodeVisualizar}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirNotificacoesCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <Image Source="notificacaobranco.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Notificação" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </Border>
 
             </Grid>
-
-            <Button Text="Sair" 
-                    BackgroundColor="#E0E0E0" 
-                    TextColor="#121212" 
-                    FontAttributes="Bold" 
-                    CornerRadius="25" 
-                    HeightRequest="55" 
-                    WidthRequest="200" 
-                    HorizontalOptions="Center" 
-                    Margin="0, 30, 0, 30"
-                    Command="{Binding LogOutCommand}" />
-
-            <Button Text="Notificações" 
-                BackgroundColor="#E0E0E0" 
-                TextColor="#121212" 
-                FontAttributes="Bold" 
-                CornerRadius="25" 
-                HeightRequest="55" 
-                WidthRequest="200" 
-                HorizontalOptions="Center" 
-                Margin="0, 30, 0, 30"
-                Command="{Binding AbrirNotificacoesCommand}" />    
-
+            <VerticalStackLayout>
+                <ImageButton Source="sair.png" WidthRequest="70" HeightRequest="70" BackgroundColor="#121212" Command="{Binding LogOutCommand}" Margin="0,50,0,0"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

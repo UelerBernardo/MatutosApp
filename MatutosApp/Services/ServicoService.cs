@@ -21,9 +21,6 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
 
         }
-
-       
-
         public async Task<(bool Sucesso, string Mensagem)> CadastrarImagemServico(string token, int codigoServico, string imagemBase64)
         {
             try

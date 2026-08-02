@@ -74,3 +74,5 @@ Publish/
 node_modules/
 dist/
 build/
+
+**/firebase-config.json
