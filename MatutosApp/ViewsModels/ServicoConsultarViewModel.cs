@@ -17,7 +17,7 @@ namespace MatutosApp.ViewsModels
     public partial class ServicoConsultarViewModel : BaseViewModel
     {
         private readonly ServicoService _servicoService;
-
+         
         [ObservableProperty] private int servicoAlteracao;
 
         [ObservableProperty] private bool podeVisualizar;

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace MatutosApp.ViewsModels
 {
+    [QueryProperty(nameof(RegraSelecionada), "RegraSelecionada")]
     public partial class ConfiguraNotificacaoCadastrarViewModel : BaseViewModel
     {
         private readonly NotificacaoService _notificacaoService;
@@ -29,6 +30,7 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] private bool isValorHabilitado = true;
         [ObservableProperty] private bool isUnidadeTempoHabilitada = true;
 
+        [ObservableProperty] private Configura_Notificacao? regraSelecionada;
 
         public List<UnidadeTempoEnum> UnidadesDeTempo { get; set; } = Enum.GetValues(typeof(UnidadeTempoEnum)).Cast<UnidadeTempoEnum>().ToList();
         public ConfiguraNotificacaoCadastrarViewModel(NotificacaoService notificacaoService)
@@ -48,6 +50,17 @@ namespace MatutosApp.ViewsModels
                     AplicarRegrasDeTela();
                 }
             }
+        }
+
+
+        private void ModoCadastro()
+        {
+            Ativo = true;
+            Descricao = string.Empty;
+            Mensagem = string.Empty;
+            Valor = 0;
+            UnidadeTempo = UnidadeTempoEnum.Minutos;
+            TipoSelecionado
         }
 
         private void AplicarRegrasDeTela()
@@ -114,6 +127,7 @@ namespace MatutosApp.ViewsModels
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao consultar tipos: {ex.Message}", "OK");
             }
         }
+
         [RelayCommand]
         public async Task CadastrarConfiguracaoNotificacao()
         {
@@ -124,11 +138,6 @@ namespace MatutosApp.ViewsModels
                 await Shell.Current.GoToAsync("///LoginView"); // Redireciona para o login
                 return;
             }
-            //if (IsValorHabilitado && (Valor == null || Valor <= 0))
-            //{
-            //    await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha todos os campos.", "Ok");
-            //    return;
-            //}
 
             try
             {
@@ -160,6 +169,44 @@ namespace MatutosApp.ViewsModels
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível cadastrar as regras de notificação. Erro: {ex.Message}", "OK");
             }
 
+        }
+
+        [RelayCommand]
+        public async Task AlterarNotificacaoRegra()
+        {
+            try
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+
+                var notificacaoAlterada = new Configura_Notificacao
+                {
+                    Codigo_Notificacao = regraSelecionada.Codigo_Notificacao,
+                    Ativo = Ativo,
+                    Codigo_Tipo = TipoSelecionado.Codigo_Tipo,
+                    Mensagem = Mensagem,
+                    Descricao = Descricao,
+                    Valor = Valor,
+                    UnidadeTempo = UnidadeTempo
+                };
+
+                var resultado = await _notificacaoService.AlterarRegraNotificacao(token, notificacaoAlterada);
+
+                if(resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                    await Shell.Current.GoToAsync("..");
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Falha", resultado.Mensagem, "Ok");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível alterar as regras da notificação. Erro: {ex.Message}", "OK");
+            }
         }
     }
 }

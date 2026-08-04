@@ -18,6 +18,8 @@ namespace MatutosApp.ViewsModels
 
         [ObservableProperty] ObservableCollection<Configura_Notificacao> listaRegraNotificacao = new();
 
+        [ObservableProperty] private Configura_Notificacao regraClicada;
+
         public ConfiguraNotificacaoConsultarViewModel(NotificacaoService notificacaoService)
         {
             _notificacaoService = notificacaoService;
@@ -56,6 +58,30 @@ namespace MatutosApp.ViewsModels
             {
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível carregar as regras de notificações. Erro: {ex.Message}", "OK");
             }
+        }
+
+        [RelayCommand]
+        public async Task AbrirAlterarRegra(Configura_Notificacao regra)
+        {
+            if (regra == null) return;
+
+            var regraAlterar = new Configura_Notificacao
+            {
+                Codigo_Notificacao = regra.Codigo_Notificacao,
+                Ativo = regra.Ativo,
+                Descricao = regra.Descricao,
+                Mensagem = regra.Mensagem,
+                Codigo_Tipo = regra.Codigo_Tipo,
+                Valor = regra.Valor,
+                UnidadeTempo = regra.UnidadeTempo
+            };
+
+            var parametro = new Dictionary<string, object>
+            {
+                {"RegraSelecionada", regraAlterar }
+            };
+
+            await Shell.Current.GoToAsync(nameof(ConfiguraNotificacaoCadastrarView), parametro );
         }
     }
 }

@@ -91,6 +91,36 @@ namespace MatutosApi.Controllers
             }
         }
 
+        [HttpPut ("regra-alterar")]
+        [Authorize]
+        public async Task<IActionResult> AlterarRegraNotificacao([FromBody] Configura_Notificacao notificacaoAlteracao)
+        {
+            try
+            {
+                var regraNotificacaoAlterada = await _dbContext.Configura_Notificacoes
+                    .Where(rn => rn.Codigo_Notificacao == notificacaoAlteracao.Codigo_Notificacao)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(n => n.Ativo, notificacaoAlteracao.Ativo)
+                        .SetProperty(n => n.Descricao, notificacaoAlteracao.Descricao)
+                        .SetProperty(n => n.UnidadeTempo, notificacaoAlteracao.UnidadeTempo)
+                        .SetProperty(n => n.Mensagem, notificacaoAlteracao.Mensagem)
+                        .SetProperty(n => n.Codigo_Tipo, notificacaoAlteracao.Codigo_Tipo));
+
+                if(regraNotificacaoAlterada <= 0)
+                {
+                    return NotFound( new {Mensagem = "Regra de notifiacação não encontrada."});
+                }
+
+                return Ok("Regra alterada com sucesso!");
+            }
+            catch(Exception ex)
+            {
+                string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });
+            }
+        }
+
+
         [HttpPost("regra-cadastrar")]
         [Authorize]
         public async Task<IActionResult> CadastrarNotificacao([FromBody] Configura_Notificacao notificacaoNova)
