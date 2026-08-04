@@ -49,6 +49,7 @@ namespace MatutosApp.Services
             }
         }
 
+     
         public async Task<(bool Sucesso, List<Configura_Notificacao>? Dados)> ConsultarRegraNotificacao(string token)
         {
             try
@@ -106,6 +107,38 @@ namespace MatutosApp.Services
             {
                 Debug.WriteLine($"Exceção ao consultar tipo de evento: {ex.Message}");
                 return (false, null);
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem)> AlterarRegraNotificacao(string token, Configura_Notificacao configura_Notificacao)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+
+                var resultado = await _httpClient.PutAsJsonAsync("notificacao/regra-alterar", configura_Notificacao);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var mensagem = await resultado.Content.ReadFromJsonAsync<ApiResposta>(options);
+                if (resultado.IsSuccessStatusCode)
+                {
+                    string mensagemSucesso = mensagem?.Mensagem;
+
+                    return (true, mensagemSucesso);
+                }
+                else
+                {
+                    string mensagemFalha = mensagem?.Mensagem;
+                    return (false, mensagemFalha);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log ajustado para a ação correta
+                System.Diagnostics.Debug.WriteLine($"Exceção ao alterar notificação: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor.");
             }
         }
 

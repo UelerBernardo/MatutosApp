@@ -122,12 +122,24 @@ namespace MatutosApp.ViewsModels
                 });
             }
 
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realmente finalizar o agendamento? Após a confimação não será possível alterar as informações.", "Sim", "Não");
+            if(!confirmar)
+            {
+                return;
+            }
+
             var resultado = await _agendamentoService.AgendamentoServicoCadastrar(novosAgendamentosServicos, token);
 
             if (resultado.Sucesso)
             {
+                LiberarAgendamento();
                 await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento Cadastrado com sucesso.", "OK");
-                await Shell.Current.GoToAsync($"{nameof(AgendamentoDetalhesView)}?Agendamento={resultado.IdAgendamento}");
+
+                var parametros = new Dictionary<string, object>
+                {
+                    {"CadastroAgendamento", true }
+                };
+                await Shell.Current.GoToAsync($"{nameof(AgendamentoDetalhesView)}?Agendamento={resultado.IdAgendamento}", parametros);
             }
             else
             {
@@ -156,6 +168,30 @@ namespace MatutosApp.ViewsModels
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
             }
+        }
+
+        public async Task LiberarAgendamento()
+        {
+  
+            string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+            if (Agendamento <= 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
+                return;
+            }
+
+            var resultado = await _agendamentoService.AgendamentoAlterarSituacao(Agendamento, token, AgendamentoSituacao.Liberado);
+
+            if (resultado.Sucesso)
+            {
+
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+            }
+            
         }
 
 

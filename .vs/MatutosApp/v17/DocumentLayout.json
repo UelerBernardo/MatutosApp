@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosapp\\viewsmodels\\configuranotificacaocadastrarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\configuranotificacaocadastrarviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|c:\\users\\ueler\\desktop\\estagio\\matutosapp\\matutosapp\\viewsmodels\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C47BC679-E1EC-47E9-9CA5-BF9304B36421}|MatutosApp\\MatutosApp.csproj|solutionrelative:matutosapp\\viewsmodels\\usuarioviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +18,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 238,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsuarioViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\UsuarioViewModel.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-03T23:57:23.761Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ConfiguraNotificacaoCadastrarViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\ConfiguraNotificacaoCadastrarViewModel.cs",
+              "RelativeDocumentMoniker": "MatutosApp\\ViewsModels\\ConfiguraNotificacaoCadastrarViewModel.cs",
+              "ToolTip": "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosApp\\ViewsModels\\ConfiguraNotificacaoCadastrarViewModel.cs",
+              "RelativeToolTip": "MatutosApp\\ViewsModels\\ConfiguraNotificacaoCadastrarViewModel.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAYwD4AAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-03T23:50:09.054Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"

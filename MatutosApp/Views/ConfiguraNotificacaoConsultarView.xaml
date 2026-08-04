@@ -22,7 +22,8 @@
         <!-- Lista (Fica no meio e empurra o resto para baixo: Row 1) -->
         <CollectionView Grid.Row="1" 
                         ItemsSource="{Binding ListaRegraNotificacao}"
-                        SelectionMode="None">
+                        SelectionMode="None"
+                        SelectedItem="{Binding RegraClicada}">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>

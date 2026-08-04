@@ -9,11 +9,19 @@ using System.Threading.Tasks;
 namespace MatutosApp.ViewsModels
 {
     [QueryProperty(nameof(AgendamentoID), "Agendamento")]
+    [QueryProperty(nameof(CadastroAgendamento), "CadastroAgendamento")]
     public partial class AgendamentoDetalhesViewModel : BaseViewModel
     {
         private readonly AgendamentoService _agendamentoService;
 
         [ObservableProperty] private int agendamentoID;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
+        private bool cadastroAgendamento;
+
+        public string NomeBotaoAcao => CadastroAgendamento ? "Voltar para Início" : "Voltar";
+
 
         [ObservableProperty]
         Agendamento dadosDoAgendamento = new Agendamento
@@ -107,42 +115,54 @@ namespace MatutosApp.ViewsModels
                 }
             }
         }
-
         [RelayCommand]
-        public async Task LiberarAgendamento()
+        public async Task Voltar()
         {
-            if (DadosDoAgendamento != null && DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Aberto)
+            if(CadastroAgendamento == true)
             {
-                await Application.Current.MainPage.DisplayAlert("Aviso", "Somente é possível liberar registros na situção 'Aberto'.", "Ok");
-                return; 
+                await Shell.Current.GoToAsync("///PrincipalView");
             }
-            bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realmente liberar o agendamento?", "Sim", "Não");
-            if (!confirmar)
+            else
             {
-                return;
-            }
-            else { 
-                string token = await SecureStorage.Default.GetAsync("jwt_token");
-
-                if (AgendamentoID <= 0)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
-                    return;
-                }
-
-                var resultado = await _agendamentoService.AgendamentoAlterarSituacao(AgendamentoID, token, AgendamentoSituacao.Liberado);
-
-                if (resultado.Sucesso)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento liberado.", "Ok");
-                    //await Shell.Current.GoToAsync(nameof(PrincipalView));
-                    await Shell.Current.GoToAsync("///PrincipalView");
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
-                }
+                await Shell.Current.GoToAsync("..");
             }
         }
+
+        //[RelayCommand]
+        //public async Task LiberarAgendamento()
+        //{
+        //    if (DadosDoAgendamento != null && DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Aberto)
+        //    {
+        //        await Application.Current.MainPage.DisplayAlert("Aviso", "Somente é possível liberar registros na situção 'Aberto'.", "Ok");
+        //        return; 
+        //    }
+        //    bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realmente liberar o agendamento?", "Sim", "Não");
+        //    if (!confirmar)
+        //    {
+        //        return;
+        //    }
+        //    else { 
+        //        string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+        //        if (AgendamentoID <= 0)
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
+        //            return;
+        //        }
+
+        //        var resultado = await _agendamentoService.AgendamentoAlterarSituacao(AgendamentoID, token, AgendamentoSituacao.Liberado);
+
+        //        if (resultado.Sucesso)
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento liberado.", "Ok");
+        //            //await Shell.Current.GoToAsync(nameof(PrincipalView));
+        //            await Shell.Current.GoToAsync("///PrincipalView");
+        //        }
+        //        else
+        //        {
+        //            await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+        //        }
+        //    }
+        //}
     }
 }
