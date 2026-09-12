@@ -31,6 +31,14 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Message = "Um serviço não pode ser cadastrado com mais de 3 imagens." });
                 }
 
+                bool servicoMesmoNome = await _dbContext.Servicos.Where(s => s.Descricao == servico.Descricao).AnyAsync();
+
+                if (servicoMesmoNome)
+                {
+                    return BadRequest(new { Mensagem = "Já existe um serviço cadastrado com esse nome." });
+                }
+
+
                 var servicoNovo = new Servico
                 {
                     Descricao = servico.Descricao,
@@ -90,6 +98,14 @@ namespace MatutosApi.Controllers
 
                     _dbContext.Servico_Imagens.AddRange(novasImagens);
                     await _dbContext.SaveChangesAsync(); 
+                }
+
+
+                bool servicoMesmoNome = await _dbContext.Servicos.Where(s => s.Descricao == servico.Descricao && s.Codigo_Servico != servico.Codigo_Servico).AnyAsync();
+
+                if (servicoMesmoNome)
+                {
+                    return BadRequest(new { Mensagem = "Já existe um serviço cadastrado com esse nome." });
                 }
 
                 var servicoAlterado = await _dbContext.Servicos

@@ -5,6 +5,34 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+
+        <!-- ESTILO: Tons de Cinza (Ação Principal) -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HeightRequest" Value="50" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="Auto, *, Auto">
 
         <Grid Grid.Row="0" BackgroundColor="#121212" Padding="20,50,20,30">
@@ -24,7 +52,7 @@
                        HorizontalTextAlignment="Center"
                        FontAttributes="Bold" 
                        VerticalOptions="Center" 
-                       Margin="0,0,0,15"/>
+                       Margin="0,0,25,15"/>
             </Grid>
         </Grid>
 
@@ -57,7 +85,7 @@
 
                             <Frame Grid.Column="0" BackgroundColor="#2A2A2A" CornerRadius="25" 
                                    WidthRequest="50" HeightRequest="50" Padding="0" HasShadow="False" BorderColor="Transparent" VerticalOptions="Center">
-                             
+
                                 <Image Source="telefonebranco.png" WidthRequest="40"/>
                             </Frame>
 
@@ -109,12 +137,9 @@
         <VerticalStackLayout Grid.Row="2" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
             <Grid Padding="20,10,20,15" BackgroundColor="#121212">
+                <!-- Botão com o estilo padrão cinza aplicado -->
                 <Button Text="Adicionar Novo Telefone" 
-                        BackgroundColor="#E0E0E0" 
-                        TextColor="#121212" 
-                        CornerRadius="12" 
-                        FontAttributes="Bold" 
-                        FontSize="16"
+                        Style="{StaticResource BotaoCinzaStyle}"
                         Command="{Binding AbrirAdicionarTelefoneCommand}"/>
             </Grid>
         </VerticalStackLayout>

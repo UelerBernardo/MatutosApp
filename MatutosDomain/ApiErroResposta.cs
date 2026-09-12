@@ -8,6 +8,6 @@ namespace MatutosDomain
 {
     public class ApiErroResposta
     {
-        public string Mensagem { get; set; } 
+        public string? Mensagem { get; set; } 
     }
 }

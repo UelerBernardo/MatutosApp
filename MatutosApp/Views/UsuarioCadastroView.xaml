@@ -5,9 +5,64 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+
+        <!-- ESTILO 1: Escuro com destaque em Vermelho/Vinho -->
+        <Style x:Key="BotaoVermelhoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#a15650" />
+            <Setter Property="BorderColor" Value="#a15650" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HeightRequest" Value="55" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#a15650" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- ESTILO 2: Tons de Cinza -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HeightRequest" Value="55" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="20,40,20,40">
 
+            <!-- CABEÇALHO -->
             <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
                 <Label Text="Barbearia Matutos"
                        FontSize="28"
@@ -20,6 +75,7 @@
                        HorizontalOptions="Center" />
             </VerticalStackLayout>
 
+            <!-- CARTÃO DO FORMULÁRIO -->
             <Border BackgroundColor="#1E1E1E" 
                     Stroke="#333333" 
                     StrokeThickness="1" 
@@ -28,24 +84,47 @@
 
                 <VerticalStackLayout Spacing="20">
 
+                    <!-- NOME COMPLETO -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Nome Completo" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
                         <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
-                            <Entry Placeholder="Ex: Uéler Silva"
+                            <Entry Placeholder="Ex: Luiz Felipe"
                                    Text="{Binding Nome}" 
                                    TextColor="#FFFFFF"
                                    PlaceholderColor="#888888"
+                                   MaxLength="250"
                                    BackgroundColor="Transparent"
                                    ClearButtonVisibility="WhileEditing"
                                    VerticalOptions="Center"/>
                         </Border>
                     </VerticalStackLayout>
 
+                    <!-- E-MAIL -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="E-mail" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
                         <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
                             <Entry Placeholder="seuemail@exemplo.com"
                                    Text="{Binding Email}"
+                                   Keyboard="Email"
+                                   TextColor="#FFFFFF"
+                                   MaxLength="250"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   ClearButtonVisibility="WhileEditing"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                        <Label Text="Formato de e-mail inválido" 
+                               TextColor="Red" 
+                               FontSize="12"
+                               IsVisible="{Binding EmailInvalido}" />
+                    </VerticalStackLayout>
+
+                    <!-- CONFIRMAR E-MAIL (Bloco Ocultável) -->
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding PodeEditarSenha}">
+                        <Label Text="Confirmar E-mail" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="Confirme seu e-mail"
+                                   Text="{Binding EmailConfirmacao}"
                                    Keyboard="Email"
                                    TextColor="#FFFFFF"
                                    PlaceholderColor="#888888"
@@ -55,53 +134,109 @@
                         </Border>
                     </VerticalStackLayout>
 
+                    <!-- SENHA -->
                     <VerticalStackLayout Spacing="8">
                         <Label Text="Senha" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+
                         <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
                             <Entry Placeholder="Digite sua senha"
                                    Text="{Binding Senha}"
                                    IsPassword="True"
                                    TextColor="#FFFFFF"
+                                   MaxLength="250"
                                    PlaceholderColor="#888888"
                                    BackgroundColor="Transparent"
                                    IsEnabled="{Binding PodeEditarSenha}"
                                    VerticalOptions="Center"/>
                         </Border>
+
+                        <!-- CHECKLIST DE SENHA FORTE (Só aparece se o usuário puder editar a senha) -->
+                        <VerticalStackLayout Spacing="2" Margin="5,0,0,0" IsVisible="{Binding PodeEditarSenha}">
+                            <Label Text="Sua senha precisa ter:" FontSize="12" FontAttributes="Bold" TextColor="#888888" Margin="0,0,0,4" />
+
+                            <!-- Regra 1: Tamanho -->
+                            <Label Text="• Mínimo de 8 caracteres" FontSize="12" TextColor="#a15650">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding TemTamanhoMinimo}" Value="True">
+                                        <Setter Property="TextColor" Value="#4CAF50" />
+                                        <Setter Property="Text" Value="✓ Mínimo de 8 caracteres" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <!-- Regra 2: Maiúscula -->
+                            <Label Text="• Pelo menos 1 letra maiúscula" FontSize="12" TextColor="#a15650">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding TemMaiuscula}" Value="True">
+                                        <Setter Property="TextColor" Value="#4CAF50" />
+                                        <Setter Property="Text" Value="✓ Pelo menos 1 letra maiúscula" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <!-- Regra 3: Número -->
+                            <Label Text="• Pelo menos 1 número" FontSize="12" TextColor="#a15650">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding TemNumero}" Value="True">
+                                        <Setter Property="TextColor" Value="#4CAF50" />
+                                        <Setter Property="Text" Value="✓ Pelo menos 1 número" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <!-- Regra 4: Especial -->
+                            <Label Text="• Pelo menos 1 caractere especial (@, !, #, etc)" FontSize="12" TextColor="#a15650">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding TemEspecial}" Value="True">
+                                        <Setter Property="TextColor" Value="#4CAF50" />
+                                        <Setter Property="Text" Value="✓ Caractere especial incluído" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </VerticalStackLayout>
                     </VerticalStackLayout>
+
+                    <!-- CONFIRMAR SENHA (Bloco Ocultável) -->
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding PodeEditarSenha}">
+                        <Label Text="Confirmar Senha" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Entry Placeholder="Confirme sua senha"
+                                   Text="{Binding SenhaConfirmacao}"
+                                   IsPassword="True"
+                                   TextColor="#FFFFFF"
+                                   PlaceholderColor="#888888"
+                                   BackgroundColor="Transparent"
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- TIPO DE USUÁRIO (Ocultável) -->
+                    <VerticalStackLayout Spacing="8" IsVisible="{Binding PodeEditarTipoUsuario}">
+                        <Label Text="Tipo de Usuário" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
+                            <Picker 
+                                    TitleColor="#888888"
+                                    ItemsSource="{Binding usuarioTipoDisponivel}"
+                                    SelectedItem="{Binding UsuarioTipoSelecionado}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#FFFFFF"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
             </Border>
-            <Picker Title="Selecione o tipo" 
-                     TitleColor="#888888"
-                     ItemsSource="{Binding usuarioTipoDisponivel}"
-                     SelectedItem="{Binding UsuarioTipoSelecionado}"
-                     BackgroundColor="Transparent"
-                     TextColor="#FFFFFF"
-                     IsEnabled="{Binding PodeEditarTipoUsuario}"
-                     WidthRequest="150"
-                    HorizontalOptions="Start"
-                     FontAttributes="Bold"
-                     VerticalOptions="Center"/>
 
+            <!-- BOTÕES DE AÇÃO -->
             <VerticalStackLayout Spacing="15" Margin="0,10,0,0">
-
                 <Button Text="{Binding NomeBotaoAcao}"
                         Command="{Binding CadastrarOuAlterarCommand}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
-                        CornerRadius="12"
-                        HeightRequest="55" />
+                        Style="{StaticResource BotaoCinzaStyle}" />
 
                 <Button Text="Cancelar"
                         Command="{Binding CancelarCommand}"
-                        BackgroundColor="Transparent"
-                        TextColor="#AAAAAA"
-                        BorderColor="#333333"
-                        BorderWidth="1"
-                        FontAttributes="Bold"
-                        CornerRadius="12"
-                        HeightRequest="55" />
-
+                        Style="{StaticResource BotaoVermelhoStyle}" />
             </VerticalStackLayout>
 
         </VerticalStackLayout>
