@@ -22,3 +22,4 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosDomain\obj\Debug\net9.0\Matutos
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosDomain\obj\Debug\net9.0\refint\MatutosDomain.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosDomain.pdb
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosDomain\obj\Debug\net9.0\ref\MatutosDomain.dll
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosDomain\obj\Debug\net9.0\MatutosD.E262615E.Up2Date

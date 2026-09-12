@@ -22,6 +22,12 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] private bool isPopupSenhaVisivel;
         [ObservableProperty] private string senhaAtual;
         [ObservableProperty] private string novaSenha;
+        [ObservableProperty] private bool temTamanhoMinimo;
+        [ObservableProperty] private bool temMaiuscula;
+        [ObservableProperty] private bool temNumero;
+        [ObservableProperty] private bool temEspecial;
+
+        public bool SenhaForte => TemTamanhoMinimo && TemMaiuscula && TemNumero && TemEspecial;
         [ObservableProperty] private string confirmarNovaSenha;
 
 
@@ -33,9 +39,31 @@ namespace MatutosApp.ViewsModels
 
         public void AtualizarFotoTela()
         {
-            // Como a sua classe herda de BaseViewModel, você tem acesso ao OnPropertyChanged.
-            // Isso avisa o XAML: "Ei, releia a propriedade FotoPerfilSource agora!"
             OnPropertyChanged(nameof(FotoPerfilSource));
+        }
+
+        partial void OnConfirmarNovaSenhaChanged(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                TemTamanhoMinimo = false;
+                TemMaiuscula = false;
+                TemNumero = false;
+                TemEspecial = false;
+            }
+            else
+            {
+                // Verifica cada regra separadamente usando LINQ
+                TemTamanhoMinimo = value.Length >= 8;
+                TemMaiuscula = value.Any(char.IsUpper);
+                TemNumero = value.Any(char.IsDigit);
+
+                // Caractere especial é qualquer coisa que não seja letra nem número
+                TemEspecial = value.Any(ch => !char.IsLetterOrDigit(ch));
+            }
+
+            // Avisa a tela que a propriedade global de segurança pode ter mudado
+            OnPropertyChanged(nameof(SenhaForte));
         }
 
         public ImageSource FotoPerfilSource
@@ -128,6 +156,12 @@ namespace MatutosApp.ViewsModels
             if (string.IsNullOrWhiteSpace(SenhaAtual) || string.IsNullOrWhiteSpace(NovaSenha) || string.IsNullOrWhiteSpace(ConfirmarNovaSenha))
             {
                 await Application.Current.MainPage.DisplayAlert("Atenção", "Preencha todos os campos.", "Ok");
+                return;
+            }
+
+            if (!SenhaForte)
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "A senha ainda não atende aos requisitos de segurança.", "OK");
                 return;
             }
 

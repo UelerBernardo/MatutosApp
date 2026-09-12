@@ -31,17 +31,81 @@ namespace MatutosApp.ViewsModels
         }
 
 
+        public ImageSource FotoPerfilSource
+        {
+            get
+            {
+                var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
 
-        //[RelayCommand]
-        //public async Task AbrirUsuarioCadastro()
-        //{
-        //    var parametros = new Dictionary<string, object>
-        //            {
-        //                { "CadastroDeUsuario", true } 
-        //            };
+                return usuarioLogado == null || string.IsNullOrEmpty(usuarioLogado.Imagem_Usuario)
+                    ? "user_placeholder.png"
+                    : ImageSource.FromUri(new Uri($"https://localhost:7110{usuarioLogado.Imagem_Usuario}"));
+            }
+        }
 
-        //    await Shell.Current.GoToAsync(nameof(UsuarioCadastroView), parametros);
-        //}
+        [RelayCommand]
+        public async Task UsuarioAtivarInativar(Usuario usuarioSelecionado)
+        {
+            try
+            {
+                string? token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                bool alteracao = false;
+
+                if(usuarioSelecionado.Ativo == false)
+                {
+                    bool confirmacao = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realizar a ativação do usuário selecionado?", "Sim", "Não");
+
+                    if(!confirmacao)
+                    {
+                        return;
+                    }
+
+                    alteracao = true;
+
+                    var resultado = await _usuarioServico.UsuarioInativar(token, usuarioSelecionado.Codigo_Usuario, alteracao);
+                    if(resultado.Sucesso)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                        _ = ConsultarUsuarios();
+                        return;
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                        return;
+                    }
+                }
+                else
+                {
+                    bool confirmacao = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realizar a inativação do usuário selecionado?", "Sim", "Não");
+
+                    if (!confirmacao)
+                    {
+                        return;
+                    }
+
+                    alteracao = false;
+
+                    var resultado = await _usuarioServico.UsuarioInativar(token, usuarioSelecionado.Codigo_Usuario, alteracao);
+                    if (resultado.Sucesso)
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
+                        _ = ConsultarUsuarios();
+                        return;
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                        return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível alterar o usuário selecionado. Erro: {ex.Message}", "OK");
+            }
+        }
 
         [RelayCommand]
         public async Task AbrirCadastroUsuario()
@@ -81,7 +145,6 @@ namespace MatutosApp.ViewsModels
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        // Agora isso vai funcionar perfeitamente!
                         ListaUsuarios.Clear();
 
                         if (resultado.Dados != null)

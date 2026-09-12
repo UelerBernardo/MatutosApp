@@ -32,7 +32,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0-android35.0": {
+          "net9.0-android": {
+            "framework": "net9.0-android35.0",
             "targetAlias": "net9.0-android",
             "projectReferences": {
               "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
@@ -40,7 +41,8 @@
               }
             }
           },
-          "net9.0-windows10.0.19041": {
+          "net9.0-windows10.0.19041.0": {
+            "framework": "net9.0-windows10.0.19041",
             "targetAlias": "net9.0-windows10.0.19041.0",
             "projectReferences": {
               "C:\\Users\\Ueler\\Desktop\\Estagio\\MatutosApp\\MatutosDomain\\MatutosDomain.csproj": {
@@ -59,10 +61,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
-        "net9.0-android35.0": {
+        "net9.0-android": {
+          "framework": "net9.0-android35.0",
           "targetAlias": "net9.0-android",
           "dependencies": {
             "CommunityToolkit.Mvvm": {
@@ -87,12 +90,12 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.120, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.2, )",
+              "version": "[9.0.20, )",
               "autoReferenced": true
             },
             "Plugin.Firebase": {
@@ -111,6 +114,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.Android.Ref.35",
+              "version": "[35.0.105, 35.0.105]"
+            },
+            {
+              "name": "Microsoft.Android.Runtime.35.android-arm64",
+              "version": "[35.0.105, 35.0.105]"
+            },
+            {
+              "name": "Microsoft.Android.Runtime.35.android-x64",
+              "version": "[35.0.105, 35.0.105]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.Android": {
               "privateAssets": "all"
@@ -119,9 +136,10 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
         },
-        "net9.0-windows10.0.19041": {
+        "net9.0-windows10.0.19041.0": {
+          "framework": "net9.0-windows10.0.19041",
           "targetAlias": "net9.0-windows10.0.19041.0",
           "dependencies": {
             "CommunityToolkit.Mvvm": {
@@ -146,7 +164,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.120, )"
             },
             "Plugin.Firebase": {
               "target": "Package",
@@ -178,7 +196,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401\\RuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
@@ -220,6 +238,7 @@
         },
         "frameworks": {
           "net9.0": {
+            "framework": "net9.0",
             "targetAlias": "net9.0",
             "projectReferences": {}
           }
@@ -234,10 +253,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net9.0": {
+          "framework": "net9.0",
           "targetAlias": "net9.0",
           "imports": [
             "net461",
@@ -255,7 +275,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

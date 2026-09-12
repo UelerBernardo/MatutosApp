@@ -10,5 +10,6 @@ namespace MatutosDomain
     {
         public string? Token { get; set; }
         public Usuario? Usuario { get; set; }
+        public string? Mensagem { get; set; }
     }
 }

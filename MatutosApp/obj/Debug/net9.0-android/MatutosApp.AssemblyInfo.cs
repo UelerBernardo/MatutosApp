@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MatutosApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+928ab851a4f26ed43c1e450e0f4164233cab2cad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+3ba5755c3c50f31c07ce0b0c91210959bb89a12f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MatutosApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MatutosApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -8,17 +8,19 @@
              x:Name="PaginaConsultaServico">
 
     <ContentPage.Resources>
-        <Style x:Key="BotaoAnimadoStyle" TargetType="Button">
-            <!-- O estado Normal (padrão) já fica definido aqui -->
+
+        <!-- ESTILO 1: Escuro com destaque em Vermelho/Vinho -->
+        <Style x:Key="BotaoVermelhoStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="#1E1E1E" />
             <Setter Property="TextColor" Value="#a15650" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
 
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup Name="CommonStates">
                         <VisualState Name="Normal" />
-
-                        <!-- O estado Pressionado -->
                         <VisualState Name="Pressed">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor" Value="#a15650" />
@@ -29,15 +31,41 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
+
+        <!-- ESTILO 2: Tons de Cinza -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto, *, Auto">
 
+        <!-- CABEÇALHO -->
         <VerticalStackLayout Grid.Row="0" Padding="20,40,20,10" Spacing="5">
             <Label Text="Nossos Serviços" FontSize="28" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center"/>
             <Label Text="Clique em um serviço para ver as fotos" FontSize="14" TextColor="#AAAAAA" HorizontalOptions="Center"/>
         </VerticalStackLayout>
 
+        <!-- LISTA DE SERVIÇOS -->
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding ListaServicos}" 
                         SelectionMode="Single" 
@@ -54,8 +82,10 @@
 
                         <VerticalStackLayout Spacing="0">
 
-                            <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
+                            <!-- Grid principal do card organizado -->
+                            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10" VerticalOptions="Center">
 
+                                <!-- Textos e Duração (Coluna 0) -->
                                 <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
                                     <Label Text="{Binding Descricao}" FontSize="16" FontAttributes="Bold" TextColor="#FFFFFF"/>
                                     <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" FontSize="15" TextColor="#a15650" FontAttributes="Bold"/>
@@ -65,47 +95,53 @@
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
 
-                                <Image Grid.Column="1" Source="camerabranca.png" HeightRequest="40" WidthRequest="40" VerticalOptions="Center" />
-                                <Button Text="Alterar"
-                                        Style="{StaticResource BotaoAnimadoStyle}"
-                                        IsVisible="{Binding BindingContext.PodeVisualizar, Source={x:Reference PaginaConsultaServico}}"
-                                        FontAttributes="Bold"
-                                        Grid.Column="1" 
-                                        Grid.Row="2" 
-                                        CornerRadius="25"
-                                        BorderColor="#a15650"
-                                        BorderWidth="1.5"
-                                        VerticalOptions="Center" 
-                                        Command="{Binding BindingContext.AbrirAlteracaoServicoCommand, Source={x:Reference PaginaConsultaServico}}" 
-                                        CommandParameter="{Binding .}"/>
+                                <!-- Ações à Direita (Coluna 1): Botão Alterar e Ícone de Câmera empilhados -->
+                                <VerticalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center" HorizontalOptions="Center">
+                                    <Image Source="camerabranca.png" HeightRequest="32" WidthRequest="32" HorizontalOptions="Center" />
+
+                                    <!-- Exemplo usando o Estilo Vermelho no botão Alterar -->
+                                    <Button Text="Alterar"
+                                            Style="{StaticResource BotaoVermelhoStyle}"
+                                            IsVisible="{Binding BindingContext.PodeVisualizar, Source={x:Reference PaginaConsultaServico}}"
+                                            FontSize="12"
+                                            HeightRequest="30"
+                                            Padding="12,0"
+                                            BorderColor="White"
+                                            BackgroundColor="White"
+                                            CornerRadius="18"
+                                            Command="{Binding BindingContext.AbrirAlteracaoServicoCommand, Source={x:Reference PaginaConsultaServico}}" 
+                                            CommandParameter="{Binding .}"/>
+                                </VerticalStackLayout>
+
                             </Grid>
 
+                            <!-- Seção Expansível de Fotos -->
                             <VerticalStackLayout IsVisible="{Binding IsExpanded}" Margin="0,15,0,0" Spacing="15">
 
                                 <BoxView HeightRequest="1" Color="#333333" />
 
                                 <ActivityIndicator IsRunning="{Binding IsCarregando}" 
-                                                           IsVisible="{Binding IsCarregando}" 
-                                                           Color="#E0E0E0" 
-                                                           HorizontalOptions="Center" 
-                                                           HeightRequest="30" />
+                                                   IsVisible="{Binding IsCarregando}" 
+                                                   Color="#E0E0E0" 
+                                                   HorizontalOptions="Center" 
+                                                   HeightRequest="30" />
 
                                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding ImagensDoServico}" Spacing="15">
 
                                     <BindableLayout.EmptyView>
                                         <Label Text="Nenhuma foto cadastrada." 
-                                                       TextColor="#666666" 
-                                                       HorizontalOptions="Center"
-                                                       Margin="0,10,0,10" />
+                                               TextColor="#666666" 
+                                               HorizontalOptions="Center"
+                                               Margin="0,10,0,10" />
                                     </BindableLayout.EmptyView>
 
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
                                             <Border StrokeShape="RoundRectangle 12" 
-                                                            Stroke="#333333" 
-                                                            StrokeThickness="1" 
-                                                            BackgroundColor="#2A2A2A" 
-                                                            HeightRequest="250" 
+                                                    Stroke="#333333" 
+                                                    StrokeThickness="1" 
+                                                    BackgroundColor="#2A2A2A" 
+                                                    HeightRequest="250" 
                                                     HorizontalOptions="Fill">
 
                                                 <Image Source="{Binding FonteImagem}" Aspect="AspectFill" />
@@ -121,22 +157,21 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
+        <!-- RODAPÉ COM OS BOTÕES -->
         <VerticalStackLayout Grid.Row="2" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
             <VerticalStackLayout Spacing="15" Padding="20,10,20,10" BackgroundColor="#121212">
+
+                <!-- Botão Novo Serviço com Estilo Cinza -->
                 <Button Text="Novo Serviço"
                         IsVisible="{Binding PodeVisualizar}"
                         Command="{Binding AbrirCadastroServicoCommand}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
-                        FontSize="16"/>
+                        Style="{StaticResource BotaoCinzaStyle}" />
+
+                <!-- Botão Voltar com Estilo Cinza -->
                 <Button Text="Voltar"
                         Command="{Binding VoltarTela}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
-                        FontSize="16"/>
+                        Style="{StaticResource BotaoCinzaStyle}" />
             </VerticalStackLayout>
         </VerticalStackLayout>
 

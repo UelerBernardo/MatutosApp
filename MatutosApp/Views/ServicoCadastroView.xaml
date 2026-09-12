@@ -3,7 +3,87 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.ServicoCadastroView"
              BackgroundColor="#121212"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             x:Name="PaginaCadastroServico">
+
+    <ContentPage.Resources>
+
+        <!-- ESTILO 1: Escuro com destaque em Vermelho/Vinho (Ideal para cancelar ou ações secundárias) -->
+        <Style x:Key="BotaoVermelhoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#a15650" />
+            <Setter Property="BorderColor" Value="#a15650" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HeightRequest" Value="55" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#a15650" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- ESTILO 2: Tons de Cinza (Ideal para botões de ação principal) -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="HeightRequest" Value="55" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- ESTILO 3: Cinza escuro para itens secundários compactos (Selecionar Foto) -->
+        <Style x:Key="BotaoSecundarioStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2A2A2A" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="BorderColor" Value="#555555" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="HeightRequest" Value="45" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#444444" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="20,40,20,40">
@@ -36,6 +116,7 @@
                                    Placeholder="Ex: Corte Degradê" 
                                    TextColor="#FFFFFF" 
                                    PlaceholderColor="#888888" 
+                                   MaxLength="250"
                                    BackgroundColor="Transparent" 
                                    VerticalOptions="Center" />
                         </Border>
@@ -60,7 +141,8 @@
                             <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
                                 <Entry Text="{Binding Duracao}" 
                                        Placeholder="Ex: 45 min" 
-                                       TextColor="#FFFFFF" 
+                                       TextColor="#FFFFFF"
+                                       MaxLength="250"
                                        PlaceholderColor="#888888" 
                                        BackgroundColor="Transparent" 
                                        VerticalOptions="Center" />
@@ -73,7 +155,8 @@
                                 <Entry Text="{Binding Tempo_servico}" 
                                        Keyboard="Numeric" 
                                        Placeholder="Ex: 45" 
-                                       TextColor="#FFFFFF" 
+                                       TextColor="#FFFFFF"
+                                       MaxLength="11"
                                        PlaceholderColor="#888888" 
                                        BackgroundColor="Transparent" 
                                        VerticalOptions="Center" />
@@ -100,10 +183,10 @@
             </Border>
 
             <Border BackgroundColor="#1E1E1E" 
-                 Stroke="#333333" 
-                 StrokeThickness="1" 
-                 StrokeShape="RoundRectangle 20" 
-                 Padding="20">
+                   Stroke="#333333" 
+                   StrokeThickness="1" 
+                   StrokeShape="RoundRectangle 20" 
+                   Padding="20">
 
                 <VerticalStackLayout Spacing="15">
 
@@ -143,45 +226,32 @@
                                         VerticalOptions="Start" 
                                         Margin="3"
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoverImagemCommand}"
-                                        CommandParameter="{Binding .}" />   
+                                        CommandParameter="{Binding .}" />
 
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
+                    <!-- Botão Selecionar Foto com Estilo Secundário -->
                     <Button Text="Selecionar Foto"
-                             Command="{Binding SelecionarImagemServicoCommand}"
-                             BackgroundColor="#2A2A2A"
-                             TextColor="#FFFFFF"
-                             BorderColor="#555555"
-                             BorderWidth="1"
-                             FontAttributes="Bold"
-                             CornerRadius="10"
-                             HeightRequest="45"
-                             Margin="0,5,0,0" />
+                            Command="{Binding SelecionarImagemServicoCommand}"
+                            Style="{StaticResource BotaoSecundarioStyle}"
+                            Margin="0,5,0,0" />
                 </VerticalStackLayout>
             </Border>
 
             <VerticalStackLayout Spacing="15" Margin="0,10,0,0">
+
+                <!-- Botão Principal de Ação (Cadastrar/Alterar) com Estilo Cinza -->
                 <Button Text="{Binding NomeBotaoAcao}"
                         Command="{Binding CadastrarOuAlterarCommand}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
-                        FontSize="16"
-                        CornerRadius="12"
-                        HeightRequest="55" />
+                        Style="{StaticResource BotaoCinzaStyle}" />
 
+                <!-- Botão Cancelar com Estilo Vermelho -->
                 <Button Text="Cancelar"
                         Command="{Binding VoltarTela}"
-                        BackgroundColor="Transparent"
-                        TextColor="#a15650"
-                        BorderColor="#a15650"
-                        BorderWidth="1"
-                        FontAttributes="Bold"
-                        FontSize="16"
-                        CornerRadius="12"/>
+                        Style="{StaticResource BotaoVermelhoStyle}" />
             </VerticalStackLayout>
 
         </VerticalStackLayout>

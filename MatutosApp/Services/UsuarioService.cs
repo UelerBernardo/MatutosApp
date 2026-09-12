@@ -24,7 +24,37 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
-        // 👉 CORREÇÃO 1: A assinatura agora retorna uma List<Usuario>
+        public async Task<(bool Sucesso, string Mensagem)> UsuarioInativar(string token, int idUsuario, bool ativo)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                string url = $"usuario/ativar-inativar/{idUsuario}?ativo={ativo}";
+
+                var resultado = await _httpClient.PatchAsync(url, null);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    return (true, dados.Mensagem);
+                }
+                else
+                {
+                    var dados = await resultado.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+
+                    return (false, dados.Mensagem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao inativar/ativar usuário: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.");
+            }
+        }
+
         public async Task<(bool Sucesso, string Mensagem, List<Usuario>? Dados)> ConsultarListaUsuario(string token, UsuarioTipo usuarioTipo, string? nome, bool? ativo)
         {
             try
@@ -179,7 +209,7 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<(bool Sucesso, Usuario Dados)> UsuarioCadastrar(UsuarioCadastro usuario)
+        public async Task<(bool Sucesso, Usuario Dados, string Mensagem)> UsuarioCadastrar(UsuarioCadastro usuario)
         {
             try
             {
@@ -206,25 +236,26 @@ namespace MatutosApp.Services
                             TipoSelecionado = dados.Usuario.TipoSelecionado
                         };
 
-                        return (true, usuarioSalvo);
+                        return (true, usuarioSalvo, null );
                     }
                     else
                     {
+
                         Debug.WriteLine("Cadastro realizado, mas o Token não foi recebido.");
-                        return (false, null);
+                        return (false, null, dados.Mensagem);
                     }
                 }
                 else
                 {
-                    var errorMessage = await resposta.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {errorMessage}");
-                    return (false, null);
+                    var dados = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
+                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {dados.Mensagem}");
+                    return (false, null, dados.Mensagem);
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
-                return (false, null);
+                return (false, null, "Erro Interno da API.");
             }
         }
 

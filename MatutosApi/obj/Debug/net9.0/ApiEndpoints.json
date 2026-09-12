@@ -142,6 +142,22 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "AlterarRegraNotificacao",
+    "RelativePath": "notificacao/regra-alterar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "notificacaoAlteracao",
+        "Type": "MatutosDomain.Configura_Notificacao",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
     "Method": "CadastrarNotificacao",
     "RelativePath": "notificacao/regra-cadastrar",
     "HttpMethod": "POST",
@@ -346,6 +362,27 @@
         "Name": "dados",
         "Type": "MatutosApi.Controllers.UsuarioController\u002BAlterarSenhaPerfilRequest",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.UsuarioController",
+    "Method": "InativarUsuario",
+    "RelativePath": "usuario/ativar-inativar/{idUsuario}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "ativo",
+        "Type": "System.Boolean",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -3,19 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MatutosApp.Views.UsuarioConsultarView"
              BackgroundColor="#121212"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             x:Name="PaginaConsultaUsuario">
 
-    <Grid RowDefinitions="Auto, Auto,*" Padding="15">
+    <ContentPage.Resources>
+
+        <!-- ESTILO 1: Tons de Cinza (Ação Principal) -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="45" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="15" RowSpacing="15">
 
         <!-- PAINEL DE FILTROS (Linha 0) -->
-        <VerticalStackLayout Grid.Row="0" Spacing="15" Margin="0,0,0,20">
+        <VerticalStackLayout Grid.Row="0" Spacing="15">
 
             <Label Text="Buscar Usuários" 
                    FontSize="24" 
                    FontAttributes="Bold" 
-                   TextColor="#FFFFFF"/>
+                   TextColor="#FFFFFF"
+                   HorizontalTextAlignment="Center"/>
 
-            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
+            <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
                 <VerticalStackLayout Spacing="12">
 
                     <!-- Novo Layout de Filtros: 2 Linhas para não espremer os campos -->
@@ -61,14 +91,10 @@
 
                     </Grid>
 
-                    <!-- Botão de Pesquisa -->
+                    <!-- Botão de Pesquisa com Estilo Aplicado -->
                     <Button Text="Pesquisar" 
                             Command="{Binding ConsultarUsuariosCommand}"
-                            BackgroundColor="#4CAF50" 
-                            TextColor="White" 
-                            FontAttributes="Bold" 
-                            CornerRadius="8" 
-                            HeightRequest="45" 
+                            Style="{StaticResource BotaoCinzaStyle}"
                             Margin="0,5,0,0"/>
                 </VerticalStackLayout>
             </Border>
@@ -86,20 +112,38 @@
                 <DataTemplate>
                     <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
 
+                        <Border.GestureRecognizers>
+                            <!-- Usamos o Source={x:Reference...} para "pular" para fora da lista e achar o comando na ViewModel -->
+                            <TapGestureRecognizer 
+                                CommandParameter="{Binding .}" 
+                                Command="{Binding BindingContext.UsuarioAtivarInativarCommand, Source={x:Reference PaginaConsultaUsuario}}" />
+                        </Border.GestureRecognizers>
+
                         <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
 
                             <!-- Foto / Ícone (Esquerda) -->
                             <Frame Grid.Column="0" WidthRequest="50" HeightRequest="50" CornerRadius="25" 
-                                   Padding="0" IsClippedToBounds="True" BorderColor="#333333" BackgroundColor="#2A2A2A"
+                                   Padding="0" IsClippedToBounds="True" BorderColor="White" BackgroundColor="#2A2A2A"
                                    VerticalOptions="Center">
-                                <Image Source="usuariosistema.png" Aspect="AspectFit" Margin="10"/>
+
+                                <!-- Alterado Aspect para AspectFill e removida a Margin -->
+                                <Image Source="{Binding UrlImagemCompleta}" 
+                                       Aspect="AspectFill" 
+                                       Margin="0"/>
                             </Frame>
 
                             <!-- Dados do Usuário (Centro) -->
                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
                                 <Label Text="{Binding Nome}" TextColor="White" FontSize="16" FontAttributes="Bold" />
-                                <Label Text="{Binding E_mail}" TextColor="#AAAAAA" FontSize="13" />
-                                <Label Text="{Binding TipoSelecionado}" TextColor="#03DAC6" FontSize="12" FontAttributes="Bold" Margin="0,4,0,0"/>
+                                <HorizontalStackLayout>
+                                    <Label Text="E_mail:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
+                                    <Label Text="{Binding Email}" TextColor="White" FontSize="13" Margin="4,0,0,0"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout>
+                                    <Label Text="Tipo Usuário:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
+                                    <Label Text="{Binding TipoSelecionado}" TextColor="White" FontSize="12" FontAttributes="Bold" Margin="4,0,0,0"/>
+                                </HorizontalStackLayout>
                             </VerticalStackLayout>
 
                             <!-- Status (Direita) -->
@@ -143,8 +187,13 @@
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
         </CollectionView>
-        <VerticalStackLayout Grid.Row="3" VerticalOptions="End" >
-            <Button Text="Novo Usuário" BorderColor="Black" Background="White" TextColor="Black" FontAttributes="Bold" Command="{Binding AbrirCadastroUsuarioCommand}"/>
+
+        <!-- RODAPÉ COM O BOTÃO DE NOVO USUÁRIO (Linha 2) -->
+        <VerticalStackLayout Grid.Row="2">
+            <Button Text="Novo Usuário" 
+                    Command="{Binding AbrirCadastroUsuarioCommand}"
+                    Style="{StaticResource BotaoCinzaStyle}" />
         </VerticalStackLayout>
+
     </Grid>
 </ContentPage>

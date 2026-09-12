@@ -52,6 +52,29 @@ namespace MatutosApp.ViewsModels
             PodeEditarPrincipal = true;
         }
 
+        partial void OnDddChanged(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return;
+
+            string textoLimpo = new string(value.Where(char.IsDigit).ToArray());
+
+            if (Ddd != textoLimpo)
+            {
+                Ddd = textoLimpo;
+            }
+        }
+
+        partial void OnNumero_telefoneChanged(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return;
+
+            string textoLimpo = new string(value.Where(char.IsDigit).ToArray());
+
+            if(Numero_telefone != textoLimpo) 
+            {
+                Numero_telefone = textoLimpo;
+            }
+        }
 
         partial void OnTelefoneEditarChanged(Telefone? value)
         {
@@ -136,7 +159,7 @@ namespace MatutosApp.ViewsModels
 
                     if (!confirmar)
                     {
-                        await Shell.Current.GoToAsync(nameof(PrincipalView)); 
+                        await Shell.Current.GoToAsync("///PrincipalView"); 
                     }
                     else
                     {

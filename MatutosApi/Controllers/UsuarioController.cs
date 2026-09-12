@@ -26,6 +26,53 @@ namespace MatutosApi.Controllers
             _emailService = emailService;
         }
 
+        [HttpPatch("ativar-inativar/{idUsuario}")]
+        [Authorize]
+        public async Task<IActionResult> InativarUsuario(int idUsuario,[FromQuery] bool ativo)
+        {
+            try
+            {
+                var usuarioToken = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+               ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuarioToken) || !int.TryParse(usuarioToken, out int codigoUsuario))
+                {
+                    return Unauthorized(new { Mensagem = "Usuário não autenticado." });
+                }
+
+                if (codigoUsuario == idUsuario && ativo == false)
+                {
+                    return BadRequest(new { Mensagem = "Ação negada: Você não pode inativar a própria conta de administrador." });
+                }
+
+                bool usuarioAdm = await _dbcontext.Administradores.Where(adm => adm.Codigo_Usuario == codigoUsuario).AnyAsync();
+
+                if (usuarioAdm == false)
+                {
+                    return BadRequest(new { Mensagem = "Apenas usuários administradores podem alterar o status de outros usuários!" });
+                }
+
+                var inativar = await _dbcontext.Usuarios
+                    .Where(u => u.Codigo_Usuario == idUsuario)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(u => u.Ativo, ativo)
+                    );
+                if(inativar <= 0)
+                {
+                    return BadRequest(new { Mensagem = "Usuário não encontrado para inativação." });
+                }
+
+                string mensagem = ativo ? "Usuário ativado no sistema com sucesso!" : "Usuário inativado no sistema com sucesso!";
+
+                return Ok(new { Mensagem = mensagem });
+            }
+            catch (Exception ex)
+            {
+                string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });
+            }
+        }
+
         [HttpPut("alterar")]
         [Authorize]
         public async Task<IActionResult> AlterarUsuario([FromBody] Usuario usuario)
@@ -144,7 +191,7 @@ namespace MatutosApi.Controllers
             var emailExiste = await _dbcontext.Usuarios.AnyAsync(u => u.Email == request.Email);
             if (emailExiste)
             {
-                return BadRequest(new { Message = "Este e-mail já está em uso." });
+                return BadRequest(new { Mensagem = "Este e-mail já está em uso." });
             }
 
             Usuario novoUsuario;
@@ -233,7 +280,6 @@ namespace MatutosApi.Controllers
 
         [HttpGet("consultar-lista")]
         [Authorize]
-        // 👉 MUDANÇA 1: O parâmetro 'ativo' agora é bool? (anulável)
         public async Task<IActionResult> ConsultarListaUsuario(UsuarioTipo usuarioTipo, string? nome, bool? ativo)
         {
             try
@@ -244,7 +290,6 @@ namespace MatutosApi.Controllers
                             from cliente in _dbcontext.Clientes
                             join usuario in _dbcontext.Usuarios
                             on cliente.Codigo_Usuario equals usuario.Codigo_Usuario
-                            // 👉 MUDANÇA 2: Aceita nome vazio E aceita ativo nulo (opção "Todos")
                             where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
                                   && (!ativo.HasValue || usuario.Ativo == ativo)
                             select new
@@ -252,9 +297,9 @@ namespace MatutosApi.Controllers
                                 Codigo_Usuario = cliente.Codigo_Usuario,
                                 Nome = usuario.Nome,
                                 TipoSelecionado = usuarioTipo,
-                                E_mail = usuario.Email,
+                                Email = usuario.Email,
                                 Ativo = usuario.Ativo,
-                                ImagemUsuario = usuario.Imagem_Usuario
+                                Imagem_Usuario = usuario.Imagem_Usuario
                             }).ToListAsync();
 
                     if (clienteLista.Count <= 0)
@@ -277,9 +322,9 @@ namespace MatutosApi.Controllers
                             Codigo_Usuario = barbeiro.Codigo_Usuario,
                             Nome = usuario.Nome,
                             TipoSelecionado = usuarioTipo,
-                            E_mail = usuario.Email,
+                            Email = usuario.Email,
                             Ativo = usuario.Ativo,
-                            ImagemUsuario = usuario.Imagem_Usuario
+                            Imagem_Usuario = usuario.Imagem_Usuario
                         }).ToListAsync();
 
                     if (barbeiroLista.Count <= 0)
@@ -302,9 +347,9 @@ namespace MatutosApi.Controllers
                             Codigo_Usuario = adm.Codigo_Usuario,
                             Nome = usuario.Nome,
                             TipoSelecionado = usuarioTipo,
-                            E_mail = usuario.Email,
+                            Email = usuario.Email,
                             Ativo = usuario.Ativo,
-                            ImagemUsuario = usuario.Imagem_Usuario
+                            Imagem_Usuario = usuario.Imagem_Usuario
                         }).ToListAsync();
 
                     if (admLista.Count <= 0)

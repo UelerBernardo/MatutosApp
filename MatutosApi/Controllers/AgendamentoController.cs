@@ -290,10 +290,10 @@ namespace MatutosApi.Controllers
 
                 return Ok(agendamento);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Mensagem = $"Erro ao consultar agendamento: {ex.Message}" });
-            }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, new { Mensagem = $"Erro ao consultar agendamento: {ex.Message}" });
+                }
         }
 
         [HttpGet("consultar")]

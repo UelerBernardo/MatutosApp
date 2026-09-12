@@ -53,15 +53,15 @@ namespace MatutosApp.ViewsModels
         }
 
 
-        private void ModoCadastro()
-        {
-            Ativo = true;
-            Descricao = string.Empty;
-            Mensagem = string.Empty;
-            Valor = 0;
-            UnidadeTempo = UnidadeTempoEnum.Minutos;
-            TipoSelecionado
-        }
+        //private void ModoCadastro()
+        //{
+        //    Ativo = true;
+        //    Descricao = string.Empty;
+        //    Mensagem = string.Empty;
+        //    Valor = 0;
+        //    UnidadeTempo = UnidadeTempoEnum.Minutos;
+        //    TipoSelecionado
+        //}
 
         private void AplicarRegrasDeTela()
         {

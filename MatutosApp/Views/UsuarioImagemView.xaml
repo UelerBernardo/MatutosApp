@@ -6,6 +6,60 @@
              Title=""
              Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+
+        <!-- ESTILO 1: Escuro com destaque em Vermelho/Vinho (Ideal para cancelar ou ações secundárias) -->
+        <Style x:Key="BotaoVermelhoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#a15650" />
+            <Setter Property="BorderColor" Value="#a15650" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="HeightRequest" Value="45" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#a15650" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- ESTILO 2: Tons de Cinza (Ideal para botões de ação principal) -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="HeightRequest" Value="45" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+    </ContentPage.Resources>
+
     <Grid RowDefinitions="Auto, *, Auto">
 
         <Grid Grid.Row="0" BackgroundColor="#121212" Padding="20,50,20,30">
@@ -63,25 +117,19 @@
 
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="20" Margin="0,30,0,0">
 
+                <!-- Botão Mudar com Estilo Cinza -->
                 <Button Text="Mudar"
                         ImageSource="edit_icon.png"
                         Command="{Binding EscolherImagemCommand}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        CornerRadius="20"
-                        WidthRequest="130"
-                        FontAttributes="Bold"/>
+                        Style="{StaticResource BotaoCinzaStyle}"
+                        WidthRequest="130"/>
 
+                <!-- Botão Cancelar com Estilo Vermelho Padronizado -->
                 <Button Text="Cancelar"
                         ImageSource="trash_icon.png"
                         Command="{Binding CancelarCommand}"
-                        BackgroundColor="Transparent"
-                        TextColor="#AAAAAA"
-                        BorderColor="#333333"
-                        BorderWidth="1"
-                        CornerRadius="20"
-                        WidthRequest="130"
-                        FontAttributes="Bold"/>
+                        Style="{StaticResource BotaoVermelhoStyle}"
+                        WidthRequest="130"/>
 
             </HorizontalStackLayout>
         </VerticalStackLayout>

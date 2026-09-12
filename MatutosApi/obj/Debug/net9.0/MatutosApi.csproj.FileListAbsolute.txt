@@ -155,14 +155,12 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Cli
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.CodeDom.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Drawing.Common.dll
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Formats.Asn1.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Management.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Memory.Data.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Runtime.Caching.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Security.Permissions.dll
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Text.Json.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\System.Windows.Extensions.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\runtimes\unix\lib\net6.0\Microsoft.Data.SqlClient.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\runtimes\win\lib\net6.0\Microsoft.Data.SqlClient.dll
@@ -191,12 +189,6 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\scopedcss\
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets\msbuild.MatutosApi.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets\msbuild.MatutosApi.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets\msbuild.build.MatutosApi.props
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.MatutosApi.props
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.MatutosApi.props
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.pack.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.csproj.Up2Date
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.dll
@@ -204,3 +196,9 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\refint\Mat
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.pdb
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.genruntimeconfig.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\ref\MatutosApi.dll
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\swae.build.ex.cache

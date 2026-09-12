@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MatutosDomain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4e7c2193d809acdcca4c0c97453e34b5dcdf658b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ba5755c3c50f31c07ce0b0c91210959bb89a12f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MatutosDomain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MatutosDomain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
