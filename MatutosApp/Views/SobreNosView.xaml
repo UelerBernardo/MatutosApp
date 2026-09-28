@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.SobreNosView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Secundário (Transparente com Borda) -->
+        <Style x:Key="BotaoContornoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="#333333" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="TextColor" Value="#AAAAAA" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#1E1E1E" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*, Auto">
+
+        <!-- Conteúdo Rolável -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20" Padding="20,40,20,20">
+
+                <!-- Cabeçalho -->
+                <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0,0,0,10">
+                    <Label Text="Barbearia Matutos" FontSize="32" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center"/>
+                    <Label Text="Tradição, Estilo e Respeito" FontSize="14" TextColor="#4CAF50" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Cartão: Sobre a Barbearia -->
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="20">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Label Text="✂️" FontSize="18" VerticalOptions="Center"/>
+                            <Label Text="Nossa História" FontSize="18" FontAttributes="Bold" TextColor="#FFFFFF" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="#333333" Margin="0,5" />
+
+                        <Label Text="A Barbearia Matutos nasceu com o propósito de resgatar a tradição das barbearias clássicas, unindo um ambiente acolhedor com cortes modernos e atendimento de excelência. Nossa missão é proporcionar não apenas um corte de cabelo ou barba, mas uma experiência completa de cuidado, resenha e bem-estar para os nossos clientes e amigos."
+                               TextColor="#CCCCCC"
+                               FontSize="15"
+                               LineBreakMode="WordWrap"
+                               LineHeight="1.3"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Cartão: Horário de Funcionamento -->
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="20">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Label Text="🕒" FontSize="18" VerticalOptions="Center"/>
+                            <Label Text="Horário de Funcionamento" FontSize="18" FontAttributes="Bold" TextColor="#FFFFFF" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="#333333" Margin="0,5" />
+
+                        <!-- 👉 CORREÇÃO AQUI: Adicionado RowDefinitions="Auto, Auto" para evitar a sobreposição -->
+                        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto" RowSpacing="15">
+                            <!-- Segunda a Sábado -->
+                            <Label Grid.Row="0" Grid.Column="0" Text="Segunda a Sábado" TextColor="#CCCCCC" FontSize="16" VerticalOptions="Center"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="07:30 às 18:30" TextColor="#4CAF50" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+
+                            <!-- Domingo -->
+                            <Label Grid.Row="1" Grid.Column="0" Text="Domingos e Feriados" TextColor="#AAAAAA" FontSize="16" VerticalOptions="Center"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="Fechado" TextColor="#CF6679" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Cartão: Contato e Localização (Bônus) -->
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 16" Padding="20">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                            <Label Text="📍" FontSize="18" VerticalOptions="Center"/>
+                            <Label Text="Onde Estamos" FontSize="18" FontAttributes="Bold" TextColor="#FFFFFF" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <BoxView HeightRequest="1" Color="#333333" Margin="0,5" />
+
+                        <VerticalStackLayout Spacing="15">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Endereço" TextColor="#888888" FontSize="12" FontAttributes="Bold"/>
+                                <!-- 👉 CORREÇÃO: LineBreakMode garante que não vaze da tela -->
+                                <Label Text="R. Prof. Abílio França Valente, 190 - Jardim de Lucia, Bebedouro - SP, 14711-006" TextColor="#CCCCCC" FontSize="15" LineBreakMode="WordWrap"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Contato" TextColor="#888888" FontSize="12" FontAttributes="Bold"/>
+                                <Label Text="(017) 99216-5805" TextColor="#CCCCCC" FontSize="15"/>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Espaçador invisível para não colar no rodapé -->
+                <BoxView HeightRequest="20" Color="Transparent" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Rodapé fixo com botão Voltar -->
+        <VerticalStackLayout Grid.Row="1" Spacing="0" VerticalOptions="End">
+            <BoxView HeightRequest="1" Color="#333333" />
+            <VerticalStackLayout Spacing="15" Padding="20,15,20,15" BackgroundColor="#121212">
+
+                <Button Text="Voltar"
+                        Command="{Binding VoltarTelaCommand}"
+                        Style="{StaticResource BotaoContornoStyle}"
+                        FontSize="16"
+                        HeightRequest="45"/>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>  

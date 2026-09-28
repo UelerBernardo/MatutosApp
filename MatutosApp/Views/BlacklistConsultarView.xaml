@@ -5,14 +5,119 @@
              x:Name="PaginaConsultaBlacklist"
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
-    <Grid RowDefinitions="Auto, *, Auto">
 
+    <ContentPage.Resources>
+        <!-- Estilo para os Botões Vinho (Alterar e Novo Bloqueio) -->
+        <Style x:Key="BotaoVinhoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#a15650" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Escurece o botão ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#7d423e" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para o Botão Escuro (Filtrar) -->
+        <Style x:Key="BotaoFiltroStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2A2A2A" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#444444" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para o Botão Secundário Vazado (Voltar) -->
+        <Style x:Key="BotaoContornoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="#333333" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="TextColor" Value="#AAAAAA" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#1E1E1E" />
+                                <Setter Property="TextColor" Value="#888888" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Alterado para 4 linhas para incluir a área de filtro de datas -->
+    <Grid RowDefinitions="Auto, Auto, *, Auto">
+
+        <!-- 1. Cabeçalho -->
         <VerticalStackLayout Grid.Row="0" Padding="20,40,20,10" Spacing="5">
             <Label Text="Bloqueios de Agenda" FontSize="28" FontAttributes="Bold" TextColor="#FFFFFF" HorizontalOptions="Center"/>
             <Label Text="Gerenciamento de ausências e horários fechados" FontSize="14" TextColor="#AAAAAA" HorizontalOptions="Center"/>
         </VerticalStackLayout>
 
-        <CollectionView Grid.Row="1"
+        <!-- 2. Painel de Filtros de Data -->
+        <Border Grid.Row="1" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15" Margin="20,5,20,10">
+            <VerticalStackLayout Spacing="12">
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <!-- Data Inicial -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Data Inicial" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataInicial}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Data Final -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Data Final" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataFinal}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Botão Filtrar usando o Estilo -->
+                <Button Text="Filtrar Período" 
+                        Command="{Binding ConsultarBlacklistCommand}" 
+                        Style="{StaticResource BotaoFiltroStyle}"
+                        HeightRequest="40"
+                        Margin="0,5,0,0"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- 3. Lista de Bloqueios -->
+        <CollectionView Grid.Row="2"
                         ItemsSource="{Binding ListaBlacklist}" 
                         SelectionMode="None" 
                         Margin="20,10,20,0">
@@ -27,6 +132,7 @@
 
                         <Grid ColumnDefinitions="*, Auto" VerticalOptions="Center">
 
+                            <!-- Coluna Esquerda: Informações do Bloqueio -->
                             <VerticalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
 
                                 <HorizontalStackLayout Spacing="5">
@@ -36,12 +142,12 @@
 
                                 <HorizontalStackLayout Spacing="5">
                                     <Label Text="Início:" FontSize="14" TextColor="#AAAAAA" FontAttributes="Bold" VerticalOptions="Center"/>
-                                    <Label Text="{Binding Inicio_Bloqueio, StringFormat='{0:dd/MM/yyyy às HH:mm}'}" FontSize="14" TextColor="#a15650" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Inicio_Bloqueio, StringFormat='{0:dd/MM/yyyy} às {0:HH:mm}'}" FontSize="14" TextColor="#a15650" FontAttributes="Bold" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout Spacing="5">
                                     <Label Text="Fim:" FontSize="14" TextColor="#AAAAAA" FontAttributes="Bold" VerticalOptions="Center"/>
-                                    <Label Text="{Binding Fim_Bloqueio, StringFormat='{0:dd/MM/yyyy às HH:mm}'}" FontSize="14" TextColor="#a15650" FontAttributes="Bold" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Fim_Bloqueio, StringFormat='{0:dd/MM/yyyy} às {0:HH:mm}'}" FontSize="14" TextColor="#a15650" FontAttributes="Bold" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
 
                                 <VerticalStackLayout Spacing="2" Margin="0,4,0,0">
@@ -51,16 +157,33 @@
 
                             </VerticalStackLayout>
 
-                            <VerticalStackLayout Grid.Column="1" Spacing="10" VerticalOptions="Center" HorizontalOptions="Center">
+                            <!-- Coluna Direita: Status e Botão -->
+                            <VerticalStackLayout Grid.Column="1" Spacing="10" VerticalOptions="Start" HorizontalOptions="End">
 
-                                <Button Text="Detalhes"
-                                        TextColor="White" 
-                                        FontAttributes="Bold"
-                                        CornerRadius="8"
-                                        HeightRequest="40"
-                                        WidthRequest="88"
-                                        VerticalOptions="Center" 
-                                        BackgroundColor="#a15650" 
+                                <!-- Label de Status (Ativo/Inativo) com Triggers para cor e texto -->
+                                <Label FontSize="16" FontAttributes="Bold" HorizontalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ativo}" Value="True">
+                                            <Setter Property="Text" Value="Ativo" />
+                                            <Setter Property="TextColor" Value="#4CAF50" />
+                                            <!-- Verde -->
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ativo}" Value="False">
+                                            <Setter Property="Text" Value="Inativo" />
+                                            <Setter Property="TextColor" Value="#CF6679" />
+                                            <!-- Vermelho -->
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+
+                                <!-- Botão Alterar usando o Estilo -->
+                                <Button Text="Alterar"
+                                        Style="{StaticResource BotaoVinhoStyle}"
+                                        CornerRadius="20"
+                                        HeightRequest="35"
+                                        WidthRequest="85"
+                                        Margin="0,35,0,0"
+                                        VerticalOptions="End" 
                                         Command="{Binding BindingContext.AbrirAlteracaoBlacklistCommand, Source={x:Reference PaginaConsultaBlacklist}}" 
                                         CommandParameter="{Binding .}"/>
                             </VerticalStackLayout>
@@ -71,21 +194,27 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <VerticalStackLayout Grid.Row="2" Spacing="0">
+        <!-- 4. Rodapé -->
+        <VerticalStackLayout Grid.Row="3" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
-            <VerticalStackLayout Spacing="10" Padding="15,15,15,15" BackgroundColor="#121212">
+            <VerticalStackLayout Spacing="15" Padding="20,15,20,15" BackgroundColor="#121212">
+
+                <!-- Botão Novo Bloqueio usando o Estilo -->
                 <Button Text="Novo Bloqueio de Agenda"
                         Command="{Binding AbrirBlacklistCadastroCommand}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
-                        FontSize="16"/>
+                        Style="{StaticResource BotaoVinhoStyle}"
+                        FontSize="16"
+                        CornerRadius="12"
+                        HeightRequest="45"/>
+
+                <!-- Botão Voltar usando o Estilo -->
                 <Button Text="Voltar"
+                        BackgroundColor="#FFFFFF"
                         Command="{Binding VoltarTela}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
+                        Style="{StaticResource BotaoContornoStyle}"
                         FontAttributes="Bold"
-                        FontSize="16" />
+                        FontSize="16" 
+                        HeightRequest="45"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
 

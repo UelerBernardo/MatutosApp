@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MatutosApp.Views.AgendamentoMeusServicosView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Principal -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="45" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Adicionado 3 linhas: Título, Filtros, Lista -->
+    <Grid RowDefinitions="Auto, Auto, *" Padding="15,20,15,0" RowSpacing="15">
+
+        <!-- LINHA 0: Cabeçalho Cursivo -->
+        <Label Grid.Row="0"
+               Text="Meus Serviços"
+               FontSize="36"
+               FontAttributes="Bold"
+               TextColor="#FFFFFF"
+               FontFamily="Cursive" 
+               HorizontalOptions="Center" 
+               Margin="0,0,0,5" />
+
+        <!-- LINHA 1: Painel de Filtros -->
+        <Border Grid.Row="1" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
+            <VerticalStackLayout Spacing="12">
+
+                <!-- DATAS -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Data Inicial" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataInicial}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Data Final" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataFinal}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- NOME DO CLIENTE E SITUAÇÃO -->
+                <Grid ColumnDefinitions="*, 130" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="{Binding Mensagem}" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <Entry Text="{Binding NomeCliente}" 
+                                   Placeholder="Ex: João Silva" 
+                                   TextColor="White" 
+                                   PlaceholderColor="#888888" 
+                                   BackgroundColor="Transparent" 
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Situação" FontSize="12" FontAttributes="Bold" TextColor="#AAAAAA"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <Picker TitleColor="#888888"
+                                    ItemsSource="{Binding FiltroSituacao}"
+                                    SelectedItem="{Binding SituacaoSelecionada}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#FFFFFF"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- BOTÃO PESQUISAR -->
+                <Button Text="Pesquisar" 
+                        Command="{Binding MeusServicosCommand}" 
+                        Style="{StaticResource BotaoCinzaStyle}" 
+                        Margin="0,5,0,0"/>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- LINHA 2: Lista de Resultados com Visual Premium -->
+        <CollectionView Grid.Row="2" ItemsSource="{Binding ListaAgendamneto}" SelectionMode="None" Margin="0,5,0,0">
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+            </CollectionView.ItemsLayout>
+
+            <!-- EmptyView Personalizada -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,40,0,0">
+                    <Label Text="✂️" FontSize="50" HorizontalOptions="Center"/>
+                    <Label Text="Nenhum serviço encontrado." TextColor="#FFFFFF" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+                    <Label Text="Altere os filtros acima e tente novamente." TextColor="#888888" FontSize="14" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" Padding="15" StrokeShape="RoundRectangle 12">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirDetalhesCommand}"
+                                CommandParameter="{Binding Codigo_Agendamento}" />
+                        </Border.GestureRecognizers>
+
+                        <!-- CARTÃO REORGANIZADO: 3 Linhas -->
+                        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="12">
+
+                            <!-- LINHA 0: Código do Agendamento (Esq) e Situação (Dir) -->
+                            <Label Grid.Row="0" Grid.Column="0" 
+                                   Text="{Binding Codigo_Agendamento, StringFormat='Agendamento: {0}'}"
+                                   TextColor="#AAAAAA" FontAttributes="Bold" VerticalOptions="Center"/>
+
+                            <Border Grid.Row="0" Grid.Column="1" Padding="8,4" StrokeShape="RoundRectangle 5" StrokeThickness="1" BackgroundColor="#2A2A2A" HorizontalOptions="End" VerticalOptions="Center">
+                                <Border.Triggers>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Aberto">
+                                        <Setter Property="Stroke" Value="#FFFFFF" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Cancelado">
+                                        <Setter Property="Stroke" Value="#E63946" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Liberado">
+                                        <Setter Property="Stroke" Value="#2196F3" />
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Concluido">
+                                        <Setter Property="Stroke" Value="#4CAF50" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+
+                                <Label Text="{Binding Codigo_Situacao_Agendamento}" FontSize="12" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Aberto">
+                                            <Setter Property="TextColor" Value="#FFFFFF" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Cancelado">
+                                            <Setter Property="TextColor" Value="#E63946" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Liberado">
+                                            <Setter Property="TextColor" Value="#2196F3" />
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Concluido">
+                                            <Setter Property="TextColor" Value="#4CAF50" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Border>
+
+                            <!-- LINHA 1: Data Abaixo do Agendamento -->
+                            <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="6" VerticalOptions="Center">
+                                <Image Source="calendarioagendamento.png" VerticalOptions="Center" HeightRequest="20" WidthRequest="20"/>
+                                <Label Text="{Binding Data_Agendamento, StringFormat='{0:dd/MM/yyyy HH:mm}'}" 
+                                       FontAttributes="Bold" FontSize="15" TextColor="#FFFFFF" VerticalOptions="Center"/>
+                            </HorizontalStackLayout>
+
+                            <!-- LINHA 2 ESQUERDA: Dados do Cliente -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2" VerticalOptions="Center" Margin="0,0,0,0">
+                                <HorizontalStackLayout Spacing="5">
+                                    <Image Source="usuarioagendamento.png" HeightRequest="25" WidthRequest="20" VerticalOptions="Center"/>
+                                    <Label Text="Cliente:" FontSize="13" TextColor="#AAAAAA" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Nome_Cliente, TargetNullValue='Cliente'}" FontSize="17" TextColor="#FFFFFF" FontAttributes="Bold"/>
+                                </HorizontalStackLayout>
+                                
+                            </VerticalStackLayout>
+
+                            <!-- LINHA 2 DIREITA: Valor Total -->
+                            <VerticalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="End" Margin="0,5,0,0">
+                                <Label Text="Valor" FontSize="12" TextColor="#AAAAAA" HorizontalOptions="End"/>
+                                <Label Text="{Binding Valor_Total_Agendamento, StringFormat='R$ {0:F2}'}" 
+                                       FontSize="18" TextColor="#4CAF50" FontAttributes="Bold" HorizontalOptions="End"/>
+                            </VerticalStackLayout>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

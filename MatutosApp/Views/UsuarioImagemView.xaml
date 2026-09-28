@@ -62,7 +62,7 @@
 
     <Grid RowDefinitions="Auto, *, Auto">
 
-        <Grid Grid.Row="0" BackgroundColor="#121212" Padding="20,50,20,30">
+        <Grid Grid.Row="0" BackgroundColor="#121212" Padding="20,50,5,5">
             <Grid ColumnDefinitions="Auto, *">
                 <ImageButton Grid.Column="0" 
                              Source="back_arrow_white.png" 
@@ -77,14 +77,15 @@
                        TextColor="#FFFFFF" 
                        FontSize="22" 
                        FontAttributes="Bold" 
-                       VerticalOptions="Center" 
-                       Margin="15,0,0,0"/>
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       Margin="0,40,38,0"/>
             </Grid>
         </Grid>
 
         <VerticalStackLayout Grid.Row="1" 
-                             Padding="30" 
-                             Spacing="20" 
+                             Padding="10" 
+                             Spacing="10" 
                              VerticalOptions="Center">
 
             <Label Text="Uma foto ajuda as pessoas a reconhecerem você e permite saber quando você está conectado."

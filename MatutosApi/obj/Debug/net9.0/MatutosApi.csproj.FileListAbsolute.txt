@@ -178,6 +178,7 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\runtimes\w
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosDomain.dll
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\bin\Debug\net9.0\MatutosDomain.pdb
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.csproj.AssemblyReference.cache
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rpswa.dswa.cache.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.AssemblyInfoInputs.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.AssemblyInfo.cs
@@ -185,10 +186,15 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.sourcelink.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\scopedcss\bundle\MatutosApi.styles.css
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\swae.build.ex.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.csproj.Up2Date
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.dll
@@ -196,9 +202,3 @@ C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\refint\Mat
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.pdb
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\MatutosApi.genruntimeconfig.cache
 C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\ref\MatutosApi.dll
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjimswa.dswa.cache.json
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\staticwebassets.build.json.cache
-C:\Users\Ueler\Desktop\Estagio\MatutosApp\MatutosApi\obj\Debug\net9.0\swae.build.ex.cache

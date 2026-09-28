@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace MatutosApp.ViewsModels
 {
-    //[QueryProperty(nameof(AdministradorCadastro), "CadastroDeUsuario")]
+    [QueryProperty(nameof(AdministradorCadastro), "CadastroDeUsuario")]
     public partial class UsuarioViewModel : BaseViewModel, IQueryAttributable
     {
         public readonly UsuarioService? _usuarioService;
@@ -69,7 +69,6 @@ namespace MatutosApp.ViewsModels
             usuarioTipoDisponivel = new ObservableCollection<UsuarioTipo>(Enum.GetValues(typeof(UsuarioTipo)).Cast<UsuarioTipo>());
 
             EcontrarTipoUsuarioLogado();
-            DefinirModoDaTela();
         }
 
         partial void OnSenhaChanged(string value)

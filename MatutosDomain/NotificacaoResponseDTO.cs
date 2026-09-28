@@ -8,6 +8,7 @@ namespace MatutosDomain
 {
     public class NotificacaoResponseDTO
     {
+        public int Codigo_Historico { get; set; }
         public int? ConfiguraNotificacao { get; set; }
         public string? Mensagem { get; set; }
         public DateTime? DataDisparo { get; set; }

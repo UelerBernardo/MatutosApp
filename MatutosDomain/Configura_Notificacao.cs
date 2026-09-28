@@ -19,10 +19,10 @@ namespace MatutosDomain
         public string? Descricao { get; set; }
         public string? Mensagem { get; set; }
         public int? Valor { get; set; }
+        public DateTime? DataCadastro { get; set; }
         public UnidadeTempoEnum? UnidadeTempo { get; set; }
         [ForeignKey("Codigo_Tipo")]
         public Tipo_Evento? TipoEventoRelacionado { get; set; }
-
         public ICollection<Notificacao> Notificacoes { get; set; } = new List<Notificacao>();
     }
 }

@@ -5,11 +5,77 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
-    <!-- 1. CORREÇÃO: "Auto" para topo, "*" para o meio (expande), e "Auto" para o rodapé -->
-    <Grid RowDefinitions="Auto, *, Auto" Padding="20">
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Principal (Verde) -->
+        <Style x:Key="BotaoVerdeStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#4CAF50" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Escurece o verde ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#388E3C" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
 
-        <!-- Cabeçalho (Fica no topo: Row 0) -->
-        <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,20">
+        <!-- Estilo do Botão Secundário (Transparente com Borda) -->
+        <Style x:Key="BotaoContornoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="#333333" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="TextColor" Value="#AAAAAA" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Preenche com fundo escuro e acende o texto ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#1E1E1E" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para o Botão Escuro (Filtrar) -->
+        <Style x:Key="BotaoFiltroStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2A2A2A" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#444444" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="20">
+
+        <!-- 1. Cabeçalho -->
+        <VerticalStackLayout Grid.Row="0" Spacing="5" Margin="0,0,0,15">
             <Label Text="Regras de Notificação" 
                    FontSize="28" 
                    FontAttributes="Bold" 
@@ -19,11 +85,68 @@
                    TextColor="#888888"/>
         </VerticalStackLayout>
 
-        <!-- Lista (Fica no meio e empurra o resto para baixo: Row 1) -->
-        <CollectionView Grid.Row="1" 
+        <!-- 2. Painel de Filtros -->
+        <Border Grid.Row="1" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15" Margin="0,0,0,15">
+            <VerticalStackLayout Spacing="12">
+
+                <!-- Linha 1: Datas -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <!-- Data Inicial -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Data Inicial" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataInicial}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Data Final -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Data Final" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataFinal}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Linha 2: Status e Botão Filtrar -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+
+                    <!-- Status -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Status" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <Picker ItemsSource="{Binding OpcoesStatus}"
+                                    SelectedItem="{Binding StatusSelecionado}"
+                                    TextColor="White"
+                                    TitleColor="#888888"
+                                    BackgroundColor="Transparent"
+                                    VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Botão Filtrar -->
+                    <!-- VerticalOptions="End" alinha o botão à parte inferior, ficando na mesma reta da caixa do Picker -->
+                    <Button Grid.Column="1"
+                            Text="Filtrar" 
+                            Command="{Binding ConsultarRegraNotificacaoCommand}" 
+                            Style="{StaticResource BotaoFiltroStyle}"
+                            HeightRequest="45"
+                            VerticalOptions="End"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- 3. Lista -->
+        <CollectionView Grid.Row="2" 
                         ItemsSource="{Binding ListaRegraNotificacao}"
-                        SelectionMode="None"
-                        SelectedItem="{Binding RegraClicada}">
+                        SelectionMode="None">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -34,10 +157,13 @@
                             Margin="0,0,0,15" 
                             Padding="16">
 
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer CommandParameter="{Binding .}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlterarRegraCommand}"/>
+                        </Border.GestureRecognizers>
+
                         <!-- 3 Colunas: Esquerda (Texto), Centro (Ativo), Direita (Lápis) -->
                         <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto, Auto" ColumnSpacing="12" RowSpacing="8">
 
-                            <!-- 1. Regra / ID (Esquerda - Linha 0) -->
                             <Label Grid.Row="0" Grid.Column="0" 
                                    Text="{Binding Codigo_Notificacao, StringFormat='Regra: {0}'}" 
                                    FontSize="18" 
@@ -45,14 +171,13 @@
                                    FontAttributes="Bold"
                                    VerticalOptions="Center"/>
 
-                            <!-- 2. Descrição / Título (Esquerda - Linha 1) -->
                             <Label Grid.Row="1" Grid.Column="0" 
                                    Text="{Binding Descricao, StringFormat='Título: {0}'}" 
                                    FontSize="13" 
                                    TextColor="#CCCCCC"
                                    VerticalOptions="Center"/>
 
-                            <!-- 3. Status ATIVO (Centro - Ocupa as 2 linhas verticalmente) -->
+                            <!-- Status ATIVO -->
                             <VerticalStackLayout Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" 
                                                  VerticalOptions="Center" 
                                                  HorizontalOptions="Center" 
@@ -64,7 +189,7 @@
                                         Scale="0.75"/>
                             </VerticalStackLayout>
 
-                            <!-- 4. Botão Lápis / Edição (Direita - Ocupa as 2 linhas verticalmente) -->
+                            <!-- Botão Lápis / Edição -->
                             <Frame Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" 
                                    WidthRequest="42" HeightRequest="42" 
                                    CornerRadius="21" 
@@ -74,7 +199,8 @@
                                    VerticalOptions="Center" 
                                    HorizontalOptions="End">
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding AbrirImagemUsuarioCommand}" />
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AbrirAlterarRegraCommand}" 
+                                                          CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
                                 <Image Source="lapis.png" WidthRequest="20" HeightRequest="20" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Frame>
@@ -86,28 +212,29 @@
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
                     <Label Text="Nenhuma regra encontrada." TextColor="#FFFFFF" FontSize="18" HorizontalOptions="Center"/>
-                    <Label Text="Cadastre uma nova regra para começar." TextColor="#888888" FontSize="14" HorizontalOptions="Center"/>
+                    <Label Text="Verifique os filtros ou cadastre uma nova regra." TextColor="#888888" FontSize="14" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
         </CollectionView>
 
-        <!-- 2. CORREÇÃO: Rodapé com Botões agora na Row 2, colado na parte inferior -->
-        <VerticalStackLayout Grid.Row="2" Spacing="0" VerticalOptions="End" Margin="0,0,0,0">
+        <!-- 4. Rodapé -->
+        <VerticalStackLayout Grid.Row="3" Spacing="0" VerticalOptions="End" Margin="0,0,0,0">
             <BoxView HeightRequest="1" Color="#333333" Margin="0,0,0,15" />
             <VerticalStackLayout Spacing="15" BackgroundColor="#121212">
+
+                <!-- Botão Principal de Ação (Verde) -->
                 <Button Text="Nova Regra"
                         Command="{Binding AbrirRegraNotificacaoCommand}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
+                        Style="{StaticResource BotaoVerdeStyle}"
                         FontSize="16"
-                         />
+                        HeightRequest="45"/>
+
+                <!-- Botão Secundário (Transparente com borda cinza) -->
                 <Button Text="Voltar"
-                        Command="{Binding VoltarTela}"
-                        BackgroundColor="#E0E0E0"
-                        TextColor="#121212"
-                        FontAttributes="Bold"
-                        FontSize="16"/>
+                        Command="{Binding VoltarCommand}"
+                        Style="{StaticResource BotaoContornoStyle}"
+                        FontSize="16"
+                        HeightRequest="45"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
 

@@ -5,6 +5,81 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Azul (Voltar) -->
+        <Style x:Key="BotaoVoltarStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2196F3" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="BorderColor" Value="#1976D2" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Escurece o azul ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#1976D2" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- Estilo do Botão Vermelho Vazado (Cancelar) -->
+        <Style x:Key="BotaoCancelarStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#E63946" />
+            <Setter Property="BorderColor" Value="#E63946" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Preenche o fundo de vermelho e letra fica branca ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#E63946" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- Estilo do Botão Verde (Concluir) -->
+        <Style x:Key="BotaoConcluirStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#4CAF50" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="BorderColor" Value="#FFFFFF" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Escurece o verde ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#388E3C" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <ScrollView Padding="20">
         <VerticalStackLayout Spacing="20">
 
@@ -79,7 +154,6 @@
             <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" Padding="20" StrokeShape="RoundRectangle 15">
                 <VerticalStackLayout Spacing="15">
                     <Grid ColumnDefinitions="40, *">
-                        <!--<Label Grid.Column="0" Text="👤" FontSize="20" VerticalOptions="Center"/>-->
                         <Image Grid.Column="0" Source="usuariodetalhe.png" VerticalOptions="Center" HeightRequest="25" WidthRequest="25"/>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                             <Label Text="Cliente" FontSize="12" FontAttributes="Bold" TextColor="#AAAAAA"/>
@@ -134,23 +208,22 @@
 
             <VerticalStackLayout Spacing="15" Margin="0,10,0,40">
 
+                <!-- Aplicado o BotaoVoltarStyle e removidas propriedades redundantes -->
                 <Button Text="{Binding NomeBotaoAcao}" 
                         Command="{Binding VoltarCommand}"
-                        BackgroundColor="#4CAF50"
-                        TextColor="#FFFFFF"
-                        FontAttributes="Bold"
-                        CornerRadius="12"
-                        FontSize="16"/>
+                        Style="{StaticResource BotaoVoltarStyle}"/>
 
+                <!-- Aplicado o BotaoCancelarStyle -->
                 <Button Text="Cancelar Agendamento" 
                         Command="{Binding CancelarAgendamentoCommand}"
-                        BackgroundColor="Transparent"
-                        BorderColor="#E63946"
-                        BorderWidth="1"
-                        TextColor="#E63946"
-                        FontAttributes="Bold"
-                        CornerRadius="12"
-                        FontSize="16"/>
+                        IsVisible="{Binding PodeVisualizarCliente}"
+                        Style="{StaticResource BotaoCancelarStyle}"/>
+
+                <!-- Aplicado o BotaoConcluirStyle -->
+                <Button Text="Concluir Agendamento" 
+                        Command="{Binding ConcluirAgendamentoCommand}"
+                        IsVisible="{Binding PodeVisualizarAdmBar}"
+                        Style="{StaticResource BotaoConcluirStyle}"/>
 
             </VerticalStackLayout>
 

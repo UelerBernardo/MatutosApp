@@ -5,20 +5,120 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto, *, Auto" Padding="0,20,0,0">
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Principal -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
 
+    <!-- Adicionada uma linha extra (o segundo Auto) para o Painel de Filtros -->
+    <Grid RowDefinitions="Auto, Auto, *, Auto" Padding="0,20,0,0">
+
+        <VerticalStackLayout>
         <!-- LINHA 0: Título -->
         <Label Grid.Row="0"
-               Text="Meus Agendamentos"
+               Text="Meus"
+               FontSize="36"
+               FontAttributes="Bold"
+               TextColor="#FFFFFF"
+               FontFamily="Cursive" 
+               HorizontalOptions="Center" 
+               Margin="0,0,0,0" />
+        <Label Grid.Row="0"
+               Text="Agendamentos"
                FontSize="36"
                FontAttributes="Bold"
                TextColor="#FFFFFF"
                FontFamily="Cursive" 
                HorizontalOptions="Center" 
                Margin="0,0,0,15" />
+        </VerticalStackLayout>
+        <!-- LINHA 1: Painel de Filtros -->
+        <Border Grid.Row="1" BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15" Margin="15,0,15,15">
+            <VerticalStackLayout Spacing="12">
 
-        <!-- LINHA 1: Lista (Ocupa o meio da tela) -->
-        <CollectionView Grid.Row="1" 
+                <!-- DATAS -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Data Inicial" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataInicial}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Data Final" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <DatePicker Date="{Binding DataFinal}" 
+                                        TextColor="White" 
+                                        BackgroundColor="Transparent" 
+                                        VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- NOME DO BARBEIRO E SITUAÇÃO -->
+                <Grid ColumnDefinitions="*, 130" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Barbeiro (Opcional)" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <Entry Text="{Binding NomeBarbeiro}" 
+                                   Placeholder="Ex: João" 
+                                   TextColor="White" 
+                                   PlaceholderColor="#888888" 
+                                   BackgroundColor="Transparent" 
+                                   VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Situação" FontSize="12" FontAttributes="Bold" TextColor="#AAAAAA"/>
+                        <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
+                            <Picker TitleColor="#888888"
+                                    ItemsSource="{Binding FiltroSituacao}"
+                                    SelectedItem="{Binding SituacaoSelecionada}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#FFFFFF"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="Center"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- BOTÃO PESQUISAR -->
+                <Button Text="Pesquisar" 
+                        Command="{Binding ConsultarAgendamentosCommand}" 
+                        Style="{StaticResource BotaoCinzaStyle}" 
+                        Margin="0,5,0,0"/>
+
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- LINHA 2: Lista (Ocupa o resto do meio da tela) -->
+        <!-- Atualizado para Grid.Row="2" -->
+        <CollectionView Grid.Row="2" 
                         ItemsSource="{Binding ListaAgendamentos}"
                         SelectionMode="None"
                         Margin="15,0,15,0">
@@ -29,7 +129,7 @@
 
             <CollectionView.EmptyView>
                 <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10" Margin="0,50,0,0">
-                    <Label Text="✂️" FontSize="50" HorizontalOptions="Center"/>
+                    <Image Source="meusagendamentos.png" HeightRequest="60" WidthRequest="60"/>
                     <Label Text="Você não possui agendamentos recentes." 
                            TextColor="#AAAAAA" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                 </VerticalStackLayout>
@@ -45,10 +145,8 @@
                                 CommandParameter="{Binding Codigo_Agendamento}" />
                         </Border.GestureRecognizers>
 
-                        <!-- Ajustado para 3 linhas sequenciais -->
                         <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
 
-                            <!-- 👉 CORREÇÃO AQUI: Adicionado Grid.ColumnSpan="2" para a data utilizar a tela inteira -->
                             <HorizontalStackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Spacing="4" VerticalOptions="Center">
                                 <Label Text="{Binding Codigo_Agendamento, StringFormat='Agendamento: {0}'}" TextColor="#AAAAAA" FontAttributes="Bold" VerticalOptions="Center"/>
                                 <Label Text=" | " TextColor="#AAAAAA" FontAttributes="Bold" VerticalOptions="Center"/>
@@ -62,10 +160,9 @@
                                     <Image Source="barbeiroagendamento.png" HeightRequest="25" WidthRequest="25" VerticalOptions="Center"/>
                                     <Label Text="Barbeiro" FontSize="15" TextColor="#AAAAAA" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding Barbeiro.Nome}" FontSize="15" TextColor="#FFFFFF" FontAttributes="Bold"/>
+                                <Label Text="{Binding NomeBarbeiro}" FontSize="15" TextColor="#FFFFFF" FontAttributes="Bold"/>
                             </VerticalStackLayout>
 
-                            <!-- O Status subiu para a Linha 1 -->
                             <Border Grid.Row="1" Grid.Column="1" Padding="8,4" StrokeShape="RoundRectangle 5" StrokeThickness="1" BackgroundColor="#2A2A2A" VerticalOptions="Start">
                                 <Border.Triggers>
                                     <DataTrigger TargetType="Border" Binding="{Binding Codigo_Situacao_Agendamento}" Value="Aberto">
@@ -105,7 +202,7 @@
                                     <Image Source="usuarioagendamento.png" HeightRequest="25" WidthRequest="20" VerticalOptions="Center"/>
                                     <Label Text="Cliente" FontSize="15" TextColor="#AAAAAA" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
-                                <Label Text="{Binding Cliente.Nome}" FontSize="15" TextColor="#FFFFFF" FontAttributes="Bold"/>
+                                <Label Text="{Binding NomeCliente}" FontSize="15" TextColor="#FFFFFF" FontAttributes="Bold"/>
                             </VerticalStackLayout>
 
                             <VerticalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="End" Spacing="2" VerticalOptions="End">
@@ -119,12 +216,14 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- LINHA 2: Botão Voltar no rodapé -->
-        <VerticalStackLayout Grid.Row="2" Spacing="0">
+        <!-- LINHA 3: Botão Voltar no rodapé -->
+        <!-- Atualizado para Grid.Row="3" -->
+        <VerticalStackLayout Grid.Row="3" Spacing="0">
             <BoxView HeightRequest="1" Color="#333333" />
             <VerticalStackLayout Spacing="15" Padding="20,10,20,10" BackgroundColor="#121212">
                 <Button Text="Voltar"
                         Command="{Binding VoltarTela}"
+                        Style="{StaticResource BotaoCinzaStyle}"
                         BackgroundColor="#E0E0E0"
                         TextColor="#121212"
                         FontAttributes="Bold"

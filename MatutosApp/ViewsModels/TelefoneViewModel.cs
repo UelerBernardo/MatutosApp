@@ -29,12 +29,10 @@ namespace MatutosApp.ViewsModels
 
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(TituloPagina))]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
         private AcaoTela _acaoTela;
 
         //propriedade para receber se é alteração ou cadastro para mudar o nome da tela
-        public string TituloPagina => AcaoTela == AcaoTela.Cadastro ? "Novo Cliente" : "Editar Perfil";
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Alterar";
         
 

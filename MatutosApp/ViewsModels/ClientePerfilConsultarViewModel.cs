@@ -17,7 +17,7 @@ namespace MatutosApp.ViewsModels
 
         private readonly UsuarioService _usuarioService;
 
-        [ObservableProperty] private Usuario usuarioPerfil;
+        [ObservableProperty] private UsuarioPerfil usuarioPerfil;
 
         [ObservableProperty] private bool isPopupSenhaVisivel;
         [ObservableProperty] private string senhaAtual;
@@ -66,6 +66,12 @@ namespace MatutosApp.ViewsModels
             OnPropertyChanged(nameof(SenhaForte));
         }
 
+        [RelayCommand]
+        public async Task AbrirTelaSobreNos()
+        {
+            await Shell.Current.GoToAsync(nameof(SobreNosView));
+        }
+
         public ImageSource FotoPerfilSource
         {
             get
@@ -92,7 +98,12 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task AbrirMeusDados()
         {
-            await Shell.Current.GoToAsync(nameof(UsuarioCadastroView));
+            var parametros = new Dictionary<string, object>
+            {
+                {"CadastroDeUsuario", false}
+            };
+
+            await Shell.Current.GoToAsync(nameof(UsuarioCadastroView), parametros);
         }
         [RelayCommand]
         public async Task AbrirAgendamentos()

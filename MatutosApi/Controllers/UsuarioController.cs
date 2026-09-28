@@ -380,23 +380,32 @@ namespace MatutosApi.Controllers
                     return Unauthorized(new { Mensagem = "Usuário não autenticado ou token inválido." });
                 }
 
-                var clienteconsulta = await _dbcontext.Usuarios
-                    .Where(a => a.Codigo_Usuario == codigoUsuario)
-                    .Select(a => new
+                int notificacoesNaoLidas = await (
+                    from notificacao in _dbcontext.Notificacoes
+                    where notificacao.Codigo_Usuario == codigoUsuario && notificacao.Lida == false
+                    select notificacao
+                ).CountAsync();
+
+                var consulta = await (
+                    from user in _dbcontext.Usuarios
+                    where (user.Codigo_Usuario == codigoUsuario)
+                    select new UsuarioPerfil
                     {
-                        a.Codigo_Usuario,
-                        a.Nome,
-                        a.Email,
-                        a.Ativo,
-                        a.Imagem_Usuario
+                        Codigo_Usuario = user.Codigo_Usuario,
+                        Nome = user.Nome,
+                        Email = user.Email,
+                        Imagem_Usuario = user.Imagem_Usuario,
+                        Ativo = user.Ativo,
+                        NotificacaoNaoLidas = notificacoesNaoLidas
                     }).FirstOrDefaultAsync();
 
-                if (clienteconsulta == null)
+
+                if (consulta == null)
                 {
                     return NotFound(new { Mensagem = "Perfil de cliente não encontrado." });
                 }
 
-                return Ok(clienteconsulta);
+                return Ok(consulta);
             }
             catch (Exception ex)
             {

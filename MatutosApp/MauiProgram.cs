@@ -10,6 +10,7 @@ using MatutosApp.ViewsModels;
 using Microsoft.Extensions.Logging;
 using Plugin.Firebase.Bundled.Shared;
 using Microsoft.Maui.LifecycleEvents;
+
 #if ANDROID
 using Plugin.Firebase.Bundled.Platforms.Android;
 #endif
@@ -39,10 +40,18 @@ namespace MatutosApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            string ipDaApi = DeviceInfo.Platform == DevicePlatform.Android
-      ? "https://10.0.2.2:7110/"
-      : "https://localhost:7110/";
 
+            // 👉 1. ROTEAMENTO DE REDE INTELIGENTE
+            string ipDaApi = "http://172.20.10.2:5000/";
+
+            if (DeviceInfo.DeviceType == DeviceType.Virtual && DeviceInfo.Platform == DevicePlatform.Android)
+            {
+                ipDaApi = "https://10.0.2.2:7110/";
+            }
+            else if (DeviceInfo.Platform == DevicePlatform.WinUI)
+            {
+                ipDaApi = "https://localhost:7110/";
+            }
 
 
             // 👉 2. O passaporte de segurança do emulador
@@ -101,7 +110,6 @@ namespace MatutosApp
            ;
 
 
-
             // 👉 3. ViewModels
             builder.Services.AddTransient<UsuarioViewModel>();
             builder.Services.AddTransient<TelefoneViewModel>();
@@ -124,6 +132,8 @@ namespace MatutosApp
             builder.Services.AddTransient<ConfiguraNotificacaoConsultarViewModel>();
             builder.Services.AddTransient<NotificacaoConsultarViewModel>();
             builder.Services.AddTransient<UsuarioConsultarViewModel>();
+            builder.Services.AddTransient<AgendamentoMeusServicosViewModel>();
+            builder.Services.AddTransient<SobreNosViewModel>();
 
 
             // 👉 4. Views
@@ -148,13 +158,14 @@ namespace MatutosApp
             builder.Services.AddTransient<ConfiguraNotificacaoConsultarView>();
             builder.Services.AddTransient<NotificacaoConsultarView>();
             builder.Services.AddTransient<UsuarioConsultarView>();
+            builder.Services.AddTransient<AgendamentoMeusServicosView>();
+            builder.Services.AddTransient<SobreNosView>();
 
 
             // 👉 5. Configuração Visual (Somente regra de interface aqui dentro!)
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemBorda", (handler, view) =>
             {
                 if (handler.PlatformView == null) return;
-
 #if ANDROID
                 handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 #elif IOS
@@ -171,6 +182,7 @@ namespace MatutosApp
 
             return builder.Build();
         }
+
         private static CrossFirebaseSettings CreateCrossFirebaseSettings()
         {
             return new CrossFirebaseSettings(

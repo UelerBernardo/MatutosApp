@@ -18,9 +18,93 @@ namespace MatutosApi.Controllers
             _dbContext = dbContext;
         }
 
+        [HttpPut("visualizar-todas")]
+        [Authorize]
+        public async Task<IActionResult> VisualizarTodas()
+        {
+            try
+            {
+                var usuarioLogado = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
+                int idPessoaLogada = int.Parse(usuarioLogado);
+
+                int linhasAfetadas = await _dbContext.Notificacoes
+                    .Where(not => not.Codigo_Usuario == idPessoaLogada && not.Lida == false)
+                    .ExecuteUpdateAsync(setters => setters
+                        .SetProperty(not => not.Lida, true)); // Valor true chumbado aqui!
+
+                if (linhasAfetadas == 0)
+                {
+                    return BadRequest(new { Mensagem = "Todas as notificações já estão lidas." });
+                }
+
+                return Ok(new { Mensagem = $"{linhasAfetadas} notificação(ões) marcada(s) como visualizada(s)!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao marcar como visualizada as notificações: {ex.Message}" });
+            }
+        }
+
+        [HttpGet("notificacao-detalhe/{idHistorico}")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarDetalhesNotificacao(int idHistorico)
+        {
+            try
+            {
+                if (idHistorico <= 0)
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos para consultar os detalhes da notificação" });
+                }
+                var usuarioLogado = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
+                int idPessoaLogada = int.Parse(usuarioLogado);
+
+                var not = await _dbContext.Notificacoes.FirstOrDefaultAsync(n => n.Codigo_Historico == idHistorico);
+                if (not == null)
+                {
+                    return NotFound(new { Mensagem = "Notificação não encontrada." });
+                }
+                if (not.Codigo_Usuario != idPessoaLogada)
+                {
+                    return Forbid(); // Retorna 403 (Proibido)
+                }
+
+                if (!not.Lida)
+                {
+                    not.Lida = true;
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                // 5. Faz a consulta detalhada com os Joins que você já tinha feito brilhantemente
+                var notDetalhes = await (
+                    from notificacao in _dbContext.Notificacoes
+                    join cliente in _dbContext.Clientes on
+                        notificacao.Codigo_Usuario equals cliente.Codigo_Usuario
+                    join regra in _dbContext.Configura_Notificacoes on
+                        notificacao.Codigo_Notificacao equals regra.Codigo_Notificacao
+                    where (notificacao.Codigo_Historico == idHistorico)
+                    select new NotificacaoDetalhes
+                    {
+                        Codigo_Historico = idHistorico,
+                        Codigo_Notificacao = notificacao.Codigo_Notificacao,
+                        Codigo_Usuario = notificacao.Codigo_Usuario,
+                        NomeCliente = cliente.Nome,
+                        MensagemEnviada = notificacao.MensagemEnviada,
+                        DataDisparo = notificacao.DataDisparo,
+                        Lida = notificacao.Lida, // Como já salvamos acima, aqui já vai voltar "true"
+                        Descricao = regra.Descricao,
+                    }).FirstOrDefaultAsync();
+
+                return Ok(notDetalhes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao consultar detalhes da notificação: {ex.Message}" });
+            }
+        }
+
         [HttpGet ("notificacao-consultar")]
         [Authorize]
-        public async Task<IActionResult> ConsultarNotificacao()
+        public async Task<IActionResult> ConsultarNotificacao([FromQuery] DateTime dataInicial, DateTime dataFinal)
         {
             var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
             int codigoUsuarioLogado = int.Parse(usuario);
@@ -33,18 +117,18 @@ namespace MatutosApi.Controllers
             try
             {
                 var listaDeNotificacao = await _dbContext.Notificacoes
-                    .Where(n => n.Codigo_Usuario == codigoUsuarioLogado)
+                    .Where(n => n.Codigo_Usuario == codigoUsuarioLogado && n.DataDisparo >= dataInicial && n.DataDisparo <= dataFinal)
                     .Join(
                         _dbContext.Configura_Notificacoes,
                         notificacao => notificacao.Codigo_Notificacao,
                         configuracao => configuracao.Codigo_Notificacao,
                         (notificacao, configuracao) => new
                         {
+                            Codigo_Historico = notificacao.Codigo_Historico,
                             ConfiguraNotificacao = notificacao.Codigo_Notificacao,
                             Mensagem = notificacao.MensagemEnviada,
                             DataDisparo = notificacao.DataDisparo,
                             Lida = notificacao.Lida,
-
                             DescricaoRegra = configuracao.Descricao,
                             TipoEvento = configuracao.Codigo_Tipo
                         })
@@ -61,11 +145,13 @@ namespace MatutosApi.Controllers
 
         [HttpGet("regra-consultar")]
         [Authorize]
-        public async Task<IActionResult> ConsultarRegraNotificacao()
+        public async Task<IActionResult> ConsultarRegraNotificacao([FromQuery] DateTime inicial, DateTime final, bool? ativo)
         {
             try
             {
-                var listaRegraNotificacao = await _dbContext.Configura_Notificacoes.ToListAsync();
+                var listaRegraNotificacao = await _dbContext.Configura_Notificacoes
+                    .Where(regra => regra.DataCadastro >= inicial && regra.DataCadastro <= final && regra.Ativo == ativo || !ativo.HasValue)
+                    .ToListAsync();
 
                 return Ok(listaRegraNotificacao);
             }
@@ -111,7 +197,7 @@ namespace MatutosApi.Controllers
                     return NotFound( new {Mensagem = "Regra de notifiacação não encontrada."});
                 }
 
-                return Ok("Regra alterada com sucesso!");
+                return Ok(new { Mensagem = "Regra alterada com sucesso!" });
             }
             catch(Exception ex)
             {
@@ -135,7 +221,8 @@ namespace MatutosApi.Controllers
                     Descricao = notificacaoNova.Descricao,
                     Mensagem = notificacaoNova.Mensagem,
                     Valor = notificacaoNova.Valor,
-                    UnidadeTempo = notificacaoNova.UnidadeTempo
+                    UnidadeTempo = notificacaoNova.UnidadeTempo,
+                    DataCadastro = DateTime.Now
                 };
 
                 // 2. Salvamos no banco (Aqui o Entity Framework preenche o ID gerado)

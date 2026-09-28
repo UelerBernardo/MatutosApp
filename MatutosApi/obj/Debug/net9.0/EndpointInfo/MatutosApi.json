@@ -5,6 +5,50 @@
     "version": "v1"
   },
   "paths": {
+    "/agendamento/meus-servicos": {
+      "get": {
+        "tags": [
+          "Agendamento"
+        ],
+        "parameters": [
+          {
+            "name": "nomeCliente",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "situacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/AgendamentoSituacao"
+            }
+          },
+          {
+            "name": "dataIncial",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dataFinal",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/agendamento/alterarSituacao/{codigoAgendamento}": {
       "patch": {
         "tags": [
@@ -164,10 +208,42 @@
         }
       }
     },
-    "/agendamento/consultar": {
+    "/agendamento/meus-agendamentos": {
       "get": {
         "tags": [
           "Agendamento"
+        ],
+        "parameters": [
+          {
+            "name": "nomeBarbeiro",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "situacao",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/AgendamentoSituacao"
+            }
+          },
+          {
+            "name": "datainicial",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "datafinal",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -188,10 +264,59 @@
         }
       }
     },
+    "/blacklist/alterar": {
+      "put": {
+        "tags": [
+          "Blacklist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Blacklist"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/blacklist/consultar": {
       "get": {
         "tags": [
           "Blacklist"
+        ],
+        "parameters": [
+          {
+            "name": "inicial",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "final",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -231,10 +356,63 @@
         }
       }
     },
+    "/notificacao/visualizar-todas": {
+      "put": {
+        "tags": [
+          "Notificacao"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notificacao/notificacao-detalhe/{idHistorico}": {
+      "get": {
+        "tags": [
+          "Notificacao"
+        ],
+        "parameters": [
+          {
+            "name": "idHistorico",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/notificacao/notificacao-consultar": {
       "get": {
         "tags": [
           "Notificacao"
+        ],
+        "parameters": [
+          {
+            "name": "dataInicial",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "dataFinal",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -247,6 +425,31 @@
       "get": {
         "tags": [
           "Notificacao"
+        ],
+        "parameters": [
+          {
+            "name": "inicial",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "final",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ativo",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -971,8 +1174,7 @@
           1,
           2,
           3,
-          4,
-          5
+          4
         ],
         "type": "integer",
         "format": "int32"
@@ -1208,6 +1410,11 @@
           "valor": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "dataCadastro": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "unidadeTempo": {
