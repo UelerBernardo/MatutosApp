@@ -150,6 +150,13 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task CancelarAgendamento()
         {
+            bool confirmacao = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realmente cancelar o agendamento? O progresso atual será desfeito.", "Sim", "Não");
+
+            if(!confirmacao)
+            {
+                return;
+            }
+
             string token = await SecureStorage.Default.GetAsync("jwt_token");
             if (Agendamento <= 0)
             {

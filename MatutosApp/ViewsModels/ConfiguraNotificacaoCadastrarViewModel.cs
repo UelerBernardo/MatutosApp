@@ -30,13 +30,25 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] private bool isValorHabilitado = true;
         [ObservableProperty] private bool isUnidadeTempoHabilitada = true;
 
+        [ObservableProperty] private bool podeEditar = true;
+
         [ObservableProperty] private Configura_Notificacao? regraSelecionada;
 
         public List<UnidadeTempoEnum> UnidadesDeTempo { get; set; } = Enum.GetValues(typeof(UnidadeTempoEnum)).Cast<UnidadeTempoEnum>().ToList();
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
+        [NotifyPropertyChangedFor(nameof(Titulo))]
+        private AcaoTela _acaoTela = AcaoTela.Cadastro;
+
+        public string Titulo => AcaoTela == AcaoTela.Cadastro ? "Configurar Avisos e Alertas" : "Alterar Avisos e Alertas";
+        public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Cadastrar" : "Alterar Regra";
+
         public ConfiguraNotificacaoCadastrarViewModel(NotificacaoService notificacaoService)
         {
             _notificacaoService = notificacaoService;
             _ = ConsultarTipoEvento();
+            DefinirModoTela();
         }
 
         private Tipo_Evento _tipoSelecionado;
@@ -52,45 +64,65 @@ namespace MatutosApp.ViewsModels
             }
         }
 
+        partial void OnRegraSelecionadaChanged(Configura_Notificacao? value)
+        {
+            if (value != null)
+            {
+                AcaoTela = AcaoTela.Alteração;
+            }
+            DefinirModoTela();
+        }
 
-        //private void ModoCadastro()
-        //{
-        //    Ativo = true;
-        //    Descricao = string.Empty;
-        //    Mensagem = string.Empty;
-        //    Valor = 0;
-        //    UnidadeTempo = UnidadeTempoEnum.Minutos;
-        //    TipoSelecionado
-        //}
+        private void DefinirModoTela()
+        {
+            if (AcaoTela == AcaoTela.Cadastro)
+            {
+                PodeEditar = true;
+                Ativo = true;
+                Mensagem = string.Empty;
+                Descricao = string.Empty;
+                Valor = 0;
+                UnidadeTempo = UnidadeTempoEnum.Dias;
+                TipoSelecionado = TiposEventos.FirstOrDefault();
+            }
+            else
+            {
+                if (RegraSelecionada != null)
+                {
+                    PodeEditar = false;
+                    Ativo = RegraSelecionada.Ativo;
+                    Mensagem = RegraSelecionada.Mensagem ?? string.Empty;
+                    Descricao = RegraSelecionada.Descricao ?? string.Empty;
+                    Valor = RegraSelecionada.Valor;
+                    UnidadeTempo = RegraSelecionada.UnidadeTempo;
+
+                    // 👉 CORREÇÃO 1: Mudança de .Where para .FirstOrDefault para bater com a tipagem
+                    TipoSelecionado = TiposEventos.FirstOrDefault(tipo => tipo.Codigo_Tipo == RegraSelecionada.Codigo_Tipo);
+                }
+            }
+        }
 
         private void AplicarRegrasDeTela()
         {
             if (TipoSelecionado == null || string.IsNullOrWhiteSpace(TipoSelecionado.Nome)) return;
 
-            // 👉 CORREÇÃO: Voltamos a testar o Nome (igual está no XAML) e ignorando maiúsculas/minúsculas
             if (TipoSelecionado.Nome.Trim().Equals("Promocional", StringComparison.OrdinalIgnoreCase))
             {
-                // Regra: Ficam INVISÍVEIS
                 IsValorVisivel = false;
                 IsUnidadeTempoVisivel = false;
-
                 Valor = null;
                 UnidadeTempo = null;
             }
             else if (TipoSelecionado.Nome.Trim().Equals("Inatividade", StringComparison.OrdinalIgnoreCase))
             {
-                // Regra: Ficam visíveis, mas a Unidade de tempo fica SOMENTE LEITURA
                 IsValorVisivel = true;
                 IsUnidadeTempoVisivel = true;
-
                 IsValorHabilitado = true;
                 IsUnidadeTempoHabilitada = false; // Trava o campo
-
                 UnidadeTempo = UnidadesDeTempo.FirstOrDefault(u => (int)u == 3);
             }
             else
             {
-                // Regra padrão: Tudo visível e liberado
                 IsValorVisivel = true;
                 IsUnidadeTempoVisivel = true;
                 IsValorHabilitado = true;
@@ -98,6 +130,7 @@ namespace MatutosApp.ViewsModels
             }
         }
 
+     
 
         [RelayCommand]
         public async Task ConsultarTipoEvento()
@@ -108,13 +141,22 @@ namespace MatutosApp.ViewsModels
             {
                 var resultado = await _notificacaoService.ConsultarTipoEvento(token);
 
-                if(resultado.Sucesso && resultado.Dados != null)
+                if (resultado.Sucesso && resultado.Dados != null)
                 {
                     TiposEventos.Clear();
 
-                    foreach(var evento in resultado.Dados)
+                    foreach (var evento in resultado.Dados)
                     {
                         TiposEventos.Add(evento);
+                    }
+
+                    if(AcaoTela == AcaoTela.Cadastro)
+                    {
+                        TipoSelecionado = TiposEventos.FirstOrDefault();
+                    }
+                    if (AcaoTela == AcaoTela.Alteração && RegraSelecionada != null)
+                    {
+                        TipoSelecionado = TiposEventos.FirstOrDefault(tipo => tipo.Codigo_Tipo == RegraSelecionada.Codigo_Tipo);
                     }
                 }
                 else
@@ -127,15 +169,34 @@ namespace MatutosApp.ViewsModels
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao consultar tipos: {ex.Message}", "OK");
             }
         }
-
         [RelayCommand]
-        public async Task CadastrarConfiguracaoNotificacao()
+        public async Task SalvarRegra()
+        {
+            // Validações básicas (não deixe enviar se o tipo ou a mensagem estiverem vazios)
+            if (TipoSelecionado == null || string.IsNullOrWhiteSpace(Mensagem))
+            {
+                await Application.Current.MainPage.DisplayAlert("Atenção", "O Tipo de Evento e a Mensagem são obrigatórios.", "OK");
+                return;
+            }
+
+            if (AcaoTela == AcaoTela.Cadastro)
+            {
+                await CadastrarConfiguracaoNotificacao();
+            }
+            else
+            {
+                await AlterarNotificacaoRegra();
+            }
+        }
+
+        // Tirei a tag [RelayCommand] daqui, pois ele não deve ser chamado direto pelo XAML
+        private async Task CadastrarConfiguracaoNotificacao()
         {
             string? token = await SecureStorage.Default.GetAsync("jwt_token");
             if (string.IsNullOrWhiteSpace(token))
             {
                 await Application.Current.MainPage.DisplayAlert("Sessão Expirada", "Faça login novamente para realizar o cadastro.", "Ok");
-                await Shell.Current.GoToAsync("///LoginView"); // Redireciona para o login
+                await Shell.Current.GoToAsync("///LoginView");
                 return;
             }
 
@@ -153,11 +214,10 @@ namespace MatutosApp.ViewsModels
 
                 var resultado = await _notificacaoService.CadastrarNotificacoes(token, notificacaoNova);
 
-                if(resultado.Sucesso)
+                if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
                     await Shell.Current.GoToAsync("..");
-
                 }
                 else
                 {
@@ -168,16 +228,14 @@ namespace MatutosApp.ViewsModels
             {
                 await Application.Current.MainPage.DisplayAlert("Erro", $"Não foi possível cadastrar as regras de notificação. Erro: {ex.Message}", "OK");
             }
-
         }
 
-        [RelayCommand]
-        public async Task AlterarNotificacaoRegra()
+        // Tirei a tag [RelayCommand] daqui, pois ele não deve ser chamado direto pelo XAML
+        private async Task AlterarNotificacaoRegra()
         {
             try
             {
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
-
 
                 var notificacaoAlterada = new Configura_Notificacao
                 {
@@ -192,7 +250,7 @@ namespace MatutosApp.ViewsModels
 
                 var resultado = await _notificacaoService.AlterarRegraNotificacao(token, notificacaoAlterada);
 
-                if(resultado.Sucesso)
+                if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Ok");
                     await Shell.Current.GoToAsync("..");

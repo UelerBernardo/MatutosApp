@@ -27,6 +27,54 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
+        public async Task<(bool Sucesso, string Mensagem, List<MeusServicos>? Dados)> ConsultarMeusServicos(string token, DateTime dataInicial, DateTime dataFinal, string? nomeUsuario, AgendamentoSituacao? situacao)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                var queryParams = new List<string>
+                    {
+                        $"dataInicial={dataInicial:yyyy-MM-ddTHH:mm:ss}",
+                        $"dataFinal={dataFinal:yyyy-MM-ddTHH:mm:ss}"
+                    };
+
+                if (!string.IsNullOrWhiteSpace(nomeUsuario))
+                {
+                    queryParams.Add($"nomeUsuario={Uri.EscapeDataString(nomeUsuario)}");
+                }
+
+                if (situacao.HasValue)
+                {
+                    queryParams.Add($"situacao={(int)situacao.Value}");
+                }
+
+                // 3. Juntamos tudo com '&' (ex: dataIncial=...&nomeCliente=...)
+                string queryString = string.Join("&", queryParams);
+
+                // Ajuste a rota base se o seu Controller exigir (ex: "agendamento/meus-servicos?")
+                string urlCompleta = $"agendamento/meus-servicos?{queryString}";
+
+                // 4. Executamos a requisição GET
+                var resposta = await _httpClient.GetAsync(urlCompleta);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<MeusServicos>>(options);
+                    return (true, "Consulta realizada com sucesso.", dados);
+                }
+                else
+                {
+                    var erro = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+                    return (false, erro?.Mensagem ?? "Não foi possível carregar os serviços.", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exceção ao consultar meus serviços: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.", null);
+            }
+        }
 
         public async Task<(bool Sucesso, string Mensagem, int IdAgendamento)> AgendamentoServicoCadastrar(List<Agendamento_Servico> agendamento_Servico, string token)
         {
@@ -154,20 +202,40 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<(bool Sucesso, string Mensagem, List<Agendamento>? Dados)> AgendamentoConsultar( string token)
+        public async Task<(bool Sucesso, string Mensagem, List<MeusAgendamentos>? Dados)> AgendamentoConsultar( string token, string? nomeBarbeiro, AgendamentoSituacao? situacao, DateTime dataInicial, DateTime dataFinal)
         {
             try
             {
                 var tokenLimpo = token.Replace("Bearer ", "").Trim();
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
 
-                var resposta = await _httpClient.GetAsync($"agendamento/consultar");
+                var query = new List<string>
+                {
+                    $"dataInicial={dataInicial: yyyy-MM-ddTHH:mm:ss}",
+                    $"dataFinal={dataFinal: yyyy-MM-ddTHH:mm:ss}"
+                };
+
+                if(!string.IsNullOrEmpty(nomeBarbeiro))
+                {
+                    query.Add($"nomeBarbeiro={Uri.EscapeDataString(nomeBarbeiro)}");
+                }
+
+                if(situacao.HasValue)
+                {
+                    query.Add($"situacao={(int)situacao.Value}");
+                }
+
+                string queryFinal = string.Join("&", query);
+
+                string urlCompleta = $"agendamento/meus-agendamentos?{queryFinal}";
+
+                var resposta = await _httpClient.GetAsync(urlCompleta);
 
                 if (resposta.IsSuccessStatusCode)
                 {
 
                     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    var dados = await resposta.Content.ReadFromJsonAsync<List<Agendamento>>(options);
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<MeusAgendamentos>>(options);
 
                     return (true, string.Empty, dados);
                 }

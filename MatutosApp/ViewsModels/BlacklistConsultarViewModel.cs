@@ -16,8 +16,12 @@ namespace MatutosApp.ViewsModels
     {
         private readonly BlacklistService _blacklistService;
 
+        [ObservableProperty] private DateTime dataInicial = DateTime.Now.Date.AddDays(-1);
+        [ObservableProperty] private DateTime dataFinal = DateTime.Now.Date;
+
         [ObservableProperty]
         private ObservableCollection<Blacklist> listaBlacklist = new();
+
 
         public BlacklistConsultarViewModel(BlacklistService blacklistService)
         {
@@ -26,18 +30,41 @@ namespace MatutosApp.ViewsModels
         }
 
         [RelayCommand]
+        public async Task AbrirAlteracaoBlacklist(Blacklist blacklist)
+        {
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenação", "Deseja realizar alteração do registro selecionado?", "Sim", "Não");
+
+            if(!confirmar)
+            {
+                return;
+            }
+
+            var query = new Dictionary<string, object>
+            {
+                { "BlacklistAlteracao", blacklist}
+            };
+
+            await Shell.Current.GoToAsync(nameof(BlacklistCadastrarView), query);
+        }
+
+        [RelayCommand]
         public async Task ConsultarBlacklist()
         {
             try
             {
                string token = await SecureStorage.Default.GetAsync("jwt_token");
-               var resultado = await _blacklistService.ConsultarBlacklist(token);
+
+                DateTime inicial = DataInicial;
+
+                DateTime final = DataFinal.AddHours(23).AddMinutes(59);
+
+               var resultado = await _blacklistService.ConsultarBlacklist(token, inicial, final);
 
                 if(resultado.Sucesso)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
-                        //ListaServicos.Clear();
+                        ListaBlacklist.Clear();
                         foreach (var blacklist in resultado.Dados)
                         {
 

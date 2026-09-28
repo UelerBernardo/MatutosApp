@@ -4,6 +4,7 @@ using MatutosDomain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Query.ExpressionVisitors.Internal;
 
 namespace MatutosApi.Controllers
 {
@@ -16,6 +17,50 @@ namespace MatutosApi.Controllers
         public AgendamentoController(MatutosDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+        }
+
+        [HttpGet("meus-servicos")]
+        [Authorize]
+        public async Task<IActionResult> ConsultarMeusServicos([FromQuery] string? nomeCliente, [FromQuery] AgendamentoSituacao? situacao, [FromQuery] DateTime dataIncial, [FromQuery] DateTime dataFinal)
+        {
+            try
+            {
+                var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
+
+                if (string.IsNullOrEmpty(usuario) || !int.TryParse(usuario, out int idPessoaLogada))
+                {
+                    return BadRequest(new { Mensagem = "Usuário logado não encontrado, faça login e tente novamente" });
+                }
+
+                var meusServicos = await (
+                    from agendamento in _dbContext.Agendamentos
+                    join cliente in _dbContext.Clientes on
+                    agendamento.Codigo_Cliente equals cliente.Codigo_Usuario
+                    where agendamento.Codigo_Barbeiro == idPessoaLogada
+                       && agendamento.Data_Agendamento >= dataIncial
+                       && agendamento.Data_Agendamento <= dataFinal
+                       && (string.IsNullOrEmpty(nomeCliente) || cliente.Nome.Contains(nomeCliente))
+                       && (situacao == null || agendamento.Codigo_Situacao_Agendamento == situacao)
+
+                    select new MeusServicos
+                    {
+                        Codigo_Agendamento = agendamento.Codigo_Agendamento,
+                        Data_Agendamento = agendamento.Data_Agendamento,
+                        Codigo_Cliente = agendamento.Codigo_Cliente,
+                        Codigo_Situacao_Agendamento = agendamento.Codigo_Situacao_Agendamento,
+                        Valor_Total_Agendamento = agendamento.Valor_Total_Agendamento,
+                        Ativo = agendamento.Ativo,
+                        Data_Fim_Agendamento = agendamento.Data_Fim_Agendamento,
+                        Codigo_Barbeiro = agendamento.Codigo_Barbeiro,
+                        Nome_Cliente = cliente.Nome
+                    }).ToListAsync();
+
+                return Ok(meusServicos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro interno ao consultar os serviços: {ex.Message}" });
+            }
         }
 
         [HttpPatch("alterarSituacao/{codigoAgendamento}")]
@@ -296,36 +341,43 @@ namespace MatutosApi.Controllers
                 }
         }
 
-        [HttpGet("consultar")]
+        [HttpGet("meus-agendamentos")]
         [Authorize]
-        public async Task<IActionResult> ConsultarAgendamento()
+        public async Task<IActionResult> ConsultarAgendamento([FromQuery] string? nomeBarbeiro, AgendamentoSituacao? situacao, DateTime datainicial, DateTime datafinal)
         {
             var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
 
-            int codigoUsuarioLogado = int.Parse(usuario);
+            int idUsuario = int.Parse(usuario);
+
+            var usuarioLogado = await _dbContext.Usuarios.Where(u => u.Codigo_Usuario == idUsuario).FirstOrDefaultAsync();
+
             try
             {
-                var agendamento = await _dbContext.Agendamentos
-                    .Where(a => a.Codigo_Cliente == codigoUsuarioLogado && a.Ativo == true && a.Data_Agendamento >= DateTime.Today.AddMonths(-1))
-                    .Select(a => new
+                var meusAgendamentos = await (
+                    from agendamento in _dbContext.Agendamentos
+                    join barbeiro in _dbContext.Barbeiros on
+                        agendamento.Codigo_Barbeiro equals barbeiro.Codigo_Usuario
+                    where (agendamento.Ativo == true) &&
+                            (agendamento.Codigo_Cliente == idUsuario) &&
+                            (agendamento.Data_Agendamento >= datainicial) &&
+                            (agendamento.Data_Agendamento <= datafinal) &&
+                            (string.IsNullOrWhiteSpace(nomeBarbeiro) || barbeiro.Nome.Contains(nomeBarbeiro)) &&
+                            (situacao == null || agendamento.Codigo_Situacao_Agendamento == situacao)
+                    select new MeusAgendamentos
                     {
-                        a.Codigo_Agendamento,
-                        a.Data_Agendamento,
-                        a.Valor_Total_Agendamento,
-                        a.Codigo_Situacao_Agendamento,
+                        Codigo_Agendamento = agendamento.Codigo_Agendamento,
+                        Data_Agendamento = agendamento.Data_Agendamento,
+                        Data_Fim_Agendamento = agendamento.Data_Fim_Agendamento,
+                        Ativo = agendamento.Ativo,
+                        Valor_Total_Agendamento = agendamento.Valor_Total_Agendamento,
+                        Codigo_Cliente = agendamento.Codigo_Cliente,
+                        Codigo_Barbeiro = agendamento.Codigo_Barbeiro,
+                        Codigo_Situacao_Agendamento = agendamento.Codigo_Situacao_Agendamento,
+                        NomeBarbeiro = barbeiro.Nome,
+                        NomeCliente = usuarioLogado.Nome
+                    }).ToListAsync();
 
-                        Cliente = new { Nome = a.Cliente.Nome},
-                        Barbeiro = new {Nome = a.Barbeiro.Nome}
-                    })
-                    .OrderByDescending(a => a.Codigo_Agendamento)
-                    .ToListAsync();
-
-                if (!agendamento.Any())
-                {
-                    return NotFound(new { Mensagem = $"Você não possui Angedamentos." });
-                }
-
-                return Ok(agendamento);
+                return Ok(meusAgendamentos);
             }
             catch (Exception ex)
             {

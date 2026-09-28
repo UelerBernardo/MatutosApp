@@ -11,7 +11,6 @@ namespace MatutosDomain
         Aberto = 1,
         Cancelado = 2,
         Liberado = 3,
-        Confirmado = 4,
-        Concluido = 5
+        Concluido = 4
     }
 }

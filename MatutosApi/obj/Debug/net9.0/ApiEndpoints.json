@@ -54,16 +54,6 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.AgendamentoController",
-    "Method": "ConsultarAgendamento",
-    "RelativePath": "agendamento/consultar",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
     "Method": "ConsultarDetalhesAgendamento",
     "RelativePath": "agendamento/consultar/detalhes/{id}",
     "HttpMethod": "GET",
@@ -95,6 +85,68 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "ConsultarAgendamento",
+    "RelativePath": "agendamento/meus-agendamentos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeBarbeiro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "situacao",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "datainicial",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "datafinal",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "ConsultarMeusServicos",
+    "RelativePath": "agendamento/meus-servicos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "nomeCliente",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "situacao",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "dataIncial",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "dataFinal",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.BarbeiroController",
     "Method": "ConsultarBarbeiro",
     "RelativePath": "barbeiro/consultar",
@@ -102,6 +154,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.BlacklistController",
+    "Method": "AlterarBlacklist",
+    "RelativePath": "blacklist/alterar",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "blacklistAlteracao",
+        "Type": "MatutosDomain.Blacklist",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -127,7 +195,18 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "inicial",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "final",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -137,7 +216,34 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "dataInicial",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "dataFinal",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "ConsultarDetalhesNotificacao",
+    "RelativePath": "notificacao/notificacao-detalhe/{idHistorico}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idHistorico",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -179,7 +285,23 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "inicial",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "final",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "ativo",
+        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -187,6 +309,16 @@
     "Method": "ConsultarTipoEvento",
     "RelativePath": "notificacao/tipo-evento/consultar",
     "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.NotificacaoController",
+    "Method": "VisualizarTodas",
+    "RelativePath": "notificacao/visualizar-todas",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [],

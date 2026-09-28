@@ -148,7 +148,7 @@
 
                         <Frame Grid.Column="1" BackgroundColor="#E0E0E0" CornerRadius="12" Padding="8,2" 
                                Margin="0,0,10,0" BorderColor="Transparent" HasShadow="False" VerticalOptions="Center">
-                            <Label Text="3" TextColor="#121212" FontSize="12" FontAttributes="Bold" />
+                            <Label Text="{Binding UsuarioPerfil.NotificacaoNaoLidas}" TextColor="#121212" FontSize="12" FontAttributes="Bold" />
                         </Frame>
                         <Label Grid.Column="2" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
                     </Grid>
@@ -177,9 +177,13 @@
 
                     <!-- Suporte -->
                     <Grid ColumnDefinitions="*, Auto" Padding="0,18">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AbrirTelaSobreNosCommand}"/>
+                        </Grid.GestureRecognizers>
                         <!-- AQUI: TextColor alterado para #E0E0E0 -->
-                        <Label Grid.Column="0" Text="Suporte" TextColor="#E0E0E0" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Label Grid.Column="0" Text="Sobre Nós" TextColor="#E0E0E0" FontSize="15" FontAttributes="Bold" VerticalOptions="Center" />
                         <Label Grid.Column="1" Text=">" TextColor="#888888" FontSize="18" FontAttributes="Bold" VerticalOptions="Center" />
+                        
                     </Grid>
                     <BoxView HeightRequest="1" Color="#2A2A2A" />
 

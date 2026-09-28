@@ -25,28 +25,35 @@ namespace MatutosApp.Services
             //    ? "https://10.0.2.2:7110/" // 👉 Emulador acessando a máquina (HTTPS)
             //    : "https://localhost:7110/";
 
-            //_httpClient = new HttpClient(ObterManipuladorInseguro())
-            //{
-            //    BaseAddress = new Uri(baseURL)
-
-            //};
         }
+        public async Task<(bool Sucesso, string Mensagem)> AlterarBlacklist(Blacklist blacklist, string token)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-        //private HttpMessageHandler ObterManipuladorInseguro()
-        //{
-        //    #if ANDROID
-        //        var handler = new Xamarin.Android.Net.AndroidMessageHandler();
-        //        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
-        //        {
-        //            if (cert != null && cert.Issuer.Equals("CN=localhost"))
-        //                return true;
-        //            return errors == System.Net.Security.SslPolicyErrors.None;
-        //        };
-        //        return handler;
-        //    #else
-        //                return new HttpClientHandler();
-        //    #endif
-        //}
+                var resultado = await _httpClient.PutAsJsonAsync("blacklist/alterar", blacklist);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if(resultado.IsSuccessStatusCode)
+                {
+                    var retornoApi = await resultado.Content.ReadFromJsonAsync<ApiResposta>(options);
+
+                    return (true, retornoApi.Mensagem ?? "Bloqueio alterado com sucesso!");
+                }
+                else
+                {
+                    var retornoApi = await resultado.Content.ReadFromJsonAsync<ApiResposta>(options);
+
+                    return (false, retornoApi.Mensagem ?? "Exceção para alterar a regra de bloqueio!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao cadastrar blacklist: {ex.Message}");
+                return (false, string.Empty);
+            }
+        }
 
         public async Task<(bool Sucesso, string Mensagem)> CadastrarBlacklist(Blacklist blacklist, string token)
         {
@@ -79,13 +86,23 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<(bool Sucesso, List<BlacklistResponse> Dados, string Mensagem)> ConsultarBlacklist(string token)
+        public async Task<(bool Sucesso, List<BlacklistResponse> Dados, string Mensagem)> ConsultarBlacklist(string token, DateTime inicial, DateTime final)
         {
             try
             {
+                var query = new List<string>
+                {
+                    $"inicial={inicial:yyyy-MM-ddTHH:mm:ss}",
+                    $"final={final:yyyy-MM-ddTHH:mm:ss}"
+                };
+
+                string queryString = string.Join("&", query);
+
+                string urlCompleta = $"blacklist/consultar?{queryString}";
+
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var resultado = await _httpClient.GetAsync("blacklist/consultar");
+                var resultado = await _httpClient.GetAsync(urlCompleta);
 
                 if (resultado.IsSuccessStatusCode)
                 {

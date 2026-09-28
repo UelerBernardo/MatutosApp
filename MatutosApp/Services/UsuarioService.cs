@@ -102,12 +102,12 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<Usuario> ConsultarPefil(string token)
+        public async Task<UsuarioPerfil> ConsultarPefil(string token)
         {
             var tokenLimpo = token.Replace("Bearer ", "").Trim();
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenLimpo);
 
-            return await _httpClient.GetFromJsonAsync<Usuario>("usuario/consultar");
+            return await _httpClient.GetFromJsonAsync<UsuarioPerfil>("usuario/consultar");
         }
 
         public async Task<(bool Sucesso, string Mensagem)> AlterarSenha(string token, string senhaAtualDigitada, string novaSenhaDigitada)

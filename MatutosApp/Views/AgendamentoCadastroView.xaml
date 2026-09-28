@@ -4,6 +4,30 @@
              x:Class="MatutosApp.Views.AgendamentoCadastroView"
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Vincular com Efeito de Clique -->
+        <Style x:Key="BotaoVincularStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#4CAF50" />
+            <!-- Verde original -->
+            <Setter Property="TextColor" Value="#FFFFFF" />
+
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Verde mais escuro quando clicado -->
+                                <Setter Property="BackgroundColor" Value="#388E3C" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="30" Padding="20,40,20,40">
 

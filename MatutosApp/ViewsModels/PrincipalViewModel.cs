@@ -19,9 +19,15 @@ namespace MatutosApp.ViewsModels
 
         private readonly UsuarioService _usuarioService;
 
-        [ObservableProperty] private Usuario usuarioPerfil;
+        [ObservableProperty] private UsuarioPerfil usuarioPerfil;
 
-        [ObservableProperty] private bool podeVisualizar;
+        [ObservableProperty] private bool podeVisualizarAdm;
+
+        [ObservableProperty] private bool podeVisualizarCliente;
+
+        [ObservableProperty] private bool podeVisualizarAdmBar = false;
+
+        [ObservableProperty] private bool podeVisualizarBarbeiro;
 
         [ObservableProperty] private UsuarioTipo usuarioTipoLogado;
 
@@ -58,17 +64,30 @@ namespace MatutosApp.ViewsModels
 
             if (usuarioLogado == null)
             {
-                PodeVisualizar = false;
+                PodeVisualizarAdm = false;
                 return;
             }
 
             if (usuarioLogado.TipoSelecionado == UsuarioTipo.Administrador)
             {
-                PodeVisualizar = true;
+                PodeVisualizarAdm = true;
+                PodeVisualizarCliente = false;
+                PodeVisualizarBarbeiro = false;
+                PodeVisualizarAdmBar = true;
+            }
+            else if (usuarioLogado.TipoSelecionado == UsuarioTipo.Barbeiro)
+            {
+                PodeVisualizarAdm = false;
+                PodeVisualizarCliente = false;
+                PodeVisualizarBarbeiro = true;
+                PodeVisualizarAdmBar = true;
             }
             else
             {
-                PodeVisualizar = false;
+                PodeVisualizarAdm = false;
+                PodeVisualizarCliente = true;
+                PodeVisualizarBarbeiro =false;
+                PodeVisualizarAdmBar = false;
             }
         }
 
@@ -120,6 +139,12 @@ namespace MatutosApp.ViewsModels
         public async Task MeusAgendamentos()
         {
             await Shell.Current.GoToAsync(nameof(AgendamentoConsultarView));
+        }
+
+        [RelayCommand]
+        public async Task MeusServicos()
+        {
+            await Shell.Current.GoToAsync(nameof(AgendamentoMeusServicosView));
         }
 
         [RelayCommand]

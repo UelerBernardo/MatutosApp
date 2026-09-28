@@ -17,9 +17,12 @@ namespace MatutosApp.ViewsModels
         private readonly NotificacaoService _notificacaoService;
 
         [ObservableProperty] ObservableCollection<Configura_Notificacao> listaRegraNotificacao = new();
-
+        [ObservableProperty] private bool? ativo;
+        [ObservableProperty] private DateTime dataInicial = DateTime.Today.AddDays(-15);
+        [ObservableProperty] private DateTime dataFinal = DateTime.Today;
         [ObservableProperty] private Configura_Notificacao regraClicada;
-
+        public List<string> OpcoesStatus { get; } = new List<string> { "Todos", "Ativos", "Inativos" };
+        [ObservableProperty] private string statusSelecionado = "Todos";
         public ConfiguraNotificacaoConsultarViewModel(NotificacaoService notificacaoService)
         {
             _notificacaoService = notificacaoService;
@@ -38,7 +41,17 @@ namespace MatutosApp.ViewsModels
             {
                 string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-                var resultado = await _notificacaoService.ConsultarRegraNotificacao(token);
+                if (StatusSelecionado == "Ativos")
+                    Ativo = true;
+                else if (StatusSelecionado == "Inativos")
+                    Ativo = false;
+                else
+                    Ativo = null;
+
+                DateTime inicial = DataInicial;
+                DateTime final = DataFinal.Date.AddHours(23).AddMinutes(59);
+
+                var resultado = await _notificacaoService.ConsultarRegraNotificacao(token, inicial, final, Ativo);
 
                 if(resultado.Sucesso && resultado.Dados != null)
                 {
@@ -63,6 +76,13 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task AbrirAlterarRegra(Configura_Notificacao regra)
         {
+            bool confirmar = await Application.Current.MainPage.DisplayAlert("Atenção", "Deseja realizar a alteração do registro selecionado?", "Sim", "Não");
+
+            if(!confirmar)
+            {
+                return;
+            }
+
             if (regra == null) return;
 
             var regraAlterar = new Configura_Notificacao
@@ -82,6 +102,12 @@ namespace MatutosApp.ViewsModels
             };
 
             await Shell.Current.GoToAsync(nameof(ConfiguraNotificacaoCadastrarView), parametro );
+        }
+
+        [RelayCommand]
+        public async Task Voltar()
+        {
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

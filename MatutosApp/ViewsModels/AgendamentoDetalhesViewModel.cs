@@ -19,7 +19,10 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
         private bool cadastroAgendamento;
-
+        [ObservableProperty]
+        private bool podeVisualizarCliente;
+        [ObservableProperty]
+        private bool podeVisualizarAdmBar;
         public string NomeBotaoAcao => CadastroAgendamento ? "Voltar para Início" : "Voltar";
 
 
@@ -29,11 +32,36 @@ namespace MatutosApp.ViewsModels
             Cliente = new Cliente(),
             Barbeiro = new Barbeiro(),
             Agendamento_Servicos = new List<Agendamento_Servico>()
+
         };
+
+        private async Task PermissaoParaVisualizar()
+        {
+            var usuarioLogado = UsuarioSessaoService.UsuarioLogado;
+
+            if (usuarioLogado == null)
+            {
+                podeVisualizarCliente = false;
+                podeVisualizarAdmBar = false;
+                return;
+            }
+
+            if(usuarioLogado.TipoSelecionado == UsuarioTipo.Cliente)
+            {
+                PodeVisualizarCliente = true;
+                PodeVisualizarAdmBar = false;
+            }
+            else
+            {
+                PodeVisualizarCliente = false;
+                PodeVisualizarAdmBar = true;
+            }
+        }
 
         public AgendamentoDetalhesViewModel(AgendamentoService agendamento) 
         {
             _agendamentoService = agendamento;
+            _=PermissaoParaVisualizar();
         }
         partial void OnAgendamentoIDChanged(int oldValue, int newValue)
         {
@@ -128,41 +156,43 @@ namespace MatutosApp.ViewsModels
             }
         }
 
-        //[RelayCommand]
-        //public async Task LiberarAgendamento()
-        //{
-        //    if (DadosDoAgendamento != null && DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Aberto)
-        //    {
-        //        await Application.Current.MainPage.DisplayAlert("Aviso", "Somente é possível liberar registros na situção 'Aberto'.", "Ok");
-        //        return; 
-        //    }
-        //    bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realmente liberar o agendamento?", "Sim", "Não");
-        //    if (!confirmar)
-        //    {
-        //        return;
-        //    }
-        //    else { 
-        //        string token = await SecureStorage.Default.GetAsync("jwt_token");
+        [RelayCommand]
+        public async Task ConcluirAgendamento()
+        {
+            if (DadosDoAgendamento != null && DadosDoAgendamento.Codigo_Situacao_Agendamento != AgendamentoSituacao.Liberado)
+            {
+                await Application.Current.MainPage.DisplayAlert("Aviso", "Somente é possível concluir registros na situação \"Liberado\".", "Ok");
+                return;
+            }
+            bool confirmar = await Shell.Current.DisplayAlert("Atenção", "Deseja realmente concluir o agendamento?", "Sim", "Não");
+            if (!confirmar)
+            {
+                return;
+            }
+            else
+            {
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
 
-        //        if (AgendamentoID <= 0)
-        //        {
-        //            await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
-        //            return;
-        //        }
+                if (AgendamentoID <= 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "O agendamento não foi encontrado", "Ok");
+                    return;
+                }
 
-        //        var resultado = await _agendamentoService.AgendamentoAlterarSituacao(AgendamentoID, token, AgendamentoSituacao.Liberado);
+                var resultado = await _agendamentoService.AgendamentoAlterarSituacao(AgendamentoID, token, AgendamentoSituacao.Concluido);
 
-        //        if (resultado.Sucesso)
-        //        {
-        //            await Application.Current.MainPage.DisplayAlert("Sucesso", "Agendamento liberado.", "Ok");
-        //            //await Shell.Current.GoToAsync(nameof(PrincipalView));
-        //            await Shell.Current.GoToAsync("///PrincipalView");
-        //        }
-        //        else
-        //        {
-        //            await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
-        //        }
-        //    }
-        //}
+                if (resultado.Sucesso)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Situação alterada com sucesso!", "Ok");
+                    _=ConsultarDetalhesAgendamento();
+
+
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                }
+            }
+        }
     }
 }

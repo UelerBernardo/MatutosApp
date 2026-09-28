@@ -20,13 +20,80 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<(bool Sucesso, List<NotificacaoResponseDTO>? Dados)> ConsultarNotificacao(string token)
+        public async Task<(bool Sucesso, string Mensagem)> NotificacaoVisualizarTodas(string token)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var resposta = await _httpClient.GetAsync("notificacao/notificacao-consultar");
+                // Dispara a requisição sem enviar dados no corpo
+                var resultado = await _httpClient.PutAsync("notificacao/visualizar-todas", null);
+
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var mensagem = await resultado.Content.ReadFromJsonAsync<ApiResposta>(options);
+
+                if (resultado.IsSuccessStatusCode)
+                {
+                    return (true, mensagem?.Mensagem ?? "Sucesso");
+                }
+                else
+                {
+                    return (false, mensagem?.Mensagem ?? "Erro desconhecido");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exceção ao alterar as notificações: {ex.Message}");
+                return (false, string.Empty);
+            }
+        }
+        public async Task<(bool Sucesso, NotificacaoDetalhes Dados, string Mensagem)> ConsultarNotificacaoDetalhes(string token, int idHistorico)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var resposta = await _httpClient.GetAsync($"notificacao/notificacao-detalhe/{idHistorico}");
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true}; 
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var dados = await resposta.Content.ReadFromJsonAsync<NotificacaoDetalhes>(options);
+
+                    return (true, dados, string.Empty);
+                }
+                else
+                {
+                    var mensagem = await resposta.Content.ReadFromJsonAsync<ApiResposta>(options);
+                    return (false, null, mensagem.Mensagem);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exceção ao consultar a notificação: {ex.Message}");
+                return (false, null, string.Empty);
+            }
+
+        }
+
+        public async Task<(bool Sucesso, List<NotificacaoResponseDTO>? Dados)> ConsultarNotificacao(string token, DateTime dataInicial, DateTime dataFinal)
+        {
+            try
+            {
+
+                var query = new List<string>
+                {
+                    $"dataInicial={dataInicial:yyyy-MM-ddTHH:mm:ss}",
+                    $"dataFinal={dataFinal:yyyy-MM-ddTHH:mm:ss}"
+                };
+
+                string queryString = string.Join("&", query);
+
+                string urlCompleta = $"notificacao/notificacao-consultar?{queryString}";
+
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                var resposta = await _httpClient.GetAsync(urlCompleta);
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
@@ -50,13 +117,26 @@ namespace MatutosApp.Services
         }
 
      
-        public async Task<(bool Sucesso, List<Configura_Notificacao>? Dados)> ConsultarRegraNotificacao(string token)
+        public async Task<(bool Sucesso, List<Configura_Notificacao>? Dados)> ConsultarRegraNotificacao(string token, DateTime inicial, DateTime final, bool? ativo)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-                var resposta = await _httpClient.GetAsync("notificacao/regra-consultar");
+                var query = new List<string>
+                 {
+                     $"inicial={inicial:yyyy-MM-ddTHH:mm:ss}",
+                     $"final={final:yyyy-MM-ddTHH:mm:ss}"
+                 };
+
+                if (ativo.HasValue)
+                {
+                    query.Add($"ativo={ativo.Value}");
+                }
+
+                var urlCompleta = $"notificacao/regra-consultar?{string.Join("&", query)}";
+
+                var resposta = await _httpClient.GetAsync(urlCompleta);
 
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
@@ -83,7 +163,6 @@ namespace MatutosApp.Services
         {
             try
             {
-                // Limpa o token para evitar duplicação do prefixo "Bearer "
                 var tokenLimpo = token.Replace("Bearer ", "").Trim();
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
 

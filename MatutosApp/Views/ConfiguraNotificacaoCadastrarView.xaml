@@ -5,10 +5,57 @@
              BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Principal (Ação de Salvar - Verde) -->
+        <Style x:Key="BotaoVerdeStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#4CAF50" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Escurece o verde ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#388E3C" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!-- Estilo do Botão Secundário (Cancelar/Voltar - Vazado) -->
+        <Style x:Key="BotaoContornoStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderColor" Value="#333333" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="TextColor" Value="#AAAAAA" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <!-- Preenche com fundo escuro e acende o texto ao clicar -->
+                                <Setter Property="BackgroundColor" Value="#1E1E1E" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="20" Padding="30">
 
-            <Label Text="Configurar Avisos e Alertas"
+            <Label Text="{Binding Titulo}"
                    FontSize="22"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
@@ -16,7 +63,7 @@
                    Margin="0,0,0,10"/>
 
             <VerticalStackLayout Spacing="8">
-                <Label Text="Descrição Interna" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
+                <Label Text="Descrição" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
                 <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
                     <Entry Placeholder="Ex: Aviso 20 minutos antes"
                            Text="{Binding Descricao}"
@@ -35,7 +82,8 @@
                         <Picker 
                             ItemsSource="{Binding TiposEventos}"
                             ItemDisplayBinding="{Binding Nome}"
-                            SelectedItem="{Binding TipoSelecionado}" 
+                            SelectedItem="{Binding TipoSelecionado}"
+                            IsEnabled="{Binding PodeEditar}"
                             TextColor="#FFFFFF"
                             TitleColor="#888888"
                             BackgroundColor="Transparent"
@@ -45,46 +93,43 @@
 
                 <VerticalStackLayout Spacing="8" Grid.Column="1">
                     <Label Text="Status da Regra" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
-                    
-                        <HorizontalStackLayout Spacing="0" VerticalOptions="Center" HorizontalOptions="Start">
+
+                    <HorizontalStackLayout Spacing="0" VerticalOptions="Center" HorizontalOptions="Start">
 
                         <Label Text="Ativa" TextColor="White" VerticalOptions="Center" FontSize="15" Margin="20"/>
                         <Switch IsToggled="{Binding Ativo}" OnColor="#4CAF50" VerticalOptions="Center" />
-                            
-                        </HorizontalStackLayout>
-                    
+
+                    </HorizontalStackLayout>
+
                 </VerticalStackLayout>
             </Grid>
 
             <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
 
-                <!-- 👉 ADICIONADO: IsVisible no layout do Valor -->
                 <VerticalStackLayout Spacing="8" Grid.Column="0" IsVisible="{Binding IsValorVisivel}">
                     <Label Text="Valor (Tempo)" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
                     <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="15,0">
                         <Entry Placeholder="Ex: 20"
-                   Text="{Binding Valor}"
-                   IsEnabled="{Binding IsValorHabilitado}"
-                   Keyboard="Numeric"
-                   TextColor="#FFFFFF"
-                   PlaceholderColor="#888888"
-                   BackgroundColor="Transparent"
-                   VerticalOptions="Center"/>
+                               Text="{Binding Valor}"
+                               IsEnabled="{Binding IsValorHabilitado}"
+                               Keyboard="Numeric"
+                               TextColor="#FFFFFF"
+                               PlaceholderColor="#888888"
+                               BackgroundColor="Transparent"
+                               VerticalOptions="Center"/>
                     </Border>
                 </VerticalStackLayout>
 
-                <!-- 👉 ADICIONADO: IsVisible no layout da Unidade de Tempo -->
                 <VerticalStackLayout Spacing="8" Grid.Column="1" IsVisible="{Binding IsUnidadeTempoVisivel}">
                     <Label Text="Unidade Tempo" FontSize="14" FontAttributes="Bold" TextColor="#CCCCCC" />
                     <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 10" HeightRequest="50" Padding="10,0">
-                        <Picker 
-                    ItemsSource="{Binding UnidadesDeTempo}"
-                    SelectedItem="{Binding UnidadeTempo}"
-                    IsEnabled="{Binding IsUnidadeTempoHabilitada}"
-                    TextColor="#FFFFFF"
-                    TitleColor="#888888"
-                    BackgroundColor="Transparent"
-                    VerticalOptions="Center"/>
+                        <Picker ItemsSource="{Binding UnidadesDeTempo}"
+                                SelectedItem="{Binding UnidadeTempo}"
+                                IsEnabled="{Binding IsUnidadeTempoHabilitada}"
+                                TextColor="#FFFFFF"
+                                TitleColor="#888888"        
+                                BackgroundColor="Transparent"
+                                VerticalOptions="Center"/>
                     </Border>
                 </VerticalStackLayout>
 
@@ -101,14 +146,21 @@
                 </Border>
             </VerticalStackLayout>
 
-            <Button Text="Salvar Regra"
-                    Command="{Binding CadastrarConfiguracaoNotificacaoCommand}"
-                    BackgroundColor="#E0E0E0"
-                    TextColor="#121212"
-                    FontAttributes="Bold"
-                    CornerRadius="12"
-                    HeightRequest="55"
-                    Margin="0, 20, 0, 0"/>
+            <!-- Agrupamento dos botões com os novos estilos -->
+            <VerticalStackLayout Spacing="15" Margin="0, 20, 0, 0">
+
+                <Button Text="{Binding NomeBotaoAcao}"
+                        Command="{Binding SalvarRegraCommand}"
+                        Style="{StaticResource BotaoVerdeStyle}"
+                        HeightRequest="55"/>
+
+                <!-- Botão para voltar/cancelar a ação já que não há NavBar -->
+                <Button Text="Cancelar"
+                        Command="{Binding VoltarTela}"
+                        Style="{StaticResource BotaoContornoStyle}"
+                        HeightRequest="55"/>
+
+            </VerticalStackLayout>
 
         </VerticalStackLayout>
     </ScrollView>

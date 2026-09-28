@@ -28,6 +28,8 @@ namespace MatutosApp
             Routing.RegisterRoute(nameof(ConfiguraNotificacaoConsultarView), typeof(ConfiguraNotificacaoConsultarView));
             Routing.RegisterRoute(nameof(NotificacaoConsultarView), typeof(NotificacaoConsultarView));
             Routing.RegisterRoute(nameof(UsuarioConsultarView), typeof(UsuarioConsultarView));
+            Routing.RegisterRoute(nameof(AgendamentoMeusServicosView), typeof(AgendamentoMeusServicosView));
+            Routing.RegisterRoute(nameof(SobreNosView), typeof(SobreNosView));
 
         }
     }
