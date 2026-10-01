@@ -22,8 +22,7 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Mensagem))]
         private bool isAdm = false;
-        public string Mensagem => IsAdm == true ? "Cliente(opcional)" : "Barbeiro(opcional)";
-
+        public string Mensagem => IsAdm == false ? "Cliente:" : "Barbeiro:";
         public ObservableCollection<string> FiltroSituacao { get; }
 
         public AgendamentoMeusServicosViewModel(AgendamentoService agendamentoService)
@@ -69,7 +68,7 @@ namespace MatutosApp.ViewsModels
                 }
 
                 // 5. Enviamos a variável convertida (que será null se o usuário escolheu "Todos")
-                var resultado = await _agendamentoService.ConsultarMeusServicos(token, inicial, final, NomeUsuario, situacaoParaEnviar);
+                var resultado = await _agendamentoService.ConsultarMeusServicos(token, inicial, final, NomeUsuario, situacaoParaEnviar, IsAdm);
 
                 if (resultado.Sucesso && resultado.Dados != null)
                 {

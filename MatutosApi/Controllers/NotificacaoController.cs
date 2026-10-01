@@ -27,18 +27,28 @@ namespace MatutosApi.Controllers
                 var usuarioLogado = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
                 int idPessoaLogada = int.Parse(usuarioLogado);
 
-                int linhasAfetadas = await _dbContext.Notificacoes
+                // 1. Traz as não lidas para a memória
+                var notificacoesNaoLidas = await _dbContext.Notificacoes
                     .Where(not => not.Codigo_Usuario == idPessoaLogada && not.Lida == false)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(not => not.Lida, true)); // Valor true chumbado aqui!
+                    .ToListAsync();
 
-                if (linhasAfetadas == 0)
+                if (!notificacoesNaoLidas.Any())
                 {
                     return BadRequest(new { Mensagem = "Todas as notificações já estão lidas." });
                 }
 
-                return Ok(new { Mensagem = $"{linhasAfetadas} notificação(ões) marcada(s) como visualizada(s)!" });
+                // 2. Altera o status na memória
+                foreach (var not in notificacoesNaoLidas)
+                {
+                    not.Lida = true;
+                }
+
+                // 3. Salva e gera os logs de Update
+                await _dbContext.SaveChangesAsync();
+
+                return Ok(new { Mensagem = $"{notificacoesNaoLidas.Count} notificação(ões) marcada(s) como visualizada(s)!" });
             }
+
             catch (Exception ex)
             {
                 return StatusCode(500, new { Mensagem = $"Erro ao marcar como visualizada as notificações: {ex.Message}" });
@@ -177,29 +187,34 @@ namespace MatutosApi.Controllers
             }
         }
 
-        [HttpPut ("regra-alterar")]
+        [HttpPut("regra-alterar")]
         [Authorize]
         public async Task<IActionResult> AlterarRegraNotificacao([FromBody] Configura_Notificacao notificacaoAlteracao)
         {
             try
             {
-                var regraNotificacaoAlterada = await _dbContext.Configura_Notificacoes
-                    .Where(rn => rn.Codigo_Notificacao == notificacaoAlteracao.Codigo_Notificacao)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(n => n.Ativo, notificacaoAlteracao.Ativo)
-                        .SetProperty(n => n.Descricao, notificacaoAlteracao.Descricao)
-                        .SetProperty(n => n.UnidadeTempo, notificacaoAlteracao.UnidadeTempo)
-                        .SetProperty(n => n.Mensagem, notificacaoAlteracao.Mensagem)
-                        .SetProperty(n => n.Codigo_Tipo, notificacaoAlteracao.Codigo_Tipo));
+                // 1. Carrega para a memória
+                var regraBanco = await _dbContext.Configura_Notificacoes
+                    .FirstOrDefaultAsync(rn => rn.Codigo_Notificacao == notificacaoAlteracao.Codigo_Notificacao);
 
-                if(regraNotificacaoAlterada <= 0)
+                if (regraBanco == null)
                 {
-                    return NotFound( new {Mensagem = "Regra de notifiacação não encontrada."});
+                    return NotFound(new { Mensagem = "Regra de notificação não encontrada." });
                 }
+
+                // 2. Atualiza as propriedades (ChangeTracker detecta a mudança)
+                regraBanco.Ativo = notificacaoAlteracao.Ativo;
+                regraBanco.Descricao = notificacaoAlteracao.Descricao;
+                regraBanco.UnidadeTempo = notificacaoAlteracao.UnidadeTempo;
+                regraBanco.Mensagem = notificacaoAlteracao.Mensagem;
+                regraBanco.Codigo_Tipo = notificacaoAlteracao.Codigo_Tipo;
+
+                // 3. Efetiva e gera o Log
+                await _dbContext.SaveChangesAsync();
 
                 return Ok(new { Mensagem = "Regra alterada com sucesso!" });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string erroReal = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
                 return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });

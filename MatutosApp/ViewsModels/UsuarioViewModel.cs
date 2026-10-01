@@ -1,34 +1,29 @@
-﻿
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MatutosApp.Services;
 using MatutosApp.Views;
 using MatutosDomain;
 using System.Text.RegularExpressions;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MatutosApp.ViewsModels
 {
-    [QueryProperty(nameof(AdministradorCadastro), "CadastroDeUsuario")]
     public partial class UsuarioViewModel : BaseViewModel, IQueryAttributable
     {
         public readonly UsuarioService? _usuarioService;
 
         [ObservableProperty] private bool administradorCadastro;
 
-        //Propriedade associadas ao usuário
+        // Propriedade associadas ao usuário
         [ObservableProperty] private string nome;
         [ObservableProperty] private string email;
 
-        //lógica de senha forte
+        // Lógica de senha forte
         [ObservableProperty] private string senha;
         [ObservableProperty] private bool temTamanhoMinimo;
         [ObservableProperty] private bool temMaiuscula;
@@ -46,19 +41,15 @@ namespace MatutosApp.ViewsModels
 
         [ObservableProperty] private UsuarioTipo usuarioTipoLogado;
 
-        [ObservableProperty]
-        private bool podeEditarTipoUsuario = true;
-
-        [ObservableProperty]
-        private bool podeEditarSenha = true;
+        [ObservableProperty] private bool podeEditarTipoUsuario = true;
+        [ObservableProperty] private bool podeEditarSenha = true;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(NomeBotaoAcao))]
         [NotifyPropertyChangedFor(nameof(Mensagem))]
-        private AcaoTela _acaoTela;
+        private AcaoTela acaoTela; // IMPORTANTE: O toolkit gera a propriedade com letra maiúscula (AcaoTela)
 
         public string NomeBotaoAcao => AcaoTela == AcaoTela.Cadastro ? "Criar Conta" : "Alterar Perfil";
-
         public string Mensagem => AcaoTela == AcaoTela.Cadastro ? "Crie a sua Conta!" : "Editar Dados";
 
         public ObservableCollection<UsuarioTipo> usuarioTipoDisponivel { get; }
@@ -69,6 +60,10 @@ namespace MatutosApp.ViewsModels
             usuarioTipoDisponivel = new ObservableCollection<UsuarioTipo>(Enum.GetValues(typeof(UsuarioTipo)).Cast<UsuarioTipo>());
 
             EcontrarTipoUsuarioLogado();
+
+            // Chamamos aqui para cobrir os Cenários 1 (Novo usuário) e 2 (Usuário editando o próprio perfil), 
+            // que não disparam o ApplyQueryAttributes por não terem parâmetros de rota.
+            DefinirModoDaTela();
         }
 
         partial void OnSenhaChanged(string value)
@@ -82,16 +77,12 @@ namespace MatutosApp.ViewsModels
             }
             else
             {
-                // Verifica cada regra separadamente usando LINQ
                 TemTamanhoMinimo = value.Length >= 8;
                 TemMaiuscula = value.Any(char.IsUpper);
                 TemNumero = value.Any(char.IsDigit);
-
-                // Caractere especial é qualquer coisa que não seja letra nem número
                 TemEspecial = value.Any(ch => !char.IsLetterOrDigit(ch));
             }
 
-            // Avisa a tela que a propriedade global de segurança pode ter mudado
             OnPropertyChanged(nameof(SenhaForte));
         }
 
@@ -117,78 +108,22 @@ namespace MatutosApp.ViewsModels
             }
 
             if (usuarioLogado.TipoSelecionado == UsuarioTipo.Cliente)
-            {
                 UsuarioTipoLogado = UsuarioTipo.Cliente;
-            }
             else if (usuarioLogado.TipoSelecionado == UsuarioTipo.Barbeiro)
-            {
                 UsuarioTipoLogado = UsuarioTipo.Barbeiro;
-            }
             else
-            {
                 UsuarioTipoLogado = UsuarioTipo.Administrador;
-            }
         }
 
-
+        // Centralizamos os 3 cenários aqui de forma clara e direta
         private void DefinirModoDaTela()
         {
             var usuario = UsuarioSessaoService.UsuarioLogado;
 
-            if(AdministradorCadastro == true)
+            // CENÁRIO 3: Admin cadastrando um NOVO usuário (Recebeu parâmetro true)
+            if (AdministradorCadastro && usuario != null && UsuarioTipoLogado == UsuarioTipo.Administrador)
             {
-                if (UsuarioTipoLogado == UsuarioTipo.Administrador)
-                {
-                    _acaoTela = AcaoTela.Cadastro;
-
-                    IsModoAlteracao = false;
-                    IsModoCadastro = true;
-
-                    Nome = string.Empty;
-                    Email = string.Empty;
-                    Senha = string.Empty;
-                    UsuarioTipoSelecionado = UsuarioTipo.Cliente;
-                    PodeEditarSenha = true;
-                    PodeEditarTipoUsuario = true;
-                }
-            }
-            else
-            { 
-
-                if (usuario != null)
-                {
-                    ModoAlteracao(usuario);
-                }
-                else
-                {
-                    ModoCadastro();
-                }
-            }
-        }
-
-        private void ModoAlteracao(Usuario usuario)
-        {
-            _acaoTela = AcaoTela.Alteração;
-
-            // Avisa o XAML que estamos alterando
-            IsModoAlteracao = true;
-            IsModoCadastro = false;
-
-            Nome = usuario.Nome;
-            Email = usuario.Email;
-            UsuarioTipoSelecionado = usuario.TipoSelecionado;
-            Senha = "**********"; 
-            PodeEditarSenha = false;
-            PodeEditarTipoUsuario = false;
-        }
-
-        private void ModoCadastro()
-        {
-            if(UsuarioTipoLogado == 0)
-            { 
-                _acaoTela = AcaoTela.Cadastro;
-
-                // Avisa o XAML que é um cadastro novo
+                AcaoTela = AcaoTela.Cadastro; // Use sempre a propriedade gerada (Capitalizada) para ativar o NotifyPropertyChangedFor
                 IsModoAlteracao = false;
                 IsModoCadastro = true;
 
@@ -196,11 +131,41 @@ namespace MatutosApp.ViewsModels
                 Email = string.Empty;
                 Senha = string.Empty;
                 UsuarioTipoSelecionado = UsuarioTipo.Cliente;
-                PodeEditarTipoUsuario = false;
+
                 PodeEditarSenha = true;
+                PodeEditarTipoUsuario = true; // Admin pode alterar o tipo da pessoa
+            }
+            // CENÁRIO 2: Usuário já logado chamou a tela (Edição do próprio perfil)
+            else if (usuario != null && !AdministradorCadastro)
+            {
+                AcaoTela = AcaoTela.Alteração;
+                IsModoAlteracao = true;
+                IsModoCadastro = false;
+
+                Nome = usuario.Nome;
+                Email = usuario.Email;
+                UsuarioTipoSelecionado = usuario.TipoSelecionado;
+                Senha = "**********";
+
+                PodeEditarSenha = false;
+                PodeEditarTipoUsuario = false; // Bloqueia o tipo de pessoa
+            }
+            // CENÁRIO 1: Nenhum usuário logado (Visitante criando a primeira conta)
+            else if (usuario == null)
+            {
+                AcaoTela = AcaoTela.Cadastro;
+                IsModoAlteracao = false;
+                IsModoCadastro = true;
+
+                Nome = string.Empty;
+                Email = string.Empty;
+                Senha = string.Empty;
+                UsuarioTipoSelecionado = UsuarioTipo.Cliente; // Força como cliente
+
+                PodeEditarSenha = true;
+                PodeEditarTipoUsuario = false; // Bloqueia o tipo de pessoa para ficar invisível/desabilitado na UI
             }
         }
-
 
         [RelayCommand]
         private async Task CadastrarOuAlterar()
@@ -211,7 +176,7 @@ namespace MatutosApp.ViewsModels
                 return;
             }
 
-            if(_acaoTela == AcaoTela.Alteração)
+            if (AcaoTela == AcaoTela.Alteração)
             {
                 await AlterarUsuario();
             }
@@ -219,8 +184,6 @@ namespace MatutosApp.ViewsModels
             {
                 await CadastrarUsuario();
             }
-
-
         }
 
         private async Task AlterarUsuario()
@@ -242,12 +205,11 @@ namespace MatutosApp.ViewsModels
                     TipoSelecionado = UsuarioTipoSelecionado
                 };
 
-                var resultado = await _usuarioService.UsuarioAlterar(usuarioAlteracao, token); 
+                var resultado = await _usuarioService.UsuarioAlterar(usuarioAlteracao, token);
 
                 if (resultado.Sucesso)
                 {
                     await Application.Current.MainPage.DisplayAlert("Sucesso", resultado.Mensagem, "Continuar");
-
                     await Shell.Current.GoToAsync(nameof(ClientePerfilConsultarView));
                 }
                 else
@@ -265,21 +227,21 @@ namespace MatutosApp.ViewsModels
         {
             try
             {
-                if(Email != EmailConfirmacao)
+                if (Email != EmailConfirmacao)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", "Os e-mails informados não coindidem.", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "Os e-mails informados não coincidem.", "Ok");
                     return;
                 }
 
-                if(!SenhaForte)
+                if (!SenhaForte)
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "A senha ainda não atende aos requisitos de segurança.", "OK");
                     return;
                 }
 
-                if(Senha != SenhaConfirmacao)
+                if (Senha != SenhaConfirmacao)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", "As senhas informados não coindidem.", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "As senhas informadas não coincidem.", "Ok");
                     return;
                 }
 
@@ -295,23 +257,21 @@ namespace MatutosApp.ViewsModels
 
                 if (resultado.Sucesso)
                 {
-                    if(UsuarioSessaoService.UsuarioLogado == null)
-                    { 
+                    if (UsuarioSessaoService.UsuarioLogado == null)
+                    {
                         UsuarioSessaoService.IniciarSessao(resultado.Dados);
                     }
 
                     var confirmar = await Application.Current.MainPage.DisplayAlert("Quase lá!", "Cadastro concluído. Deseja realizar o cadastro de telefone?", "Sim", "Não");
 
-                    if(!confirmar)
+                    if (!confirmar)
                     {
                         await Shell.Current.GoToAsync("///PrincipalView");
                     }
                     else
                     {
-
                         await Shell.Current.GoToAsync("TelefoneCadastroView");
                     }
-
                 }
                 else
                 {
@@ -326,7 +286,6 @@ namespace MatutosApp.ViewsModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            // Verifica se a chave que você enviou existe no pacote
             if (query.TryGetValue("CadastroDeUsuario", out var valorEnviado))
             {
                 if (valorEnviado is bool valorBooleano)
@@ -338,6 +297,8 @@ namespace MatutosApp.ViewsModels
                     AdministradorCadastro = convertido;
                 }
 
+                // O construtor já havia rodado, mas agora que recebemos o parâmetro via rota, 
+                // reavaliamos as regras da tela para aplicar o Cenário 3 (Admin).
                 DefinirModoDaTela();
             }
         }
@@ -345,12 +306,12 @@ namespace MatutosApp.ViewsModels
         [RelayCommand]
         public async Task Cancelar()
         {
-            if(usuarioTipoLogado != null)
+            if (UsuarioSessaoService.UsuarioLogado != null)
             {
                 await Shell.Current.GoToAsync("..");
             }
             else
-            { 
+            {
                 Application.Current.MainPage = new AppShell();
             }
         }

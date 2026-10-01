@@ -88,6 +88,8 @@ builder.Services.AddDbContext<MatutosDbContext>(options =>
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();

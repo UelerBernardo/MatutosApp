@@ -18,7 +18,7 @@ namespace MatutosApp.ViewsModels
         [ObservableProperty] private UsuarioTipo? usuarioSelecionado = UsuarioTipo.Cliente;
         [ObservableProperty] private string? nome;
         [ObservableProperty] private bool? ativo;
-        [ObservableProperty] private ObservableCollection<Usuario> listaUsuarios = new();
+        [ObservableProperty] private ObservableCollection<UsuarioConsulta> listaUsuarios = new();
         public ObservableCollection<UsuarioTipo> UsuarioTiposDisponiveis { get; set; }
 
         public List<string> OpcoesStatus { get; } = new List<string> { "Todos", "Ativos", "Inativos" };

@@ -27,10 +27,43 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<(bool Sucesso, string Mensagem, List<MeusServicos>? Dados)> ConsultarMeusServicos(string token, DateTime dataInicial, DateTime dataFinal, string? nomeUsuario, AgendamentoSituacao? situacao)
+        public async Task<(bool Sucesso, string Mensagem, List<string>? Dados)> ConsultarHorariosLivres(string token, int codigoBarbeiro, DateTime dataAgendamento)
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                string dataFormatada = dataAgendamento.ToString("yyyy-MM-dd");
+
+                string urlCompleta = $"agendamento/consultar/horarios-livres?codigoBarbeiro={codigoBarbeiro}&dataAgendamento={dataFormatada}";
+
+                var resposta = await _httpClient.GetAsync(urlCompleta);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var dados = await resposta.Content.ReadFromJsonAsync<List<string>>(options);
+                    return (true, "Horários carregados com sucesso.", dados);
+                }
+                else
+                {
+                    // Tenta ler a mensagem de erro que o BadRequest ou StatusCode(500) enviou
+                    var erro = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+                    return (false, erro?.Mensagem ?? "Não foi possível carregar os horários livres.", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Exceção ao consultar horários livres: {ex.Message}");
+                return (false, "Falha de comunicação com o servidor. Verifique sua conexão.", null);
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem, List<MeusServicos>? Dados)> ConsultarMeusServicos(string token, DateTime dataInicial, DateTime dataFinal, string? nomeUsuario, AgendamentoSituacao? situacao, bool isAdmin)
+        {
+            try
+            {
+
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 var queryParams = new List<string>
                     {
@@ -38,10 +71,13 @@ namespace MatutosApp.Services
                         $"dataFinal={dataFinal:yyyy-MM-ddTHH:mm:ss}"
                     };
 
+                queryParams.Add($"isAdmin={isAdmin}");
+
                 if (!string.IsNullOrWhiteSpace(nomeUsuario))
                 {
                     queryParams.Add($"nomeUsuario={Uri.EscapeDataString(nomeUsuario)}");
                 }
+
 
                 if (situacao.HasValue)
                 {

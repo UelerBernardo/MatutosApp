@@ -137,26 +137,37 @@ namespace MatutosApi.Controllers
         {
             try
             {
-                var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
-                   ?? User.FindFirst("id")?.Value;
+                var usuario = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? User.FindFirst("id")?.Value;
 
                 if (string.IsNullOrEmpty(usuario) || !int.TryParse(usuario, out int codigoCliente))
                 {
                     return Unauthorized(new { Mensagem = "Usuário não autenticado ou token inválido." });
                 }
 
+                // 1. Traz as entidades para a memória
                 var telefoneUsuarioExcluir = await _dbcontext.UsuarioTelefones
-                    .Where(a => a.Codigo_Telefone == codigoTelefone && a.Codigo_Usuario == codigoCliente).ExecuteDeleteAsync();
+                    .FirstOrDefaultAsync(a => a.Codigo_Telefone == codigoTelefone && a.Codigo_Usuario == codigoCliente);
 
-                if(telefoneUsuarioExcluir == 0)
+                if (telefoneUsuarioExcluir == null)
                 {
-                    return BadRequest(new { Mensagem = "Telefone não encontrado" });
+                    return BadRequest(new { Mensagem = "Vínculo de telefone não encontrado." });
                 }
 
                 var telefoneExcluir = await _dbcontext.Telefones
-                    .Where(a => a.Codigo_Telefone == codigoTelefone).ExecuteDeleteAsync();
+                    .FirstOrDefaultAsync(a => a.Codigo_Telefone == codigoTelefone);
 
-                return Ok();
+                // 2. Remove as entidades do contexto
+                _dbcontext.UsuarioTelefones.Remove(telefoneUsuarioExcluir);
+
+                if (telefoneExcluir != null)
+                {
+                    _dbcontext.Telefones.Remove(telefoneExcluir);
+                }
+
+                // 3. Efetiva no banco e gera os logs de DELETE automaticamente
+                await _dbcontext.SaveChangesAsync();
+
+                return Ok(new { Mensagem = "Telefone excluído com sucesso." });
             }
             catch (Exception ex)
             {
@@ -177,25 +188,29 @@ namespace MatutosApi.Controllers
                 }
 
                 var telefoneExiste = await _dbcontext.Telefones
-                .AnyAsync(t => t.DDD == telefone.DDD && t.Numero_Telefone == telefone.Numero_Telefone);
+                    .AnyAsync(t => t.DDD == telefone.DDD && t.Numero_Telefone == telefone.Numero_Telefone && t.Codigo_Telefone != codigoTelefone);
 
                 if (telefoneExiste)
                 {
                     return BadRequest(new { Mensagem = "Este telefone já está cadastrado no sistema." });
                 }
 
-                int linhasAfetadas = await _dbcontext.Telefones
-                    .Where(a => a.Codigo_Telefone == codigoTelefone)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(t => t.DDD, telefone.DDD)
-                        .SetProperty(t => t.Numero_Telefone, telefone.Numero_Telefone)
-                        .SetProperty(t => t.Principal, telefone.Principal)
-                    );
+                // 1. Carrega o telefone para a memória
+                var telefoneBanco = await _dbcontext.Telefones
+                    .FirstOrDefaultAsync(a => a.Codigo_Telefone == codigoTelefone);
 
-                if (linhasAfetadas == 0)
+                if (telefoneBanco == null)
                 {
                     return NotFound(new { Mensagem = "Telefone não encontrado para alteração." });
                 }
+
+                // 2. Altera as propriedades (ChangeTracker anota as mudanças)
+                telefoneBanco.DDD = telefone.DDD;
+                telefoneBanco.Numero_Telefone = telefone.Numero_Telefone;
+                telefoneBanco.Principal = telefone.Principal;
+
+                // 3. Salva gerando o log de UPDATE
+                await _dbcontext.SaveChangesAsync();
 
                 return Ok(new { Mensagem = "Telefone alterado com sucesso!" });
             }
