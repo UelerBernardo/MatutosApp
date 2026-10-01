@@ -23,31 +23,35 @@ namespace MatutosApi.Controllers
         {
             try
             {
-                if(blacklistAlteracao == null)
+                if (blacklistAlteracao == null || blacklistAlteracao.Codigo_BlackList <= 0)
                 {
                     return BadRequest(new { Mensagem = "Dados inválidos para alterar o bloqueio de agenda!" });
                 }
 
-                var alteracao = await _dbContext.Blacklists
-                    .Where(blacklist => blacklist.Codigo_BlackList == blacklistAlteracao.Codigo_BlackList)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(b => b.Ativo, blacklistAlteracao.Ativo)
-                        .SetProperty(b => b.Inicio_Bloqueio, blacklistAlteracao.Inicio_Bloqueio)
-                        .SetProperty(b => b.Fim_Bloqueio, blacklistAlteracao.Fim_Bloqueio)
-                        .SetProperty(b => b.Detalhes, blacklistAlteracao.Detalhes));
+                // 1. Traz o dado para a memória (ChangeTracker começa a rastrear)
+                var blacklistBanco = await _dbContext.Blacklists
+                    .FirstOrDefaultAsync(b => b.Codigo_BlackList == blacklistAlteracao.Codigo_BlackList);
 
-
-                if(alteracao <= 0)
+                if (blacklistBanco == null)
                 {
-                    return BadRequest(new { Mensagem = "Nenhum bloqueio encotrado para alteração" });
+                    return BadRequest(new { Mensagem = "Nenhum bloqueio encontrado para alteração" });
                 }
+
+                // 2. Altera os campos (O EF Core anota silenciosamente o "Antes" e o "Depois")
+                blacklistBanco.Ativo = blacklistAlteracao.Ativo;
+                blacklistBanco.Inicio_Bloqueio = blacklistAlteracao.Inicio_Bloqueio;
+                blacklistBanco.Fim_Bloqueio = blacklistAlteracao.Fim_Bloqueio;
+                blacklistBanco.Detalhes = blacklistAlteracao.Detalhes;
+
+                // 3. Efetiva as mudanças e dispara o gatilho da nossa AuditoriaLog
+                await _dbContext.SaveChangesAsync();
 
                 return Ok(new { Mensagem = "Bloqueio de agenda alterado com sucesso." });
 
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { Message = $"Erro interno ao buscar blacklist: {ex.Message}" });
+                return StatusCode(500, new { Message = $"Erro interno ao alterar blacklist: {ex.Message}" });
             }
         }
 

@@ -20,8 +20,7 @@ namespace MatutosApp.ViewsModels
         public ObservableCollection<Barbeiro> ListaBarbeiro { get; set; } = new();
         public ObservableCollection<Servico> ListaServico { get; set; } = new();
 
-        // 1. CORREÇÃO: Os tipos agora refletem exatamente o que está no CollectionView
-        [ObservableProperty] private DataAgendamento data_Selecionada;
+        [ObservableProperty] private DataAgendamento? data_Selecionada;
         [ObservableProperty] private HorarioAgendamento hora_Selecionada;
 
         [ObservableProperty] private DateTime data_Fim_Agendamento;
@@ -36,22 +35,20 @@ namespace MatutosApp.ViewsModels
             _barbeiroService = barbeiroService;
 
             _ = ConsultarBarbeiro();
-            CarregarDatasDisponiveis(); // Preenche os cartões de dias ao abrir a tela
+            CarregarDatasDisponiveis();
         }
 
-        // 2. A MÁGICA DA REATIVIDADE: Esses métodos rodam sozinhos quando a variável muda!
-        partial void OnBarbeiroSelecionadoChanged(Barbeiro value) => CarregarHorarios();
-        partial void OnData_SelecionadaChanged(DataAgendamento value) => CarregarHorarios();
+        partial void OnBarbeiroSelecionadoChanged(Barbeiro value) => _ = CarregarHorariosAsync();
+        partial void OnData_SelecionadaChanged(DataAgendamento value) => _ = CarregarHorariosAsync();
 
         private void CarregarDatasDisponiveis()
         {
             ListaDatas.Clear();
             DateTime dataAtual = DateTime.Today;
 
-            // Gera os próximos 15 dias para o usuário escolher
             for (int i = 0; i < 15; i++)
             {
-                if (dataAtual.DayOfWeek != DayOfWeek.Sunday) // Pula domingo
+                if (dataAtual.DayOfWeek != DayOfWeek.Sunday)
                 {
                     ListaDatas.Add(new DataAgendamento { DataReal = dataAtual });
                 }
@@ -59,23 +56,50 @@ namespace MatutosApp.ViewsModels
             }
         }
 
-        private void CarregarHorarios()
+        public async Task CarregarHorariosAsync()
         {
-            // Só carrega os horários se o Barbeiro E a Data já estiverem selecionados
             if (BarbeiroSelecionado == null || Data_Selecionada == null)
                 return;
 
-            ListaHorarios.Clear();
-
-            // AQUI NO FUTURO: Você fará a chamada na API (_agendamentoService.ConsultarHorariosLivres...)
-            // Por enquanto, geramos horários fixos para você testar o visual da tela
-            TimeSpan horaInicial = new TimeSpan(9, 0, 0);
-            TimeSpan horaFinal = new TimeSpan(19, 0, 0);
-
-            while (horaInicial <= horaFinal)
+            try
             {
-                ListaHorarios.Add(new HorarioAgendamento { HoraReal = horaInicial });
-                horaInicial = horaInicial.Add(TimeSpan.FromMinutes(60));
+                IsBusy = true;
+                ListaHorarios.Clear();
+
+                string token = await SecureStorage.Default.GetAsync("jwt_token");
+
+                // 👉 CORREÇÃO 2: Acessando a propriedade DataReal para enviar um DateTime para a API!
+                var resultado = await _agendamentoService.ConsultarHorariosLivres(
+                    token,
+                    BarbeiroSelecionado.Codigo_Usuario,
+                    Data_Selecionada.DataReal
+                );
+
+                if (resultado.Sucesso && resultado.Dados != null)
+                {
+                    foreach (var horarioTexto in resultado.Dados)
+                    {
+                        if (TimeSpan.TryParse(horarioTexto, out TimeSpan horaConvertida))
+                        {
+                            ListaHorarios.Add(new HorarioAgendamento
+                            {
+                                HoraReal = horaConvertida
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Aviso", resultado.Mensagem, "Ok");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Falha ao carregar os horários: {ex.Message}", "Ok");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 
@@ -89,7 +113,6 @@ namespace MatutosApp.ViewsModels
                     return;
                 }
 
-                // 3. CORREÇÃO: Valida se ele clicou no cartão de data e de hora
                 if (Data_Selecionada == null || Hora_Selecionada == null)
                 {
                     await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor, selecione a data e o horário desejados.", "OK");
@@ -104,7 +127,6 @@ namespace MatutosApp.ViewsModels
                     return;
                 }
 
-                // 4. CORREÇÃO: Extraímos o DateTime/TimeSpan real de dentro dos objetos selecionados
                 DateTime dataCompleta = Data_Selecionada.DataReal.Date + Hora_Selecionada.HoraReal;
 
                 var agendamentoNovo = new Agendamento

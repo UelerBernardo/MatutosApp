@@ -55,7 +55,7 @@ namespace MatutosApp.Services
             }
         }
 
-        public async Task<(bool Sucesso, string Mensagem, List<Usuario>? Dados)> ConsultarListaUsuario(string token, UsuarioTipo usuarioTipo, string? nome, bool? ativo)
+        public async Task<(bool Sucesso, string Mensagem, List<UsuarioConsulta>? Dados)> ConsultarListaUsuario(string token, UsuarioTipo usuarioTipo, string? nome, bool? ativo)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace MatutosApp.Services
 
                 if (resultado.IsSuccessStatusCode)
                 {
-                    var dados = await resultado.Content.ReadFromJsonAsync<List<Usuario>>(options);
+                    var dados = await resultado.Content.ReadFromJsonAsync<List<UsuarioConsulta>>(options);
                     return (true, string.Empty, dados);
                 }
                 else

@@ -68,7 +68,7 @@ namespace MatutosApi.Controllers
             }
         }
 
-        [HttpPut ("alterar")]
+        [HttpPut("alterar")]
         [Authorize]
         public async Task<IActionResult> AlterarServico([FromBody] Servico servico)
         {
@@ -79,14 +79,47 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Message = "Um serviço não pode ser cadastrado com mais de 3 imagens." });
                 }
 
+                bool servicoMesmoNome = await _dbContext.Servicos
+                    .Where(s => s.Descricao == servico.Descricao && s.Codigo_Servico != servico.Codigo_Servico)
+                    .AnyAsync();
+
+                if (servicoMesmoNome)
+                {
+                    return BadRequest(new { Mensagem = "Já existe um serviço cadastrado com esse nome." });
+                }
+
+                // 1. Traz o serviço E suas imagens para a memória do EF Core
+                var servicoBanco = await _dbContext.Servicos
+                    .Include(s => s.Imagens)
+                    .FirstOrDefaultAsync(s => s.Codigo_Servico == servico.Codigo_Servico);
+
+                if (servicoBanco == null)
+                {
+                    return NotFound(new { Mensagem = "Serviço não encontrado para alteração." });
+                }
+
+                // 2. Altera os dados principais do serviço (Gera Log de UPDATE)
+                servicoBanco.Duracao = servico.Duracao;
+                servicoBanco.Descricao = servico.Descricao;
+                servicoBanco.Preco = servico.Preco;
+                servicoBanco.Tempo_Servico = servico.Tempo_Servico;
+                servicoBanco.Ativo = servico.Ativo;
+
+                // 3. Trata as imagens que foram removidas (Gera Log de DELETE para as imagens)
                 var imagensManter = servico.Imagens?
                     .Select(img => img.Codigo_Imagem)
                     .ToList() ?? new List<int>();
 
-                await _dbContext.Servico_Imagens
-                    .Where(img => img.Codigo_Servico == servico.Codigo_Servico && !imagensManter.Contains(img.Codigo_Imagem))
-                    .ExecuteDeleteAsync();
+                var imagensParaRemover = servicoBanco.Imagens
+                    .Where(img => !imagensManter.Contains(img.Codigo_Imagem))
+                    .ToList();
 
+                if (imagensParaRemover.Any())
+                {
+                    _dbContext.Servico_Imagens.RemoveRange(imagensParaRemover);
+                }
+
+                // 4. Trata as imagens novas (Gera Log de INSERT para as imagens)
                 var novasImagens = servico.Imagens?.Where(img => img.Codigo_Imagem == 0).ToList();
 
                 if (novasImagens != null && novasImagens.Any())
@@ -94,37 +127,14 @@ namespace MatutosApi.Controllers
                     foreach (var img in novasImagens)
                     {
                         img.Codigo_Servico = servico.Codigo_Servico;
+                        _dbContext.Servico_Imagens.Add(img);
                     }
-
-                    _dbContext.Servico_Imagens.AddRange(novasImagens);
-                    await _dbContext.SaveChangesAsync(); 
                 }
 
-
-                bool servicoMesmoNome = await _dbContext.Servicos.Where(s => s.Descricao == servico.Descricao && s.Codigo_Servico != servico.Codigo_Servico).AnyAsync();
-
-                if (servicoMesmoNome)
-                {
-                    return BadRequest(new { Mensagem = "Já existe um serviço cadastrado com esse nome." });
-                }
-
-                var servicoAlterado = await _dbContext.Servicos
-                    .Where(s => s.Codigo_Servico == servico.Codigo_Servico)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(up => up.Duracao, servico.Duracao)
-                        .SetProperty(up => up.Descricao, servico.Descricao)
-                        .SetProperty(up => up.Preco, servico.Preco)
-                        .SetProperty(up => up.Tempo_Servico, servico.Tempo_Servico)
-                        .SetProperty(up => up.Ativo, servico.Ativo)
-                    );
-
-                if (servicoAlterado <= 0)
-                {
-                    return NotFound(new { Mensagem = "Serviço não encontrado para alteração." });
-                }
+                // 5. Salva toda a transação de uma vez e dispara a auditoria
+                await _dbContext.SaveChangesAsync();
 
                 return Ok(new { Mensagem = "Serviço alterado com sucesso!" });
-
             }
             catch (Exception ex)
             {

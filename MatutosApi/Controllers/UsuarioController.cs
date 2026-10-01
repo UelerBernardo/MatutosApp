@@ -28,7 +28,7 @@ namespace MatutosApi.Controllers
 
         [HttpPatch("ativar-inativar/{idUsuario}")]
         [Authorize]
-        public async Task<IActionResult> InativarUsuario(int idUsuario,[FromQuery] bool ativo)
+        public async Task<IActionResult> InativarUsuario(int idUsuario, [FromQuery] bool ativo)
         {
             try
             {
@@ -52,15 +52,19 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Mensagem = "Apenas usuários administradores podem alterar o status de outros usuários!" });
                 }
 
-                var inativar = await _dbcontext.Usuarios
-                    .Where(u => u.Codigo_Usuario == idUsuario)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(u => u.Ativo, ativo)
-                    );
-                if(inativar <= 0)
+                // CORREÇÃO: Carrega para a memória (ChangeTracker inicia)
+                var usuario = await _dbcontext.Usuarios.FirstOrDefaultAsync(u => u.Codigo_Usuario == idUsuario);
+
+                if (usuario == null)
                 {
                     return BadRequest(new { Mensagem = "Usuário não encontrado para inativação." });
                 }
+
+                // Altera as propriedades
+                usuario.Ativo = ativo;
+
+                // Efetiva e dispara a gravação do log
+                await _dbcontext.SaveChangesAsync();
 
                 string mensagem = ativo ? "Usuário ativado no sistema com sucesso!" : "Usuário inativado no sistema com sucesso!";
 
@@ -87,17 +91,21 @@ namespace MatutosApi.Controllers
                     return Unauthorized(new { Mensagem = "Usuário não autenticado." });
                 }
 
+                // CORREÇÃO: Carrega para a memória
                 var usuarioAlteracao = await _dbcontext.Usuarios
-                    .Where(a => a.Codigo_Usuario == codigoUsuario)
-                    .ExecuteUpdateAsync(setters => setters
-                        .SetProperty(u => u.Nome,  usuario.Nome)
-                        .SetProperty(u => u.Email, usuario.Email)
-                    );
+                    .FirstOrDefaultAsync(a => a.Codigo_Usuario == codigoUsuario);
 
-                if(usuarioAlteracao <= 0)
+                if (usuarioAlteracao == null)
                 {
                     return NotFound(new { Mensagem = "Usuário não encontrado para alteração." });
                 }
+
+                // Altera os dados
+                usuarioAlteracao.Nome = usuario.Nome;
+                usuarioAlteracao.Email = usuario.Email;
+
+                // Dispara a gravação
+                await _dbcontext.SaveChangesAsync();
 
                 return Ok(new { Mensagem = "Usuario alterado com sucesso!" });
             }
@@ -107,7 +115,6 @@ namespace MatutosApi.Controllers
                 return StatusCode(500, new { Mensagem = $"Crash na API: {erroReal}" });
             }
         }
-
 
 
         [HttpPost("cadastrar/imagem")]
@@ -287,20 +294,34 @@ namespace MatutosApi.Controllers
                 if (usuarioTipo == UsuarioTipo.Cliente)
                 {
                     var clienteLista = await (
-                            from cliente in _dbcontext.Clientes
-                            join usuario in _dbcontext.Usuarios
-                            on cliente.Codigo_Usuario equals usuario.Codigo_Usuario
-                            where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
-                                  && (!ativo.HasValue || usuario.Ativo == ativo)
-                            select new
-                            {
-                                Codigo_Usuario = cliente.Codigo_Usuario,
-                                Nome = usuario.Nome,
-                                TipoSelecionado = usuarioTipo,
-                                Email = usuario.Email,
-                                Ativo = usuario.Ativo,
-                                Imagem_Usuario = usuario.Imagem_Usuario
-                            }).ToListAsync();
+                        from cliente in _dbcontext.Clientes
+                        join usuario in _dbcontext.Usuarios on cliente.Codigo_Usuario equals usuario.Codigo_Usuario
+
+                        // Agrupa os telefones principais antes do Left Join
+                        join telPrincipal in (
+                            from ut in _dbcontext.UsuarioTelefones
+                            join t in _dbcontext.Telefones on ut.Codigo_Telefone equals t.Codigo_Telefone
+                            where t.Principal == true
+                            select new { ut.Codigo_Usuario, t.DDD, t.Numero_Telefone }
+                        ) on usuario.Codigo_Usuario equals telPrincipal.Codigo_Usuario into telefoneGroup
+
+                        // Aplica o Left Join
+                        from tel in telefoneGroup.DefaultIfEmpty()
+
+                        where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
+                              && (!ativo.HasValue || usuario.Ativo == ativo)
+
+                        select new UsuarioConsulta
+                        {
+                            Codigo_Usuario = cliente.Codigo_Usuario,
+                            Nome = usuario.Nome,
+                            TipoSelecionado = usuarioTipo,
+                            Email = usuario.Email,
+                            Ativo = usuario.Ativo,
+                            Imagem_Usuario = usuario.Imagem_Usuario,
+                            Numero_Telefone = tel != null ? tel.Numero_Telefone : null,
+                            DDD = tel != null ? tel.DDD : null
+                        }).ToListAsync();
 
                     if (clienteLista.Count <= 0)
                     {
@@ -313,18 +334,30 @@ namespace MatutosApi.Controllers
                 {
                     var barbeiroLista = await (
                         from barbeiro in _dbcontext.Barbeiros
-                        join usuario in _dbcontext.Usuarios
-                        on barbeiro.Codigo_Usuario equals usuario.Codigo_Usuario
+                        join usuario in _dbcontext.Usuarios on barbeiro.Codigo_Usuario equals usuario.Codigo_Usuario
+
+                        join telPrincipal in (
+                            from ut in _dbcontext.UsuarioTelefones
+                            join t in _dbcontext.Telefones on ut.Codigo_Telefone equals t.Codigo_Telefone
+                            where t.Principal == true
+                            select new { ut.Codigo_Usuario, t.DDD, t.Numero_Telefone }
+                        ) on usuario.Codigo_Usuario equals telPrincipal.Codigo_Usuario into telefoneGroup
+
+                        from tel in telefoneGroup.DefaultIfEmpty()
+
                         where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
                               && (!ativo.HasValue || usuario.Ativo == ativo)
-                        select new
+
+                        select new UsuarioConsulta
                         {
                             Codigo_Usuario = barbeiro.Codigo_Usuario,
                             Nome = usuario.Nome,
                             TipoSelecionado = usuarioTipo,
                             Email = usuario.Email,
                             Ativo = usuario.Ativo,
-                            Imagem_Usuario = usuario.Imagem_Usuario
+                            Imagem_Usuario = usuario.Imagem_Usuario,
+                            Numero_Telefone = tel != null ? tel.Numero_Telefone : null,
+                            DDD = tel != null ? tel.DDD : null
                         }).ToListAsync();
 
                     if (barbeiroLista.Count <= 0)
@@ -338,18 +371,30 @@ namespace MatutosApi.Controllers
                 {
                     var admLista = await (
                         from adm in _dbcontext.Administradores
-                        join usuario in _dbcontext.Usuarios
-                        on adm.Codigo_Usuario equals usuario.Codigo_Usuario
+                        join usuario in _dbcontext.Usuarios on adm.Codigo_Usuario equals usuario.Codigo_Usuario
+
+                        join telPrincipal in (
+                            from ut in _dbcontext.UsuarioTelefones
+                            join t in _dbcontext.Telefones on ut.Codigo_Telefone equals t.Codigo_Telefone
+                            where t.Principal == true
+                            select new { ut.Codigo_Usuario, t.DDD, t.Numero_Telefone }
+                        ) on usuario.Codigo_Usuario equals telPrincipal.Codigo_Usuario into telefoneGroup
+
+                        from tel in telefoneGroup.DefaultIfEmpty()
+
                         where (string.IsNullOrEmpty(nome) || usuario.Nome.Contains(nome))
                               && (!ativo.HasValue || usuario.Ativo == ativo)
-                        select new
+
+                        select new UsuarioConsulta
                         {
                             Codigo_Usuario = adm.Codigo_Usuario,
                             Nome = usuario.Nome,
                             TipoSelecionado = usuarioTipo,
                             Email = usuario.Email,
                             Ativo = usuario.Ativo,
-                            Imagem_Usuario = usuario.Imagem_Usuario
+                            Imagem_Usuario = usuario.Imagem_Usuario,
+                            Numero_Telefone = tel != null ? tel.Numero_Telefone : null,
+                            DDD = tel != null ? tel.DDD : null
                         }).ToListAsync();
 
                     if (admLista.Count <= 0)

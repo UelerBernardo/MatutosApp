@@ -80,13 +80,13 @@
                         StrokeShape="RoundRectangle 20" 
                         BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140"
-                        IsVisible="{Binding PodeVisualizarBarbeiro}">
+                        IsVisible="{Binding PodeVisualizarAdmBar}">
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding MeusServicosCommand}"/>
                     </Border.GestureRecognizers>
                     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
-                        <Image Source="agendamentosbranco.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
-                        <Label Text="Meus Serviços" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                        <Image Source="servicosagendados.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Serviços Agendados" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                     </VerticalStackLayout>
                 </Border>
 
@@ -119,7 +119,7 @@
                 </Border>
 
                 <!-- Botão: Usuários -->
-                <Border Grid.Row="2" Grid.Column="0" 
+                <Border Grid.Row="3" Grid.Column="1" 
                         StrokeShape="RoundRectangle 20" 
                         BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
                         HeightRequest="140"

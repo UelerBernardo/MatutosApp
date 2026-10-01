@@ -18,10 +18,92 @@ namespace MatutosApi.Controllers
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
         }
+        [HttpGet("consultar/horarios-livres")]
+        [Authorize]
+        public async Task<IActionResult> AgendamentoHorariosLivres([FromQuery] int codigoBarbeiro, [FromQuery] DateTime dataAgendamento)
+        {
+            try
+            {
+                if (codigoBarbeiro <= 0 || dataAgendamento == DateTime.MinValue)
+                {
+                    return BadRequest(new { Mensagem = "Dados inválidos para a consulta de horários disponíveis" });
+                }
+
+                // 1. Regra de Negócio: Domingos a barbearia está fechada
+                if (dataAgendamento.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    return Ok(new List<string>()); // Retorna lista vazia, nenhum horário disponível
+                }
+
+                // 2. Parâmetros de funcionamento (Pode adaptar o intervalo de acordo com o serviço)
+                TimeSpan horarioAbertura = new TimeSpan(7, 30, 0);  // 07:30
+                TimeSpan horarioFechamento = new TimeSpan(18, 30, 0); // 18:30
+                int intervaloMinutos = 30; // Tempo estimado de cada corte (ex: 30 minutos)
+
+                // 3. Buscar Bloqueios (Blacklist) que passam por esse dia
+                var bloqueios = await (
+                    from blacklist in _dbContext.Blacklists
+                    join usuariobloqueio in _dbContext.Usuario_Blacklists on blacklist.Codigo_BlackList equals usuariobloqueio.Codigo_BlackList
+                    where usuariobloqueio.Codigo_Usuario == codigoBarbeiro
+                       && blacklist.Ativo == true
+                       && blacklist.Inicio_Bloqueio.Date <= dataAgendamento.Date
+                       && blacklist.Fim_Bloqueio.Date >= dataAgendamento.Date
+                    select new
+                    {
+                        Inicio = blacklist.Inicio_Bloqueio.TimeOfDay,
+                        Fim = blacklist.Fim_Bloqueio.TimeOfDay
+                    }).ToListAsync();
+
+                // 4. Buscar Agendamentos de clientes que já estão marcados para este dia
+                // Precisamos garantir que o barbeiro não receba dois clientes na mesma hora
+                var agendamentosMarcados = await _dbContext.Agendamentos
+                    .Where(a => a.Codigo_Barbeiro == codigoBarbeiro
+             // Adicionado o .Value antes do .Date
+                     && a.Data_Agendamento.Value.Date == dataAgendamento.Date
+                     && a.Codigo_Situacao_Agendamento != AgendamentoSituacao.Cancelado)
+                    .Select(a => new
+                    {
+                        // Adicionado o .Value antes do .TimeOfDay
+                        Inicio = a.Data_Agendamento.Value.TimeOfDay,
+                        Fim = a.Data_Fim_Agendamento.Value.TimeOfDay
+                    }).ToListAsync();
+
+                // 5. Montar a grade de horários livres
+                var horariosLivres = new List<string>();
+                var horaAtual = horarioAbertura;
+
+                // O laço roda enquanto o horário atual + o tempo do corte couberem dentro do expediente
+                while (horaAtual.Add(TimeSpan.FromMinutes(intervaloMinutos)) <= horarioFechamento)
+                {
+                    var fimDoSlot = horaAtual.Add(TimeSpan.FromMinutes(intervaloMinutos));
+
+                    // A mágica acontece aqui: Verifica se o nosso "Slot" de 30 minutos esbarra em algum bloqueio
+                    bool interceptaBlacklist = bloqueios.Any(b => horaAtual < b.Fim && fimDoSlot > b.Inicio);
+
+                    // Verifica se o nosso "Slot" esbarra em algum cliente já agendado
+                    bool interceptaAgendamento = agendamentosMarcados.Any(a => horaAtual < a.Fim && fimDoSlot > a.Inicio);
+
+                    // Se não bateu com a Blacklist E não bateu com Agendamento, o horário está Livre!
+                    if (!interceptaBlacklist && !interceptaAgendamento)
+                    {
+                        horariosLivres.Add(horaAtual.ToString(@"hh\:mm"));
+                    }
+
+                    // Pula para o próximo horário (Ex: se era 07:30, agora vai checar 08:00)
+                    horaAtual = fimDoSlot;
+                }
+
+                return Ok(horariosLivres);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro interno ao buscar horários livres: {ex.Message}" });
+            }
+        }
 
         [HttpGet("meus-servicos")]
         [Authorize]
-        public async Task<IActionResult> ConsultarMeusServicos([FromQuery] string? nomeCliente, [FromQuery] AgendamentoSituacao? situacao, [FromQuery] DateTime dataIncial, [FromQuery] DateTime dataFinal)
+        public async Task<IActionResult> ConsultarMeusServicos([FromQuery] string? nomeUsuario, [FromQuery] AgendamentoSituacao? situacao, [FromQuery] DateTime dataInicial, [FromQuery] DateTime dataFinal, bool isAdmin)
         {
             try
             {
@@ -32,30 +114,62 @@ namespace MatutosApi.Controllers
                     return BadRequest(new { Mensagem = "Usuário logado não encontrado, faça login e tente novamente" });
                 }
 
-                var meusServicos = await (
-                    from agendamento in _dbContext.Agendamentos
-                    join cliente in _dbContext.Clientes on
-                    agendamento.Codigo_Cliente equals cliente.Codigo_Usuario
-                    where agendamento.Codigo_Barbeiro == idPessoaLogada
-                       && agendamento.Data_Agendamento >= dataIncial
-                       && agendamento.Data_Agendamento <= dataFinal
-                       && (string.IsNullOrEmpty(nomeCliente) || cliente.Nome.Contains(nomeCliente))
-                       && (situacao == null || agendamento.Codigo_Situacao_Agendamento == situacao)
 
-                    select new MeusServicos
-                    {
-                        Codigo_Agendamento = agendamento.Codigo_Agendamento,
-                        Data_Agendamento = agendamento.Data_Agendamento,
-                        Codigo_Cliente = agendamento.Codigo_Cliente,
-                        Codigo_Situacao_Agendamento = agendamento.Codigo_Situacao_Agendamento,
-                        Valor_Total_Agendamento = agendamento.Valor_Total_Agendamento,
-                        Ativo = agendamento.Ativo,
-                        Data_Fim_Agendamento = agendamento.Data_Fim_Agendamento,
-                        Codigo_Barbeiro = agendamento.Codigo_Barbeiro,
-                        Nome_Cliente = cliente.Nome
-                    }).ToListAsync();
+                if(isAdmin == false)
+                {
+                    var meusServicos = await (
+                  from agendamento in _dbContext.Agendamentos
+                  join cliente in _dbContext.Clientes on
+                  agendamento.Codigo_Cliente equals cliente.Codigo_Usuario
+                  where agendamento.Codigo_Barbeiro == idPessoaLogada
+                     && agendamento.Data_Agendamento >= dataInicial
+                     && agendamento.Data_Agendamento <= dataFinal
+                     && (string.IsNullOrEmpty(nomeUsuario) || cliente.Nome.Contains(nomeUsuario))
+                     && (situacao == null || agendamento.Codigo_Situacao_Agendamento == situacao)
 
-                return Ok(meusServicos);
+                  select new MeusServicos
+                  {
+                      Codigo_Agendamento = agendamento.Codigo_Agendamento,
+                      Data_Agendamento = agendamento.Data_Agendamento,
+                      Codigo_Cliente = agendamento.Codigo_Cliente,
+                      Codigo_Situacao_Agendamento = agendamento.Codigo_Situacao_Agendamento,
+                      Valor_Total_Agendamento = agendamento.Valor_Total_Agendamento,
+                      Ativo = agendamento.Ativo,
+                      Data_Fim_Agendamento = agendamento.Data_Fim_Agendamento,
+                      Codigo_Barbeiro = agendamento.Codigo_Barbeiro,
+                      Nome_Cliente = cliente.Nome
+                  }).ToListAsync();
+                    return Ok(meusServicos);
+
+                }
+                else
+                {
+                    // Correção no bloco do Admin: Fazer join com Cliente também!
+                    var servicosGerais = await (
+                        from agendamento in _dbContext.Agendamentos
+                        join barbeiro in _dbContext.Barbeiros on agendamento.Codigo_Barbeiro equals barbeiro.Codigo_Usuario
+                        join cliente in _dbContext.Clientes on agendamento.Codigo_Cliente equals cliente.Codigo_Usuario // Adicionado!
+                        where agendamento.Data_Agendamento >= dataInicial
+                           && agendamento.Data_Agendamento <= dataFinal
+                           && (string.IsNullOrEmpty(nomeUsuario) || barbeiro.Nome.Contains(nomeUsuario) || cliente.Nome.Contains(nomeUsuario))
+                           && (situacao == null || agendamento.Codigo_Situacao_Agendamento == situacao)
+
+                        select new MeusServicos
+                        {
+                            Codigo_Agendamento = agendamento.Codigo_Agendamento,
+                            Data_Agendamento = agendamento.Data_Agendamento,
+                            Codigo_Cliente = agendamento.Codigo_Cliente,
+                            Codigo_Situacao_Agendamento = agendamento.Codigo_Situacao_Agendamento,
+                            Valor_Total_Agendamento = agendamento.Valor_Total_Agendamento,
+                            Ativo = agendamento.Ativo,
+                            Data_Fim_Agendamento = agendamento.Data_Fim_Agendamento,
+                            Codigo_Barbeiro = agendamento.Codigo_Barbeiro,
+                            Nome_Cliente = cliente.Nome // Corrigido!
+                        }).ToListAsync();
+
+                    return Ok(servicosGerais);
+                }
+
             }
             catch (Exception ex)
             {
@@ -115,13 +229,18 @@ namespace MatutosApi.Controllers
                     _dbContext.Blacklists.Add(bloqueioHorario);
                 }
 
-                if(agendamentoSituacao == AgendamentoSituacao.Cancelado)
+                if (agendamentoSituacao == AgendamentoSituacao.Cancelado)
                 {
-                    var inativarBlacklist = await _dbContext.Blacklists
+                    // Busca a lista na base de dados para a memória do EF Core
+                    var blacklistsParaInativar = await _dbContext.Blacklists
                         .Where(b => b.Codigo_Agendamento == codigoAgendamento)
-                        .ExecuteUpdateAsync(setters => setters
-                            .SetProperty(bc => bc.Ativo, false)
-                        );
+                        .ToListAsync();
+
+                    // Altera o estado de cada registo individualmente
+                    foreach (var blacklist in blacklistsParaInativar)
+                    {
+                        blacklist.Ativo = false;
+                    }
                 }
 
                 agendamento.Codigo_Situacao_Agendamento = agendamentoSituacao;

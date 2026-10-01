@@ -34,6 +34,7 @@
 
     </ContentPage.Resources>
 
+    <!-- 👉 CORREÇÃO: O "*" na linha do meio garante que a lista ocupe o espaço e seja rolável -->
     <Grid RowDefinitions="Auto, *, Auto" Padding="15" RowSpacing="15">
 
         <!-- PAINEL DE FILTROS (Linha 0) -->
@@ -48,7 +49,6 @@
             <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
                 <VerticalStackLayout Spacing="12">
 
-                    <!-- Novo Layout de Filtros: 2 Linhas para não espremer os campos -->
                     <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto" ColumnSpacing="10" RowSpacing="12">
 
                         <!-- LINHA 0 | COLUNA 0: Tipo -->
@@ -91,7 +91,6 @@
 
                     </Grid>
 
-                    <!-- Botão de Pesquisa com Estilo Aplicado -->
                     <Button Text="Pesquisar" 
                             Command="{Binding ConsultarUsuariosCommand}"
                             Style="{StaticResource BotaoCinzaStyle}"
@@ -107,47 +106,62 @@
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="12" />
             </CollectionView.ItemsLayout>
 
-            <!-- Card de cada Usuário -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
 
                         <Border.GestureRecognizers>
-                            <!-- Usamos o Source={x:Reference...} para "pular" para fora da lista e achar o comando na ViewModel -->
                             <TapGestureRecognizer 
                                 CommandParameter="{Binding .}" 
                                 Command="{Binding BindingContext.UsuarioAtivarInativarCommand, Source={x:Reference PaginaConsultaUsuario}}" />
                         </Border.GestureRecognizers>
 
-                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <!-- 👉 CORREÇÃO DE GRID: Colunas e Linhas definidas corretamente para o Cartão -->
+                        <Grid ColumnDefinitions="Auto, *, Auto" RowDefinitions="Auto, Auto" ColumnSpacing="15" RowSpacing="5">
 
-                            <!-- Foto / Ícone (Esquerda) -->
-                            <Frame Grid.Column="0" WidthRequest="50" HeightRequest="50" CornerRadius="25" 
+                            <!-- Foto / Ícone (Coluna 0, Ocupa as 2 linhas) -->
+                            <Frame Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" 
+                                   WidthRequest="50" HeightRequest="50" CornerRadius="25" 
                                    Padding="0" IsClippedToBounds="True" BorderColor="White" BackgroundColor="#2A2A2A"
                                    VerticalOptions="Center">
 
-                                <!-- Alterado Aspect para AspectFill e removida a Margin -->
                                 <Image Source="{Binding UrlImagemCompleta}" 
                                        Aspect="AspectFill" 
                                        Margin="0"/>
                             </Frame>
 
-                            <!-- Dados do Usuário (Centro) -->
-                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <!-- Dados do Usuário (Coluna 1, Linha 0) -->
+                            <VerticalStackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Start" Spacing="2">
                                 <Label Text="{Binding Nome}" TextColor="White" FontSize="16" FontAttributes="Bold" />
-                                <HorizontalStackLayout>
-                                    <Label Text="E_mail:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
-                                    <Label Text="{Binding Email}" TextColor="White" FontSize="13" Margin="4,0,0,0"/>
+
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="E-mail:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
+                                    <Label Text="{Binding Email}" TextColor="White" FontSize="12" LineBreakMode="TailTruncation" />
                                 </HorizontalStackLayout>
 
-                                <HorizontalStackLayout>
-                                    <Label Text="Tipo Usuário:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
-                                    <Label Text="{Binding TipoSelecionado}" TextColor="White" FontSize="12" FontAttributes="Bold" Margin="4,0,0,0"/>
+                                <HorizontalStackLayout Spacing="4">
+                                    <Label Text="Tipo:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
+                                    <Label Text="{Binding TipoSelecionado}" TextColor="White" FontSize="12" FontAttributes="Bold" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 
-                            <!-- Status (Direita) -->
-                            <VerticalStackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End">
+                            <!-- 👉 MÁSCARA DO TELEFONE (Coluna 1, Linha 1) -->
+                            <HorizontalStackLayout Grid.Column="1" Grid.Row="1" Spacing="4" VerticalOptions="End">
+                                <Label Text="Telefone:" TextColor="Gray" FontAttributes="Bold" FontSize="12"/>
+
+                                <Label TextColor="White" FontSize="12" FontAttributes="Bold">
+                                    <Label.Text>
+                                        <!-- O MultiBinding junta os dois campos no formato (DDD) NUMERO -->
+                                        <MultiBinding StringFormat="({0}) {1}">
+                                            <Binding Path="DDD" />
+                                            <Binding Path="Numero_Telefone" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </HorizontalStackLayout>
+
+                            <!-- Status (Coluna 2, Ocupa as 2 linhas) -->
+                            <VerticalStackLayout Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" VerticalOptions="Center" HorizontalOptions="End">
                                 <Border StrokeThickness="0" StrokeShape="RoundRectangle 8" Padding="8,4">
                                     <Border.Triggers>
                                         <DataTrigger TargetType="Border" Binding="{Binding Ativo}" Value="True">
@@ -178,7 +192,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
-            <!-- Visual de Lista Vazia -->
             <CollectionView.EmptyView>
                 <VerticalStackLayout VerticalOptions="Center" Spacing="10" Margin="0,40,0,0">
                     <Image Source="usuariosistema.png" HeightRequest="60" Opacity="0.5" HorizontalOptions="Center"/>

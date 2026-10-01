@@ -70,6 +70,27 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.AgendamentoController",
+    "Method": "AgendamentoHorariosLivres",
+    "RelativePath": "agendamento/consultar/horarios-livres",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoBarbeiro",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "dataAgendamento",
+        "Type": "System.DateTime",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AgendamentoController",
     "Method": "ExcluirAgendamento",
     "RelativePath": "agendamento/inativarAgendamento/{codigoAgendamento}",
     "HttpMethod": "PATCH",
@@ -124,7 +145,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "nomeCliente",
+        "Name": "nomeUsuario",
         "Type": "System.String",
         "IsRequired": false
       },
@@ -134,13 +155,18 @@
         "IsRequired": false
       },
       {
-        "Name": "dataIncial",
+        "Name": "dataInicial",
         "Type": "System.DateTime",
         "IsRequired": false
       },
       {
         "Name": "dataFinal",
         "Type": "System.DateTime",
+        "IsRequired": false
+      },
+      {
+        "Name": "isAdmin",
+        "Type": "System.Boolean",
         "IsRequired": false
       }
     ],

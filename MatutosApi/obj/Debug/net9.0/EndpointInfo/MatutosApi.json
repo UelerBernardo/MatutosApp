@@ -5,6 +5,36 @@
     "version": "v1"
   },
   "paths": {
+    "/agendamento/consultar/horarios-livres": {
+      "get": {
+        "tags": [
+          "Agendamento"
+        ],
+        "parameters": [
+          {
+            "name": "codigoBarbeiro",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "dataAgendamento",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/agendamento/meus-servicos": {
       "get": {
         "tags": [
@@ -12,7 +42,7 @@
         ],
         "parameters": [
           {
-            "name": "nomeCliente",
+            "name": "nomeUsuario",
             "in": "query",
             "schema": {
               "type": "string"
@@ -26,7 +56,7 @@
             }
           },
           {
-            "name": "dataIncial",
+            "name": "dataInicial",
             "in": "query",
             "schema": {
               "type": "string",
@@ -39,6 +69,13 @@
             "schema": {
               "type": "string",
               "format": "date-time"
+            }
+          },
+          {
+            "name": "isAdmin",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
             }
           }
         ],

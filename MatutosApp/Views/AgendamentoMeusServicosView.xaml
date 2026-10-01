@@ -76,7 +76,7 @@
                     <VerticalStackLayout Grid.Column="0" Spacing="5">
                         <Label Text="{Binding Mensagem}" TextColor="#AAAAAA" FontSize="12" FontAttributes="Bold"/>
                         <Border BackgroundColor="#2A2A2A" StrokeThickness="0" StrokeShape="RoundRectangle 8" HeightRequest="45" Padding="10,0">
-                            <Entry Text="{Binding NomeCliente}" 
+                            <Entry Text="{Binding NomeUsuario}" 
                                    Placeholder="Ex: João Silva" 
                                    TextColor="White" 
                                    PlaceholderColor="#888888" 
@@ -187,11 +187,15 @@
                             <VerticalStackLayout Grid.Row="2" Grid.Column="0" Spacing="2" VerticalOptions="Center" Margin="0,0,0,0">
                                 <HorizontalStackLayout Spacing="5">
                                     <Image Source="usuarioagendamento.png" HeightRequest="25" WidthRequest="20" VerticalOptions="Center"/>
-                                    <Label Text="Cliente:" FontSize="13" TextColor="#AAAAAA" VerticalOptions="Center"/>
+                                    <Label Text="{Binding BindingContext.Mensagem, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                           FontSize="13" 
+                                           TextColor="#AAAAAA" 
+                                           VerticalOptions="Center"/>
                                     <Label Text="{Binding Nome_Cliente, TargetNullValue='Cliente'}" FontSize="17" TextColor="#FFFFFF" FontAttributes="Bold"/>
                                 </HorizontalStackLayout>
                                 
                             </VerticalStackLayout>
+
 
                             <!-- LINHA 2 DIREITA: Valor Total -->
                             <VerticalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="End" VerticalOptions="End" Margin="0,5,0,0">
