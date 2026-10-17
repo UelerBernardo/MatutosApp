@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MatutosApp.ViewsModels"
+             x:DataType="viewmodels:AuditoriaLogDetalhesViewModel"
+             x:Class="MatutosApp.Views.AuditoriaLogDetalhesView"
+             BackgroundColor="#121212"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <!-- Estilo do Botão Principal -->
+        <Style x:Key="BotaoCinzaStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal" />
+                        <VisualState Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="#888888" />
+                                <Setter Property="TextColor" Value="#FFFFFF" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Usamos um Grid para que o botão "Voltar" fique sempre fixo no rodapé -->
+    <Grid RowDefinitions="Auto, *, Auto" Padding="15">
+
+        <!-- Título (Linha 0) -->
+        <Label Grid.Row="0" 
+               Text="Detalhes do Log" 
+               FontSize="24" 
+               FontAttributes="Bold" 
+               TextColor="#FFFFFF"
+               HorizontalTextAlignment="Center"
+               Margin="0,0,0,15"/>
+
+        <!-- Conteúdo Rolável (Linha 1) -->
+        <ScrollView Grid.Row="1" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Indicador de carregamento -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                                   IsVisible="{Binding IsBusy}"
+                                   HorizontalOptions="Center" 
+                                   Color="#FFFFFF" />
+
+                <!-- Informações Gerais -->
+                <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Informações Gerais" TextColor="#FFFFFF" FontSize="18" FontAttributes="Bold" />
+                        <BoxView HeightRequest="1" Color="#333333" Margin="0,0,0,5" />
+
+                        <!-- Grid para alinhar perfeitamente as chaves e valores -->
+                        <Grid ColumnDefinitions="130, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" RowSpacing="10">
+                            <Label Grid.Row="0" Grid.Column="0" Text="ID do Log:" TextColor="Gray" FontAttributes="Bold" />
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding AuditoriaDetalhes.Codigo_Log}" TextColor="White" />
+
+                            <Label Grid.Row="1" Grid.Column="0" Text="Data/Hora:" TextColor="Gray" FontAttributes="Bold" />
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding AuditoriaDetalhes.Data_Hora_Acao, StringFormat='{}{0:dd/MM/yyyy HH:mm}'}" TextColor="White" />
+
+                            <Label Grid.Row="2" Grid.Column="0" Text="Ação:" TextColor="Gray" FontAttributes="Bold" />
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding AuditoriaDetalhes.Tipo_Acao}" TextColor="White" />
+
+                            <Label Grid.Row="3" Grid.Column="0" Text="Usuário:" TextColor="Gray" FontAttributes="Bold" />
+                            <Label Grid.Row="3" Grid.Column="1" Text="{Binding AuditoriaDetalhes.Nome}" TextColor="White" />
+
+                            <Label Grid.Row="4" Grid.Column="0" Text="Tabela Afetada:" TextColor="Gray" FontAttributes="Bold" />
+                            <Label Grid.Row="4" Grid.Column="1" Text="{Binding AuditoriaDetalhes.Entidade_Afetada}" TextColor="White" />
+
+                            <Label Grid.Row="5" Grid.Column="0" Text="ID do Registro:" TextColor="Gray" FontAttributes="Bold" />
+                            <Label Grid.Row="5" Grid.Column="1" Text="{Binding AuditoriaDetalhes.Registro_ID}" TextColor="White" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Detalhes das Alterações -->
+                <Border BackgroundColor="#1E1E1E" Stroke="White" StrokeThickness="1" StrokeShape="RoundRectangle 12" Padding="15">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Detalhes das Alterações" TextColor="#FFFFFF" FontSize="18" FontAttributes="Bold" />
+                        <BoxView HeightRequest="1" Color="#333333" Margin="0,0,0,5" />
+
+                        <Label Text="Valores Antigos:" TextColor="Gray" FontAttributes="Bold" />
+                        <!-- Cor vermelha pastel para contrastar com o fundo escuro -->
+                        <Label Text="{Binding AuditoriaDetalhes.Valores_Antigos, TargetNullValue='Nenhum'}" 
+                               TextColor="#CF6679"
+                               LineBreakMode="WordWrap" />
+
+                        <BoxView HeightRequest="1" Color="#333333" Margin="0,5" />
+
+                        <Label Text="Valores Novos:" TextColor="Gray" FontAttributes="Bold" />
+                        <!-- Cor verde pastel para contrastar com o fundo escuro -->
+                        <Label Text="{Binding AuditoriaDetalhes.Valores_Novos, TargetNullValue='Nenhum'}" 
+                               TextColor="#4CAF50"
+                               LineBreakMode="WordWrap" />
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Botão Voltar Fixo no Rodapé (Linha 2) -->
+        <Button Grid.Row="2" 
+                Text="Voltar" 
+                Command="{Binding VoltarTela}"
+                Style="{StaticResource BotaoCinzaStyle}"
+                Margin="0,15,0,0" />
+
+    </Grid>
+</ContentPage>

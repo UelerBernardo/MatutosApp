@@ -420,7 +420,8 @@ namespace MatutosApi.Controllers
 
         [HttpGet("consultar/detalhes/{id:int}")]
         [Authorize]
-        public async Task<IActionResult> ConsultarDetalhesAgendamento(int id)
+        // 👉 CORREÇÃO: Altere [FromBody] para [FromRoute], ou deixe sem nada.
+        public async Task<IActionResult> ConsultarDetalhesAgendamento([FromRoute] int id)
         {
             try
             {
@@ -441,25 +442,23 @@ namespace MatutosApi.Controllers
                         {
                             s.Quantidade_Servico,
                             s.Valor_Total_Item,
-                            Servico = new { Descricao = s.Servico.Descricao } 
+                            Servico = new { Descricao = s.Servico.Descricao }
                         }).ToList()
                     })
                     .FirstOrDefaultAsync();
 
                 if (agendamento == null)
                 {
-                    // Padronizado para retornar JSON
                     return NotFound(new { Mensagem = $"Agendamento com ID {id} não encontrado." });
                 }
 
                 return Ok(agendamento);
             }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new { Mensagem = $"Erro ao consultar agendamento: {ex.Message}" });
-                }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Mensagem = $"Erro ao consultar agendamento: {ex.Message}" });
+            }
         }
-
         [HttpGet("meus-agendamentos")]
         [Authorize]
         public async Task<IActionResult> ConsultarAgendamento([FromQuery] string? nomeBarbeiro, AgendamentoSituacao? situacao, DateTime datainicial, DateTime datafinal)

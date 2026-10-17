@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `auditoria_log` (
   `Codigo_Log` bigint(20) NOT NULL AUTO_INCREMENT,
   `Entidade_Afetada` varchar(250) NOT NULL,
   `Registro_ID` varchar(255) NOT NULL,
-  `Tipo_Acao` varchar(50) NOT NULL,
+  `Tipo_Acao` int(11) NOT NULL,
   `Valores_Antigos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`Valores_Antigos`)),
   `Valores_Novos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`Valores_Novos`)),
   `Usuario_Acao` int(11) DEFAULT NULL,

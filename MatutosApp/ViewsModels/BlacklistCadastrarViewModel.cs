@@ -220,6 +220,16 @@ namespace MatutosApp.ViewsModels
                     await Application.Current.MainPage.DisplayAlert("Atenção", "Por favor preencha os detalhes para bloquear a agenda.", "Ok");
                     return;
                 }
+                if(fim < inicio)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "A data final não pode ser menor que a data inicial", "Ok");
+                    return;
+                }
+                if(inicio == fim)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Atenção", "As datas incial e final não podem ser iguais", "Ok");
+                    return;
+                }
 
                 var novaBlacklist = new Blacklist
                 {
