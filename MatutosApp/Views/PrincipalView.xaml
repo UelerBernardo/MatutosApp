@@ -44,8 +44,9 @@
                    HorizontalOptions="Center" 
                    Margin="0, 0, 0, 10" />
 
+            <!-- 👉 MUDANÇA: Adicionado Auto para acomodar a nova linha 4 do Grid -->
             <!-- Grid de Botões do Menu -->
-            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="15">
+            <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="15">
 
                 <!-- Botão: Agendar -->
                 <Border Grid.Row="0" Grid.Column="0" 
@@ -163,10 +164,44 @@
                     </VerticalStackLayout>
                 </Border>
 
+                <!-- 👉 NOVA OPÇÃO: Auditoria (Log) -->
+                <Border Grid.Row="4" Grid.Column="0" 
+                         StrokeShape="RoundRectangle 20" 
+                         BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
+                         HeightRequest="140"
+                         IsVisible="{Binding PodeVisualizarAdm}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirAuditoriaLogCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <!-- Coloquei um ícone de placeholder, lembre-se de adicionar a imagem real no projeto -->
+                        <Image Source="log.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Auditoria" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 👉 NOVA OPÇÃO: Relatório -->
+                <Border Grid.Row="4" Grid.Column="1" 
+                         StrokeShape="RoundRectangle 20" 
+                         BackgroundColor="#1E1E1E" Stroke="#FFFFFF" StrokeThickness="1" 
+                         HeightRequest="140"
+                         IsVisible="{Binding PodeVisualizarAdm}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AbrirRelatorioCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                        <!-- Coloquei um ícone de placeholder, lembre-se de adicionar a imagem real no projeto -->
+                        <Image Source="relatorio.png" WidthRequest="70" HeightRequest="70" HorizontalOptions="Center" />
+                        <Label Text="Relatório" TextColor="#FFFFFF" FontAttributes="Bold" FontSize="16" HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
             </Grid>
+
             <VerticalStackLayout>
                 <ImageButton Source="sair.png" WidthRequest="70" HeightRequest="70" BackgroundColor="#121212" Command="{Binding LogOutCommand}" Margin="0,50,0,0"/>
             </VerticalStackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

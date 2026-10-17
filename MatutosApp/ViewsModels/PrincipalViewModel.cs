@@ -123,6 +123,13 @@ namespace MatutosApp.ViewsModels
         }
 
         [RelayCommand]
+        public async Task AbrirAuditoriaLog()
+        {
+            // Navega para a nova tela de logs
+            await Shell.Current.GoToAsync(nameof(AuditoriaLogConsultarView));
+        }
+
+        [RelayCommand]
         public async Task AbrirBlacklist()
         {
             await Shell.Current.GoToAsync(nameof(BlacklistConsultarView));

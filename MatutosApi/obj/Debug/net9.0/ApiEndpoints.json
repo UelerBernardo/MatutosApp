@@ -173,6 +173,38 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.AuditoriaLogController",
+    "Method": "LogConsultarLista",
+    "RelativePath": "auditoria-log/consulta-lista",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "MatutosDomain.FiltroLogDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.AuditoriaLogController",
+    "Method": "LogConsultarDetalhes",
+    "RelativePath": "auditoria-log/consultar-detalhes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.BarbeiroController",
     "Method": "ConsultarBarbeiro",
     "RelativePath": "barbeiro/consultar",

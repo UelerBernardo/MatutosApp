@@ -3,6 +3,7 @@ using MatutosDomain;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace MatutosApi.Infraestrutura
 {
@@ -131,16 +132,17 @@ namespace MatutosApi.Infraestrutura
         // IMPLEMENTAÇÃO DA AUDITORIA AUTOMÁTICA
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            var auditEntries = new List<AuditoriaLog>();
-
             // Extrai o ID do usuário da requisição atual via token JWT
             var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int? usuarioLogadoId = userIdClaim != null ? int.Parse(userIdClaim) : null;
 
             var entries = ChangeTracker.Entries()
                 .Where(e => e.Entity is not AuditoriaLog &&
-                           (e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted))
+                            (e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted))
                 .ToList();
+
+            // Uma lista para manter as informações temporárias e a Entidade original na memória
+            var auditInfos = new List<(EntityEntry Entry, AuditoriaLog Log, Dictionary<string, object> NewValues)>();
 
             foreach (var entry in entries)
             {
@@ -150,10 +152,6 @@ namespace MatutosApi.Infraestrutura
                     Usuario_Acao = usuarioLogadoId,
                     Data_Hora_Acao = DateTime.UtcNow
                 };
-
-                // Identifica a chave primária
-                var primaryKey = entry.Properties.FirstOrDefault(p => p.Metadata.IsPrimaryKey());
-                auditEntry.Registro_ID = primaryKey?.CurrentValue?.ToString() ?? "N/A";
 
                 var oldValues = new Dictionary<string, object>();
                 var newValues = new Dictionary<string, object>();
@@ -165,13 +163,13 @@ namespace MatutosApi.Infraestrutura
                     switch (entry.State)
                     {
                         case EntityState.Added:
-                            auditEntry.Tipo_Acao = "INSERT";
+                            auditEntry.Tipo_Acao = TipoAcaoEnum.Inserção;
                             if (property.CurrentValue != null)
                                 newValues[propertyName] = property.CurrentValue;
                             break;
 
                         case EntityState.Deleted:
-                            auditEntry.Tipo_Acao = "DELETE";
+                            auditEntry.Tipo_Acao = TipoAcaoEnum.Exclusão;
                             if (property.OriginalValue != null)
                                 oldValues[propertyName] = property.OriginalValue;
                             break;
@@ -179,7 +177,7 @@ namespace MatutosApi.Infraestrutura
                         case EntityState.Modified:
                             if (property.IsModified)
                             {
-                                auditEntry.Tipo_Acao = "UPDATE";
+                                auditEntry.Tipo_Acao = TipoAcaoEnum.Alteração;
                                 oldValues[propertyName] = property.OriginalValue;
                                 newValues[propertyName] = property.CurrentValue;
                             }
@@ -187,18 +185,55 @@ namespace MatutosApi.Infraestrutura
                     }
                 }
 
+                // Para UPDATE e DELETE, o ID real já existe, então já podemos pegar.
+                // Para o INSERT, deixaremos vazio por enquanto.
+                if (entry.State != EntityState.Added)
+                {
+                    var primaryKey = entry.Properties.FirstOrDefault(p => p.Metadata.IsPrimaryKey());
+                    auditEntry.Registro_ID = primaryKey?.CurrentValue?.ToString() ?? "N/A";
+                }
+
                 auditEntry.Valores_Antigos = oldValues.Count > 0 ? JsonSerializer.Serialize(oldValues) : null;
-                auditEntry.Valores_Novos = newValues.Count > 0 ? JsonSerializer.Serialize(newValues) : null;
 
-                auditEntries.Add(auditEntry);
+                // Guardamos as informações para atualizar o ID mais tarde.
+                // NOTA: Não serializamos Valores_Novos ainda, para podermos colocar o ID real dentro do JSON se desejado.
+                auditInfos.Add((entry, auditEntry, newValues));
             }
 
-            if (auditEntries.Any())
+            // 1º SALVAMENTO: Envia as entidades originais para o banco.
+            // É AQUI que o banco gera os IDs reais (como o ID do Servico) e o EF Core atualiza o objeto na memória.
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            // Agora passamos pelos registros de auditoria preparados e atualizamos os INSERTS
+            foreach (var info in auditInfos)
             {
-                await AuditoriaLogs.AddRangeAsync(auditEntries, cancellationToken);
+                // Se foi uma inserção, agora a entidade possui o ID gerado pelo banco
+                if (info.Log.Tipo_Acao == TipoAcaoEnum.Inserção)
+                {
+                    var primaryKey = info.Entry.Properties.FirstOrDefault(p => p.Metadata.IsPrimaryKey());
+                    info.Log.Registro_ID = primaryKey?.CurrentValue?.ToString() ?? "N/A";
+
+                    // (Opcional) Se você quiser que o ID real também apareça dentro do JSON de "Valores_Novos"
+                    if (primaryKey != null)
+                    {
+                        info.NewValues[primaryKey.Metadata.Name] = primaryKey.CurrentValue;
+                    }
+                }
+
+                // Serializamos os novos valores apenas agora, garantindo que contenham o ID real
+                info.Log.Valores_Novos = info.NewValues.Count > 0 ? JsonSerializer.Serialize(info.NewValues) : null;
+
+                // Adicionamos o log de auditoria ao contexto
+                AuditoriaLogs.Add(info.Log);
             }
 
-            return await base.SaveChangesAsync(cancellationToken);
+            if (auditInfos.Any())
+            {
+                // 2º SALVAMENTO: Salva exclusivamente a tabela de auditoria agora com os IDs corretos.
+                await base.SaveChangesAsync(cancellationToken);
+            }
+
+            return result;
         }
     }
 }

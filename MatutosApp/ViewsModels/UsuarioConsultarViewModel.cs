@@ -44,7 +44,7 @@ namespace MatutosApp.ViewsModels
         }
 
         [RelayCommand]
-        public async Task UsuarioAtivarInativar(Usuario usuarioSelecionado)
+        public async Task UsuarioAtivarInativar(UsuarioConsulta usuarioSelecionado)
         {
             try
             {

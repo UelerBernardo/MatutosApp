@@ -227,7 +227,7 @@ namespace MatutosApp.ViewsModels
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
+                     await Application.Current.MainPage.DisplayAlert("Atenção", resultado.Mensagem, "Ok");
                 }
             }
             catch (Exception ex)

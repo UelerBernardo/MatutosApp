@@ -289,6 +289,60 @@
         }
       }
     },
+    "/auditoria-log/consultar-detalhes/{id}": {
+      "get": {
+        "tags": [
+          "AuditoriaLog"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auditoria-log/consulta-lista": {
+      "post": {
+        "tags": [
+          "AuditoriaLog"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltroLogDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltroLogDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltroLogDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/barbeiro/consultar": {
       "get": {
         "tags": [
@@ -1470,6 +1524,33 @@
         },
         "additionalProperties": false
       },
+      "FiltroLogDTO": {
+        "type": "object",
+        "properties": {
+          "entidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "acao": {
+            "$ref": "#/components/schemas/TipoAcaoEnum"
+          },
+          "inicio": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "fim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "usuarioLog": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "Notificacao": {
         "type": "object",
         "properties": {
@@ -1605,6 +1686,15 @@
           }
         },
         "additionalProperties": false
+      },
+      "TipoAcaoEnum": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "format": "int32"
       },
       "Tipo_Evento": {
         "type": "object",

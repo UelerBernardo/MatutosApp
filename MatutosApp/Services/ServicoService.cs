@@ -144,6 +144,8 @@ namespace MatutosApp.Services
 
                 var resposta = await _httpClient.PostAsJsonAsync<Servico>("servico/cadastrar", servico);
 
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
                 if (resposta.IsSuccessStatusCode)
                 {
                     return (true, "Serviço cadastrado com sucesso!");
@@ -151,9 +153,8 @@ namespace MatutosApp.Services
 
                 else
                 {
-                    var errorMessage = await resposta.Content.ReadAsStringAsync();
-                    Debug.WriteLine($"Falha ao cadastrar servico. Status: {resposta.StatusCode}, Erro: {errorMessage}");
-                    return (false, errorMessage);
+                    var errorMessage = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
+                    return (false, errorMessage.Mensagem);
                 }
             }
             catch (Exception ex)

@@ -10,6 +10,8 @@ using MatutosApp.ViewsModels;
 using Microsoft.Extensions.Logging;
 using Plugin.Firebase.Bundled.Shared;
 using Microsoft.Maui.LifecycleEvents;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
 
 #if ANDROID
 using Plugin.Firebase.Bundled.Platforms.Android;
@@ -109,6 +111,12 @@ namespace MatutosApp
 #endif
            ;
 
+            builder.Services.AddHttpClient<AuditoriaLogService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+;
+
 
             // 👉 3. ViewModels
             builder.Services.AddTransient<UsuarioViewModel>();
@@ -134,6 +142,8 @@ namespace MatutosApp
             builder.Services.AddTransient<UsuarioConsultarViewModel>();
             builder.Services.AddTransient<AgendamentoMeusServicosViewModel>();
             builder.Services.AddTransient<SobreNosViewModel>();
+            builder.Services.TryAddTransient<AuditoriaLogConsultarViewModel>();
+            builder.Services.TryAddTransient<AuditoriaLogDetalhesViewModel>();
 
 
             // 👉 4. Views
@@ -160,6 +170,9 @@ namespace MatutosApp
             builder.Services.AddTransient<UsuarioConsultarView>();
             builder.Services.AddTransient<AgendamentoMeusServicosView>();
             builder.Services.AddTransient<SobreNosView>();
+            builder.Services.AddTransient<AuditoriaLogConsultarView>();
+            builder.Services.AddTransient<AuditoriaLogDetalhesView>();
+
 
 
             // 👉 5. Configuração Visual (Somente regra de interface aqui dentro!)
