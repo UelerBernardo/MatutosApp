@@ -116,6 +116,11 @@ namespace MatutosApp
             .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
 #endif
 ;
+            builder.Services.AddHttpClient<RelatorioService>(c => c.BaseAddress = new Uri(ipDaApi))
+#if ANDROID
+           .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+#endif
+;
 
 
             // 👉 3. ViewModels
@@ -144,6 +149,7 @@ namespace MatutosApp
             builder.Services.AddTransient<SobreNosViewModel>();
             builder.Services.TryAddTransient<AuditoriaLogConsultarViewModel>();
             builder.Services.TryAddTransient<AuditoriaLogDetalhesViewModel>();
+            builder.Services.TryAddTransient<RelatoriosViewModel>();
 
 
             // 👉 4. Views
@@ -172,6 +178,7 @@ namespace MatutosApp
             builder.Services.AddTransient<SobreNosView>();
             builder.Services.AddTransient<AuditoriaLogConsultarView>();
             builder.Services.AddTransient<AuditoriaLogDetalhesView>();
+            builder.Services.AddTransient<RelatoriosView>();
 
 
 

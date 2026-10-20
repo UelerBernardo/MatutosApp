@@ -57,7 +57,11 @@ namespace MatutosApp.ViewsModels
             }
         }
 
-
+        [RelayCommand]
+        public async Task AbrirRelatorio()
+        {
+            await Shell.Current.GoToAsync(nameof(RelatoriosView));
+        }
         private void PermissaoParaVisualizar()
         {
             var usuarioLogado = UsuarioSessaoService.UsuarioLogado;

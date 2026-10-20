@@ -1,0 +1,124 @@
+-- --------------------------------------------------------
+-- Servidor:                     127.0.0.1
+-- Versão do servidor:           12.2.2-MariaDB - MariaDB Server
+-- OS do Servidor:               Win64
+-- HeidiSQL Versão:              12.17.0.7270
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+-- Copiando estrutura para procedure dbmatutos.usp_Relatorio_ClientesNaoFidelizados
+DELIMITER //
+CREATE PROCEDURE `usp_Relatorio_ClientesNaoFidelizados`(
+    IN QtdDias INT
+)
+BEGIN
+	SELECT
+		cli.Codigo_Usuario AS IdCliente,
+		cli.Nome AS NomeCliente,
+		MAX(age.Data_Agendamento) AS DataUltimoAgendamento,
+		DATEDIFF(NOW(), MAX(age.Data_Agendamento)) AS DiasSemAgendamento
+	FROM
+		usuario AS cli
+	JOIN
+		agendamento age ON cli.Codigo_Usuario = age.Codigo_Cliente
+	WHERE
+		age.Codigo_Situacao_Agendamento = 4 
+	GROUP BY
+		cli.Codigo_Usuario,
+		cli.Nome
+	HAVING
+		-- Filtra por quem está sumido a um número de dias MAIOR ou IGUAL ao parâmetro informado.
+		-- Se enviar NULL, ele traz todos (ignora o filtro).
+		QtdDias IS NULL OR DATEDIFF(NOW(), MAX(age.Data_Agendamento)) >= QtdDias
+	ORDER BY
+		DiasSemAgendamento DESC;
+END//
+DELIMITER ;
+
+-- Copiando estrutura para procedure dbmatutos.usp_Relatorio_Faturamento
+DELIMITER //
+CREATE PROCEDURE `usp_Relatorio_Faturamento`(
+	IN DataInicio DATETIME,
+	IN DataFim DATETIME,
+	IN DescricaoServico VARCHAR(100),
+	IN NomeCliente VARCHAR(100)
+)
+BEGIN
+	SELECT
+		age.Codigo_Agendamento AS IdAgendamento,
+	  	ser.Codigo_Servico AS IdServico,
+      ser.Descricao AS DescricaoServico,
+      bar.Codigo_Usuario AS IdBarbeiro,
+      bar.Nome AS NomeBarbeiro,
+      cli.Codigo_Usuario AS IdCliente,
+      cli.Nome AS NomeCliente,
+      age_ser.Valor_Total_Item AS PrecoServico,
+      age.Data_Agendamento AS DataHoraAgendamento,
+      age.Valor_Total_Agendamento AS TotalAgendamento
+	FROM
+		agendamento AS age
+	JOIN
+		agendamento_servico age_ser ON age.Codigo_Agendamento = age_ser.Codigo_Agendamento
+	JOIN
+		servico ser ON age_ser.Codigo_Servico = ser.Codigo_Servico
+	JOIN
+		usuario cli ON age.Codigo_Cliente = cli.Codigo_Usuario
+	JOIN
+		usuario bar ON age.Codigo_Barbeiro = bar.Codigo_Usuario
+	WHERE
+		age.Codigo_Situacao_Agendamento = 4
+		AND (DataInicio IS NULL OR age.Data_Agendamento >= DataInicio)
+        AND (DataFim IS NULL OR age.Data_Agendamento <= DataFim)
+        AND (DescricaoServico IS NULL OR ser.Descricao LIKE CONCAT('%', DescricaoServico, '%'))
+        AND (NomeCliente IS NULL OR cli.Nome LIKE CONCAT('%', NomeCliente, '%'))
+    ORDER BY age.Data_Agendamento DESC;
+END//
+DELIMITER ;
+
+-- Copiando estrutura para procedure dbmatutos.usp_Relatorio_ServicosPorBarbeiro
+DELIMITER //
+CREATE PROCEDURE `usp_Relatorio_ServicosPorBarbeiro`(
+	IN DataInicio DATETIME,
+	IN DataFim DATETIME,
+	IN NomeBarbeiro VARCHAR(100)
+)
+BEGIN
+	SELECT
+		bar.Codigo_Usuario AS IdBarbeiro,
+		bar.Nome AS NomeBarbeiro,
+		-- Soma a quantidade de serviços feitos
+		SUM(age_ser.Quantidade_Servico) AS QuantidadeServicosPrestados,
+		-- Soma o valor total (Valor do Item * Quantidade)
+		SUM(age_ser.Valor_Total_Item * age_ser.Quantidade_Servico) AS ValorTotal
+	FROM
+		agendamento AS age
+	JOIN
+		agendamento_servico age_ser ON age.Codigo_Agendamento = age_ser.Codigo_Agendamento
+	JOIN
+		usuario bar ON age.Codigo_Barbeiro = bar.Codigo_Usuario
+	WHERE
+		age.Codigo_Situacao_Agendamento = 4 -- Status Finalizado
+		AND (DataInicio IS NULL OR age.Data_Agendamento >= DataInicio)
+		AND (DataFim IS NULL OR age.Data_Agendamento <= DataFim)
+		AND (NomeBarbeiro IS NULL OR bar.Nome LIKE CONCAT('%', NomeBarbeiro, '%'))
+	GROUP BY
+		bar.Codigo_Usuario,
+		bar.Nome
+	ORDER BY
+		ValorTotal DESC; -- Ordena do barbeiro que faturou mais para o que faturou menos
+END//
+DELIMITER ;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
