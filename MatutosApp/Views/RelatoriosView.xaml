@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:MatutosApp.ViewsModels"
+             x:DataType="viewmodels:RelatoriosViewModel"
+             x:Class="MatutosApp.Views.RelatoriosView"
+             BackgroundColor="#121212"
+             Title="Relatórios">
+
+    <ContentPage.Resources>
+        <!-- Estilo Padrão para Botões -->
+        <Style x:Key="BotaoPrimarioStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#E0E0E0" />
+            <Setter Property="TextColor" Value="#121212" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="HeightRequest" Value="50" />
+            <!-- Aumentado um pouco para ficar mais clicável -->
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- Usamos ScrollView para garantir que caiba em telas menores, mas alinhamos o conteúdo no centro -->
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="25" VerticalOptions="Center">
+
+            <!-- TÍTULO MAIOR E CENTRALIZADO -->
+            <VerticalStackLayout Spacing="5" HorizontalOptions="Center" Margin="0, 0, 0, 10">
+                <Label Text="Relatórios" 
+                       FontSize="32" 
+                       FontAttributes="Bold" 
+                       TextColor="#FFFFFF"
+                       HorizontalTextAlignment="Center"/>
+
+                <Label Text="Gere documentos em PDF com facilidade" 
+                       FontSize="14" 
+                       TextColor="#A0A0A0"
+                       HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
+
+            <!-- 1. SELEÇÃO DO RELATÓRIO -->
+            <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                <Picker ItemsSource="{Binding ListaOpcoesRelatorio}"
+                        SelectedItem="{Binding RelatorioSelecionado}"
+                        Title="Selecione o Relatório..." 
+                        TitleColor="#A0A0A0"
+                        TextColor="White"
+                        BackgroundColor="Transparent" />
+                <!-- Fundo transparente para herdar o visual do Border -->
+            </Border>
+
+            <!-- ========================================== -->
+            <!-- 2. ÁREA DE FILTROS DINÂMICOS -->
+            <!-- ========================================== -->
+
+            <!-- Filtros: FATURAMENTO -->
+            <VerticalStackLayout IsVisible="{Binding IsFiltrosFaturamentoVisible}" Spacing="15">
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Data Início" TextColor="#A0A0A0" FontSize="13" />
+                        <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                            <DatePicker Date="{Binding DataInicio}" TextColor="White" BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Data Fim" TextColor="#A0A0A0" FontSize="13" />
+                        <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                            <DatePicker Date="{Binding DataFim}" TextColor="White" BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                    <Entry Placeholder="Nome do Serviço (Opcional)" PlaceholderColor="#7A7A7A" Text="{Binding DescricaoServico}" TextColor="White" BackgroundColor="Transparent" />
+                </Border>
+
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                    <Entry Placeholder="Nome do Cliente (Opcional)" PlaceholderColor="#7A7A7A" Text="{Binding NomeCliente}" TextColor="White" BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Filtros: BARBEIROS -->
+            <VerticalStackLayout IsVisible="{Binding IsFiltrosBarbeiroVisible}" Spacing="15">
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="Data Início" TextColor="#A0A0A0" FontSize="13" />
+                        <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                            <DatePicker Date="{Binding DataInicio}" TextColor="White" BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="Data Fim" TextColor="#A0A0A0" FontSize="13" />
+                        <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                            <DatePicker Date="{Binding DataFim}" TextColor="White" BackgroundColor="Transparent" />
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                    <Entry Placeholder="Nome do Barbeiro (Opcional)" PlaceholderColor="#7A7A7A" Text="{Binding NomeBarbeiro}" TextColor="White" BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Filtros: CLIENTES NÃO FIDELIZADOS -->
+            <VerticalStackLayout IsVisible="{Binding IsFiltrosClientesVisible}" Spacing="15">
+                <Border BackgroundColor="#1E1E1E" Stroke="#333333" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,0">
+                    <Entry Placeholder="Qtd. Mínima de Dias Inativos (Ex: 30)" 
+                           PlaceholderColor="#7A7A7A"
+                           Text="{Binding QtdDiasSemAgendamento}" 
+                           Keyboard="Numeric" 
+                           TextColor="White" 
+                           BackgroundColor="Transparent" />
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- BOTÃO DE BUSCA -->
+            <Button Text="Gerar Relatório em PDF" 
+                    Command="{Binding ConsultarRelatorioCommand}" 
+                    Style="{StaticResource BotaoPrimarioStyle}"
+                    IsVisible="{Binding IsBotaoGerarVisible}" 
+                    FontAttributes="Bold"
+                    Margin="0,15,0,0" />
+
+            <!-- INDICADOR DE CARREGAMENTO -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}" 
+                               IsVisible="{Binding IsBusy}"
+                               Color="#E0E0E0" 
+                               HorizontalOptions="Center" 
+                               Margin="0,10,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

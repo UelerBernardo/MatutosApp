@@ -383,6 +383,54 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "MatutosApi.Controllers.RelatorioController",
+    "Method": "ConsultarRelatorioClientesNaoFidelizados",
+    "RelativePath": "relatorio/clientes-nao-fidelizados",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "qtdDias",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.RelatorioController",
+    "Method": "GerarRelatorioFaturamento",
+    "RelativePath": "relatorio/faturamento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "MatutosDomain.FiltroFaturamentoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MatutosApi.Controllers.RelatorioController",
+    "Method": "ConsultarRelatorioServicosPorBarbeiro",
+    "RelativePath": "relatorio/servicos-barbeiro",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "MatutosDomain.FiltroServicosPorBarbeiroDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "MatutosApi.Controllers.ServicoController",
     "Method": "AlterarServico",
     "RelativePath": "servico/alterar",
