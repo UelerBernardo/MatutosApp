@@ -50,7 +50,7 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao inativar/ativar usuário: {ex.Message}");
+                Console.WriteLine($"Exceção ao inativar/ativar usuário: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.");
             }
         }
@@ -97,7 +97,7 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
+                Console.WriteLine($"Exceção ao consultar detalhes: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.", null);
             }
         }
@@ -135,14 +135,14 @@ namespace MatutosApp.Services
                     var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiErroResposta>(options);
 
                     string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar a requisição.";
-                    System.Diagnostics.Debug.WriteLine($"Falha: {mensagemApi}");
+                    Console.WriteLine($"Falha: {mensagemApi}");
 
                     return (false, mensagemApi);
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Exceção ao alterar senha: {ex.Message}");
+                Console.WriteLine($"Exceção ao alterar senha: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor. Verifique sua conexão com a internet.");
             }
         }
@@ -204,7 +204,7 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Exceção ao enviar imagem: {ex.Message}");
+                Console.WriteLine($"Exceção ao enviar imagem: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor ao enviar a foto.", string.Empty);
             }
         }
@@ -241,20 +241,20 @@ namespace MatutosApp.Services
                     else
                     {
 
-                        Debug.WriteLine("Cadastro realizado, mas o Token não foi recebido.");
+                        Console.WriteLine("Cadastro realizado, mas o Token não foi recebido.");
                         return (false, null, dados.Mensagem);
                     }
                 }
                 else
                 {
                     var dados = await resposta.Content.ReadFromJsonAsync<AuthResponse>(options);
-                    Debug.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {dados.Mensagem}");
+                    Console.WriteLine($"Falha ao cadastrar pessoa. Status: {resposta.StatusCode}, Erro: {dados.Mensagem}");
                     return (false, null, dados.Mensagem);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
+                Console.WriteLine($"Exceção ao cadastrar pessoa: {ex.Message}");
                 return (false, null, "Erro Interno da API.");
             }
         }
@@ -289,7 +289,7 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Erro de conexão no login: {ex.Message}");
+                Console.WriteLine($"Erro de conexão no login: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.", null, null);
             }
         }
@@ -311,13 +311,13 @@ namespace MatutosApp.Services
 
                     string mensagemDaApi = erroResposta?.Mensagem ?? "Erro desconhecido ao processar requisição.";
 
-                    Debug.WriteLine($"Falha: {mensagemDaApi}");
+                    Console.WriteLine($"Falha: {mensagemDaApi}");
                     return (false, mensagemDaApi);
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                Console.WriteLine($"Exceção ao cadastrar: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.");
             }
         }
@@ -347,7 +347,7 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                Console.WriteLine($"Exceção ao cadastrar: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.");
             }
         }
@@ -385,7 +385,7 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Exceção ao cadastrar: {ex.Message}");
+                Console.WriteLine($"Exceção ao cadastrar: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.");
             }
         }
@@ -423,8 +423,8 @@ namespace MatutosApp.Services
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[FCM_DIAG] Erro crítico: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"[FCM_DIAG_STACK] {ex.StackTrace}");
+                Console.WriteLine($"[FCM_DIAG] Erro crítico: {ex.Message}");
+                Console.WriteLine($"[FCM_DIAG_STACK] {ex.StackTrace}");
 
                 // 2. Cospe o erro diretamente no ecrã do emulador para veres na hora!
                 if (Application.Current?.MainPage != null)

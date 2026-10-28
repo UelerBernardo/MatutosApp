@@ -623,38 +623,7 @@
         }
       }
     },
-    "/relatorio/faturamento": {
-      "post": {
-        "tags": [
-          "Relatorio"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FiltroFaturamentoDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FiltroFaturamentoDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FiltroFaturamentoDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/relatorio/servicos-barbeiro": {
+    "/relatorio/servicos-barbeiro/pdf": {
       "post": {
         "tags": [
           "Relatorio"
@@ -685,8 +654,8 @@
         }
       }
     },
-    "/relatorio/clientes-nao-fidelizados": {
-      "post": {
+    "/relatorio/clientes-nao-fidelizados/pdf": {
+      "get": {
         "tags": [
           "Relatorio"
         ],
@@ -700,6 +669,37 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/relatorio/faturamento/pdf": {
+      "post": {
+        "tags": [
+          "Relatorio"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltroFaturamentoDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltroFaturamentoDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiltroFaturamentoDTO"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"

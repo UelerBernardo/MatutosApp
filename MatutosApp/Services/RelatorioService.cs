@@ -14,105 +14,89 @@ namespace MatutosApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<(bool Sucesso, string Mensagem, List<RelatorioFaturamentoResponseDTO>? Dados)> GerarRelatorioFaturamento(string token, FiltroFaturamentoDTO filtros)
-        {
-            try
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-                var resposta = await _httpClient.PostAsJsonAsync("relatorio/faturamento", filtros);
-
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-                if (resposta.IsSuccessStatusCode)
-                {
-                    var dados = await resposta.Content.ReadFromJsonAsync<List<RelatorioFaturamentoResponseDTO>>(options);
-                    return (true, string.Empty, dados);
-                }
-                else
-                {
-                    // Trata erros que voltarem da API
-                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiResposta>(options);
-                    return (false, erroResposta?.Mensagem ?? "Erro ao consultar o relatório.", null);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Exceção no relatório: {ex.Message}");
-                return (false, "Falha de comunicação com o servidor.", null);
-            }
-        }
-
-        public async Task<(bool Sucesso, string Mensagem, List<RelatorioClientesNaoFidelizadosResponseDTO>? Dados)> GerarRelatorioClientesNaoFidelizados(string token, int? qtdDias)
+        public async Task<(bool Sucesso, string Mensagem, byte[]? ArquivoPdf)> GerarRelatorioFaturamentoPdf(string token, FiltroFaturamentoDTO parametros)
         {
             try
             {
                 var tokenLimpo = token.Replace("Bearer ", "").Trim();
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
 
-                // Monta a URL. Se o usuário digitou algum dia, adiciona o ?qtdDias=X no final
-                string url = "relatorio/clientes-nao-fidelizados";
-                if (qtdDias.HasValue)
-                {
-                    url += $"?qtdDias={qtdDias.Value}";
-                }
+                // Aponta para a nova rota que devolve o PDF
+                var resposta = await _httpClient.PostAsJsonAsync("relatorio/faturamento/pdf", parametros);
 
-                // Voltamos a usar o GetAsync, enviando a URL que montamos acima
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var pdfBytes = await resposta.Content.ReadAsByteArrayAsync();
+                    return (true, string.Empty, pdfBytes);
+                }
+                else
+                {
+                    // Trata erros que vêm em JSON
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiResposta>(options);
+                    return (false, erroResposta?.Mensagem ?? "Erro ao consultar relatório.", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, "Falha de comunicação com o servidor.", null);
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem, byte[]? ArquivoPdf)> GerarRelatorioServicosPorBarbeiroPdf(string token, FiltroServicosPorBarbeiroDTO parametros)
+            {
+            try
+            {
+                var tokenLimpo = token.Replace("Bearer ", "").Trim();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+                var resposta = await _httpClient.PostAsJsonAsync("relatorio/servicos-barbeiro/pdf", parametros);
+
+                if (resposta.IsSuccessStatusCode)
+                {
+                    var pdfBytes = await resposta.Content.ReadAsByteArrayAsync();
+                    return (true, string.Empty, pdfBytes);
+                }
+                else
+                {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiResposta>(options);
+                    return (false, erroResposta?.Mensagem ?? "Erro ao gerar PDF.", null);
+                }
+            }
+            catch (Exception)
+            {
+                return (false, "Falha de comunicação com o servidor.", null);
+            }
+        }
+
+        public async Task<(bool Sucesso, string Mensagem, byte[]? ArquivoPdf)> GerarRelatorioClientesNaoFidelizadosPdf(string token, int? qtdDias)
+        {
+            try
+            {
+                var tokenLimpo = token.Replace("Bearer ", "").Trim();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
+
+                string url = "relatorio/clientes-nao-fidelizados/pdf";
+                if (qtdDias.HasValue) url += $"?qtdDias={qtdDias.Value}";
+
                 var resposta = await _httpClient.GetAsync(url);
 
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
                 if (resposta.IsSuccessStatusCode)
                 {
-                    var dados = await resposta.Content.ReadFromJsonAsync<List<RelatorioClientesNaoFidelizadosResponseDTO>>(options);
-                    return (true, string.Empty, dados);
+                    var pdfBytes = await resposta.Content.ReadAsByteArrayAsync();
+                    return (true, string.Empty, pdfBytes);
                 }
                 else
                 {
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                     var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiResposta>(options);
-                    return (false, erroResposta?.Mensagem ?? "Erro ao consultar o relatório.", null);
+                    return (false, erroResposta?.Mensagem ?? "Erro ao gerar PDF.", null);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                System.Diagnostics.Debug.WriteLine($"Exceção ao consultar clientes: {ex.Message}");
                 return (false, "Falha de comunicação com o servidor.", null);
-            }
-        }
-
-        public async Task<(bool Sucesso, string Mensagem, List<RelatorioServicosPorBarbeiroResponseDTO>? Dados)> GerarRelatorioServicosPorBarbeiro(string token, FiltroServicosPorBarbeiroDTO parametros)
-        {
-            try
-            {
-                // Limpa o token caso a string venha com o prefixo "Bearer "
-                var tokenLimpo = token.Replace("Bearer ", "").Trim();
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenLimpo);
-
-                // DICA: Ajuste o prefixo "relatorio/" conforme o nome da sua Controller na API!
-                var resposta = await _httpClient.PostAsJsonAsync("relatorio/servicos-barbeiro", parametros);
-
-                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-                if (resposta.IsSuccessStatusCode)
-                {
-                    var dados = await resposta.Content.ReadFromJsonAsync<List<RelatorioServicosPorBarbeiroResponseDTO>>(options);
-
-                    return (true, string.Empty, dados);
-                }
-                else
-                {
-                    var erroResposta = await resposta.Content.ReadFromJsonAsync<ApiResposta>(options);
-
-                    string mensagemApi = erroResposta?.Mensagem ?? "Erro desconhecido ao consultar o relatório de barbeiros.";
-                    System.Diagnostics.Debug.WriteLine($"Falha na API (Relatório Barbeiros): {mensagemApi}");
-
-                    return (false, mensagemApi, null);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Exceção ao consultar relatório de barbeiros: {ex.Message}");
-                return (false, "Falha de comunicação com o servidor. Verifique sua conexão.", null);
             }
         }
     }

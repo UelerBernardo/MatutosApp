@@ -1,8 +1,8 @@
-﻿using Microsoft.Maui; // Resolve o IPropertyMapper (AppendToMapping)
-using Microsoft.Maui.Hosting; // Resolve o MauiAppBuilder
-using Microsoft.Maui.Controls.Hosting; // 👉 Resolve o UseMauiApp
-using Microsoft.Extensions.DependencyInjection; // 👉 Resolve o AddHttpClient
-using Microsoft.Maui.Devices;                   // 👉 Resolve o DeviceInfo e DevicePlatform
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Hosting;
+using Microsoft.Maui.Controls.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Maui.Devices;
 using Microsoft.Maui.Controls;
 using MatutosApp.Services;
 using MatutosApp.Views;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Plugin.Firebase.Bundled.Shared;
 using Microsoft.Maui.LifecycleEvents;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-
+using System.Net.Http; 
 
 #if ANDROID
 using Plugin.Firebase.Bundled.Platforms.Android;
@@ -31,7 +31,7 @@ namespace MatutosApp
 #if ANDROID
                     events.AddAndroid(android => android.OnCreate((activity, state) =>
                     {
-                        // 👉 Na versão 3.x, passamos apenas o activity e as configurações!
+                        // Inicializa o Firebase
                         CrossFirebase.Initialize(activity, CreateCrossFirebaseSettings());
                     }));
 #endif
@@ -56,71 +56,66 @@ namespace MatutosApp
             }
 
 
-            // 👉 2. O passaporte de segurança do emulador
-#if ANDROID
-            var devSslHandler = new HttpClientHandler();
-            devSslHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
-#endif
-
-            // 👉 3. Todas as services registradas recebendo a rede e a segurança!
+            // 👉 2. INJEÇÃO DE DEPENDÊNCIA (Com o passaporte SSL seguro aplicado!)
             builder.Services.AddHttpClient<UsuarioService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<BarbeiroService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<TelefoneService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<AgendamentoService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<ServicoService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<ClienteService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<BlacklistService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
             ;
 
             builder.Services.AddHttpClient<NotificacaoService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-           .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+           .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
            ;
 
             builder.Services.AddHttpClient<AuditoriaLogService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-            .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+            .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
-;
+            ;
+
             builder.Services.AddHttpClient<RelatorioService>(c => c.BaseAddress = new Uri(ipDaApi))
 #if ANDROID
-           .ConfigurePrimaryHttpMessageHandler(() => devSslHandler)
+           .ConfigurePrimaryHttpMessageHandler(() => ObterSslHandlerSeguro())
 #endif
-;
+            ;
 
 
             // 👉 3. ViewModels
@@ -181,8 +176,7 @@ namespace MatutosApp
             builder.Services.AddTransient<RelatoriosView>();
 
 
-
-            // 👉 5. Configuração Visual (Somente regra de interface aqui dentro!)
+            // 👉 5. Configuração Visual
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("SemBorda", (handler, view) =>
             {
                 if (handler.PlatformView == null) return;
@@ -203,14 +197,22 @@ namespace MatutosApp
             return builder.Build();
         }
 
+        // 👉 CORREÇÃO DO FIREBASE: Deixamos só o que você vai usar! Os outros assumem `false` por padrão.
         private static CrossFirebaseSettings CreateCrossFirebaseSettings()
         {
             return new CrossFirebaseSettings(
-                isAuthEnabled: false,
-                isCloudMessagingEnabled: true,
-                isAnalyticsEnabled: false,
-                isCrashlyticsEnabled: false
-                );
+                isCloudMessagingEnabled: true
+            );
         }
+
+        // 👉 CORREÇÃO DO SSL: Método para gerar um passaporte novo por Service, evitando o erro de "Handler já em uso"
+#if ANDROID
+        private static HttpMessageHandler ObterSslHandlerSeguro()
+        {
+            var handler = new HttpClientHandler();
+            handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+            return handler;
+        }
+#endif
     }
 }

@@ -4,8 +4,8 @@
              xmlns:viewmodels="clr-namespace:MatutosApp.ViewsModels"
              x:DataType="viewmodels:RelatoriosViewModel"
              x:Class="MatutosApp.Views.RelatoriosView"
-             BackgroundColor="#121212"
-             Title="Relatórios">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#121212">
 
     <ContentPage.Resources>
         <!-- Estilo Padrão para Botões -->

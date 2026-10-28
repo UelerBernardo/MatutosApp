@@ -384,9 +384,9 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.RelatorioController",
-    "Method": "ConsultarRelatorioClientesNaoFidelizados",
-    "RelativePath": "relatorio/clientes-nao-fidelizados",
-    "HttpMethod": "POST",
+    "Method": "GerarPdfClientesNaoFidelizados",
+    "RelativePath": "relatorio/clientes-nao-fidelizados/pdf",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -400,8 +400,8 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.RelatorioController",
-    "Method": "GerarRelatorioFaturamento",
-    "RelativePath": "relatorio/faturamento",
+    "Method": "GerarPdfFaturamento",
+    "RelativePath": "relatorio/faturamento/pdf",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -416,8 +416,8 @@
   },
   {
     "ContainingType": "MatutosApi.Controllers.RelatorioController",
-    "Method": "ConsultarRelatorioServicosPorBarbeiro",
-    "RelativePath": "relatorio/servicos-barbeiro",
+    "Method": "GerarPdfServicosBarbeiro",
+    "RelativePath": "relatorio/servicos-barbeiro/pdf",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
