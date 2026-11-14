@@ -19,8 +19,6 @@ namespace MatutosApi.Services
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly FirebaseService _firebaseService; 
 
-        // Define de quanto em quanto tempo o robô vai rodar. 
-        // Para testes, deixei 1 minuto. No mundo real, poderia ser 5 ou 10 minutos.
         private readonly TimeSpan _intervaloExecucao = TimeSpan.FromMinutes(1);
 
         public NotificacaoWorker(ILogger<NotificacaoWorker> logger, IServiceScopeFactory scopeFactory, FirebaseService firebaseService)

@@ -13,7 +13,7 @@ using static MatutosApi.Controllers.UsuarioController;
 var key = Encoding.ASCII.GetBytes("MatutosAppUelerBernardoLuizFelipeEstagio");
 var builder = WebApplication.CreateBuilder(args);
 
-
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 
 var caminhoConfigFirebase = Path.Combine(AppContext.BaseDirectory, "firebase-config.json");
@@ -93,6 +93,16 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirBlazor", policy =>
+    {
+        // Libera a porta exata do seu front-end
+        policy.WithOrigins("https://localhost:7205")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 var app = builder.Build();
 
 
@@ -104,7 +114,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("PermitirBlazor");
 app.UseAuthentication(); 
 app.UseAuthorization();
 app.UseStaticFiles();

@@ -153,6 +153,11 @@ namespace MatutosApi.Infraestrutura
                     Data_Hora_Acao = DateTime.UtcNow
                 };
 
+                if(auditEntry.Usuario_Acao == null || auditEntry.Usuario_Acao <= 0)
+                {
+                    auditEntry.Usuario_Acao = 13;
+                }
+
                 var oldValues = new Dictionary<string, object>();
                 var newValues = new Dictionary<string, object>();
 
